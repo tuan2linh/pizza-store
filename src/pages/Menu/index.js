@@ -7,6 +7,7 @@ import CartSidebar from '../../components/CartSidebar';
 import { FaPizzaSlice, FaFish, FaDrumstickBite, FaBacon, FaLeaf, FaList, FaUtensils, FaIceCream, FaCoffee } from 'react-icons/fa';
 import { LuBeef } from "react-icons/lu";
 import { useLocation } from 'react-router-dom';
+import PizzaDetailModal from '../../components/PizzaDetailModal';
 //#endregion
 
 //#region Menu Component
@@ -17,6 +18,8 @@ function Menu() {
       location.state?.activeMainCategory || 'pizza'
     );
     const [activeCategory, setActiveCategory] = useState('all');
+    const [selectedPizza, setSelectedPizza] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleCartToggle = () => {
         setIsCartOpen(!isCartOpen);
@@ -27,6 +30,11 @@ function Menu() {
         setActiveMainCategory(location.state.activeMainCategory);
       }
     }, [location.state]);
+
+    const handlePizzaClick = (pizza) => {
+        setSelectedPizza(pizza);
+        setIsModalOpen(true);
+    };
 
     //#endregion
 
@@ -81,7 +89,9 @@ function Menu() {
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {getAllPizzas().map((pizza) => (
-                    <div key={pizza.id} className="bg-white rounded-lg shadow-md overflow-hidden max-w-xs flex flex-col justify-between h-80">
+                    <div key={pizza.id} 
+                         className="bg-white rounded-lg shadow-md overflow-hidden max-w-xs flex flex-col justify-between h-80 cursor-pointer"
+                         onClick={() => handlePizzaClick(pizza)}>
                         <div className="relative w-full h-48 bg-gray-100 overflow-hidden group">
                             <img
                                 src={pizza.image}
@@ -90,7 +100,7 @@ function Menu() {
                             />
                         </div>
                         <div className="p-3">
-                            <h3 className="text-lg font-bold mb-1 text-center text-[#0078ae]">{pizza.name}</h3>
+                        <h3 className="text-lg font-bold mb-1 text-center text-[#0078ae] hover:underline cursor-pointer">{pizza.name}</h3>
                         </div>
                         <div className="p-3 text-center">
                             <div className="text-sm font-bold">
@@ -115,7 +125,7 @@ function Menu() {
                         />
                     </div>
                     <div className="p-3">
-                        <h3 className="text-lg font-bold mb-1 text-center text-[#0078ae]">{chicken.name}</h3>
+                        <h3 className="text-lg font-bold mb-1 text-center text-[#0078ae] hover:underline cursor-pointer">{chicken.name}</h3>
                         <p className="text-sm text-gray-600 text-center">{chicken.description}</p>
                     </div>
                     <div className="p-3 text-center">
@@ -161,6 +171,11 @@ function Menu() {
                 {activeMainCategory === 'desserts' && <div>Desserts Section</div>}
                 {activeMainCategory === 'drinks' && <div>Drinks Section</div>}
             </div>
+            <PizzaDetailModal
+                pizza={selectedPizza}
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+            />
         </div>
     );
     //#endregion
