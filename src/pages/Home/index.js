@@ -22,14 +22,14 @@ const Home = () => {
   };
 
   const menuItems = [
-    { name: 'Salad', image: menu_1, path: '/menu/salad' },
-    { name: 'Rolls', image: menu_2, path: '/menu/rolls' },
-    { name: 'Deserts', image: menu_3, path: '/menu/deserts' },
-    { name: 'Sandwich', image: menu_4, path: '/menu/sandwich' },
-    { name: 'Cake', image: menu_5, path: '/menu/cake' },
-    { name: 'Pure Veg', image: menu_6, path: '/menu/pure-veg' },
-    { name: 'Pasta', image: menu_7, path: '/menu/pasta' },
-    { name: 'Noodles', image: menu_8, path: '/menu/noodles' },
+    { name: 'Salad', image: menu_1, path: '/menu' },
+    { name: 'Rolls', image: menu_2, path: '/menu' },
+    { name: 'Deserts', image: menu_3, path: '/menu' },
+    { name: 'Sandwich', image: menu_4, path: '/menu' },
+    { name: 'Cake', image: menu_5, path: '/menu' },
+    { name: 'Pure Veg', image: menu_6, path: '/menu' },
+    { name: 'Pasta', image: menu_7, path: '/menu' },
+    { name: 'Noodles', image: menu_8, path: '/menu' },
   ];
   const pizzas = [
     {
@@ -77,7 +77,10 @@ const Home = () => {
             Order your pizza here
           </h2>
           <p className="text-white text-[1vw]">Choose from menu</p>
-          <button className="border-none text-black font-medium py-[1vw] px-[2.3vw] bg-white text-[max(1vw,13px)] rounded-[50px]">
+          <button 
+            onClick={() => navigate('/menu')}
+            className="border-none text-black font-medium py-[1vw] px-[2.3vw] bg-white text-[max(1vw,13px)] rounded-[50px]"
+          >
             View Menu
           </button>
         </div>
@@ -107,17 +110,18 @@ const Home = () => {
               <p className="text-sm">Nhập mới nguyên liệu hàng ngày</p>
             </div>
           </div>
-
           <div className="flex items-center">
             <img
-              className="object-contain w-6 h-6 mr-4" // Added margin-right
+              className="object-contain w-6 h-6 mr-4"
+              src='//bizweb.dktcdn.net/100/527/383/themes/964940/assets/policies_icon_3.png?1730347951357'
+              alt="Hỗ trợ 24/7"
+
             />
-            <div className="pl-2"> {/* Added padding-left */}
+            <div className="pl-2">
               <p className="font-bold">Hỗ trợ 24/7</p>
               <p className="text-sm">Hỗ trợ khách hàng 24/7</p>
             </div>
           </div>
-
           <div className="flex items-center">
             <img
               className="object-contain w-6 h-6 mr-4" // Added margin-right
@@ -209,7 +213,8 @@ const Home = () => {
             ))}
           </div>
           <div className="text-center mt-6">
-            <button className="bg-orange-400 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded">Xem Thêm</button>
+            <button onClick={() => navigate('/menu')}
+            className="bg-orange-400 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded">Xem Thêm</button>
           </div>
         </div>
       </div>

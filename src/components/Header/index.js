@@ -86,7 +86,8 @@ function Header({ onCartClick }) {
             />
             <div className="ml-auto max-lg:mt-4">
               <ul className="flex items-center">
-                <li className="max-sm:hidden flex text-[15px] max-lg:py-2 px-3 font-bold text-[#333] cursor-pointer">
+                <li className="max-sm:hidden flex text-[15px] max-lg:py-2 px-3 font-bold text-[#333] cursor-pointer"
+                    onClick={() => navigate('/stores')}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="20px"

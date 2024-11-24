@@ -7,7 +7,7 @@ import CartSidebar from '../../components/CartSidebar';
 import { FaPizzaSlice, FaFish, FaDrumstickBite, FaBacon, FaLeaf, FaList, FaUtensils, FaIceCream, FaCoffee } from 'react-icons/fa';
 import { LuBeef } from "react-icons/lu";
 import { useLocation } from 'react-router-dom';
-import PizzaDetailModal from '../../components/PizzaDetailModal';
+import ProductDetailModal from '../../components/ProductDetailModal';
 //#endregion
 
 //#region Menu Component
@@ -18,7 +18,7 @@ function Menu() {
       location.state?.activeMainCategory || 'pizza'
     );
     const [activeCategory, setActiveCategory] = useState('all');
-    const [selectedPizza, setSelectedPizza] = useState(null);
+    const [selectedProduct, setSelectedProduct] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleCartToggle = () => {
@@ -31,8 +31,13 @@ function Menu() {
       }
     }, [location.state]);
 
-    const handlePizzaClick = (pizza) => {
-        setSelectedPizza(pizza);
+    // Add this new useEffect for scroll to top
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
+
+    const handleProductClick = (product, type) => {
+        setSelectedProduct({ ...product, productType: type });
         setIsModalOpen(true);
     };
 
@@ -62,7 +67,7 @@ function Menu() {
     const getAllPizzas = () => {
         if (activeCategory === 'all') {
             return pizzaData.products;
-       }
+       } 
         return pizzaData.products.filter(pizza => 
             pizza.categories.includes(activeCategory)
         );
@@ -91,7 +96,7 @@ function Menu() {
                 {getAllPizzas().map((pizza) => (
                     <div key={pizza.id} 
                          className="bg-white rounded-lg shadow-md overflow-hidden max-w-xs flex flex-col justify-between h-80 cursor-pointer"
-                         onClick={() => handlePizzaClick(pizza)}>
+                         onClick={() => handleProductClick(pizza, 'pizza')}>
                         <div className="relative w-full h-48 bg-gray-100 overflow-hidden group">
                             <img
                                 src={pizza.image}
@@ -116,7 +121,9 @@ function Menu() {
     const renderChickenSection = () => (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {chickenData.products.map((chicken) => (
-                <div key={chicken.id} className="bg-white rounded-lg shadow-md overflow-hidden max-w-xs flex flex-col justify-between h-80">
+                <div key={chicken.id} 
+                     className="bg-white rounded-lg shadow-md overflow-hidden max-w-xs flex flex-col justify-between h-80 cursor-pointer"
+                     onClick={() => handleProductClick(chicken, 'chicken')}>
                     <div className="relative w-full h-48 bg-gray-100 overflow-hidden group">
                         <img
                             src={chicken.image}
@@ -171,8 +178,8 @@ function Menu() {
                 {activeMainCategory === 'desserts' && <div>Desserts Section</div>}
                 {activeMainCategory === 'drinks' && <div>Drinks Section</div>}
             </div>
-            <PizzaDetailModal
-                pizza={selectedPizza}
+            <ProductDetailModal
+                product={selectedProduct}
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
             />
