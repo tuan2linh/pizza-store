@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Header from '../../components/Header';
-import CartSidebar from '../../components/CartSidebar';
 import { pizzaData } from '../../data/pizzaData';
 import { cartItems } from '../../data/cartItems'; // Import cartItems
 import order1 from '../../assets/order1.png';
@@ -9,13 +7,8 @@ import order2 from '../../assets/order2.png';
 
 const Cart = () => {
   const navigate = useNavigate();
-  const [isCartOpen, setIsCartOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const recommendedItems = pizzaData.products.slice(0, 10); // Move this line to the top
-
-  const handleCartToggle = () => {
-    setIsCartOpen(!isCartOpen);
-  };
   const handleNext = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % recommendedItems.length);
   };
@@ -40,10 +33,6 @@ const Cart = () => {
 
   return (
     <>
-      <div className="sticky top-0 z-50 bg-white">
-        <Header onCartClick={handleCartToggle} />
-      </div>
-      <CartSidebar isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
       <div className="container mx-auto py-8 flex justify-center relative">
         <div className="hidden xl:block absolute left-0 top-0 h-full w-1/6">
           <img src={order1} alt="Left Banner" className="w-full h-full object-cover" />

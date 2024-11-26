@@ -1,25 +1,21 @@
-import React from 'react';
-import { useState } from 'react';
-import Header from '../../components/Header';
-import CartSidebar from '../../components/CartSidebar';
-import { cartItems } from '../../data/cartItems';
+import React from "react";
+import { useState } from "react";
+import { cartItems } from "../../data/cartItems";
 
 const Payment = () => {
-    const [isCartOpen, setIsCartOpen] = useState(false);
+    const [customerName, setCustomerName] = useState("");
+    const [email, setEmail] = useState("");
+    const [phone, setPhone] = useState("");
+    const [note, setNote] = useState("");
+    const [address, setAddress] = useState("");
+    const [deliveryType, setDeliveryType] = useState("immediate"); // 'immediate' or 'scheduled'
+    const [deliveryTime, setDeliveryTime] = useState("");
+    const [deliveryDate, setDeliveryDate] = useState("");
 
-    const handleCartToggle = () => {
-        setIsCartOpen(!isCartOpen);
-    };
-    const [customerName, setCustomerName] = useState('');
-    const [email, setEmail] = useState('');
-    const [phone, setPhone] = useState('');
-    const [note, setNote] = useState('');
-    const [address, setAddress] = useState('');
-    const [deliveryType, setDeliveryType] = useState('immediate'); // 'immediate' or 'scheduled'
-    const [deliveryTime, setDeliveryTime] = useState('');
-    const [deliveryDate, setDeliveryDate] = useState('');
-
-    const totalPrice = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const totalPrice = cartItems.reduce(
+        (sum, item) => sum + item.price * item.quantity,
+        0
+    );
     const PromotionDiscount = 15000; // Replace with actual promotion discount
     const voucherDiscount = 0; // Replace with actual voucher discount
     const deliveryFee = 15000; // Replace with actual delivery fee
@@ -27,10 +23,6 @@ const Payment = () => {
 
     return (
         <>
-            <div className="sticky top-0 z-50 bg-white">
-                <Header onCartClick={handleCartToggle} />
-            </div>
-            <CartSidebar isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
             <div className="container mx-auto py-8">
                 <div className="grid grid-cols-4 gap-6">
                     {/* Cột trái - 3/4 */}
@@ -38,9 +30,16 @@ const Payment = () => {
                         <div className="grid grid-cols-2 gap-6 mb-6">
                             {/* Thông tin người dùng */}
                             <div className="bg-white rounded-lg shadow-md p-4">
-                                <h2 className="text-lg font-medium mb-4">Thông tin người dùng</h2>
+                                <h2 className="text-lg font-medium mb-4">
+                                    Thông tin người dùng
+                                </h2>
                                 <div className="mb-4">
-                                    <label htmlFor="customerName" className="block text-gray-700 text-sm font-bold mb-2">Tên khách hàng</label>
+                                    <label
+                                        htmlFor="customerName"
+                                        className="block text-gray-700 text-sm font-bold mb-2"
+                                    >
+                                        Tên khách hàng
+                                    </label>
                                     <input
                                         type="text"
                                         id="customerName"
@@ -51,7 +50,12 @@ const Payment = () => {
                                     />
                                 </div>
                                 <div className="mb-4">
-                                    <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">Email</label>
+                                    <label
+                                        htmlFor="email"
+                                        className="block text-gray-700 text-sm font-bold mb-2"
+                                    >
+                                        Email
+                                    </label>
                                     <input
                                         type="email"
                                         id="email"
@@ -62,7 +66,12 @@ const Payment = () => {
                                     />
                                 </div>
                                 <div className="mb-4">
-                                    <label htmlFor="phone" className="block text-gray-700 text-sm font-bold mb-2">Số điện thoại</label>
+                                    <label
+                                        htmlFor="phone"
+                                        className="block text-gray-700 text-sm font-bold mb-2"
+                                    >
+                                        Số điện thoại
+                                    </label>
                                     <input
                                         type="tel"
                                         id="phone"
@@ -73,7 +82,12 @@ const Payment = () => {
                                     />
                                 </div>
                                 <div className="mb-4">
-                                    <label htmlFor="address" className="block text-gray-700 text-sm font-bold mb-2">Địa chỉ</label>
+                                    <label
+                                        htmlFor="address"
+                                        className="block text-gray-700 text-sm font-bold mb-2"
+                                    >
+                                        Địa chỉ
+                                    </label>
                                     <input
                                         type="text"
                                         id="address"
@@ -88,7 +102,12 @@ const Payment = () => {
                             <div className="bg-white rounded-lg shadow-md p-4">
                                 <h2 className="text-lg font-medium mb-4">Thông tin đặt hàng</h2>
                                 <div className="mb-4">
-                                    <label htmlFor="note" className="block text-gray-700 text-sm font-bold mb-2">Ghi chú</label>
+                                    <label
+                                        htmlFor="note"
+                                        className="block text-gray-700 text-sm font-bold mb-2"
+                                    >
+                                        Ghi chú
+                                    </label>
                                     <textarea
                                         id="note"
                                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -105,11 +124,13 @@ const Payment = () => {
                                                 id="immediate"
                                                 name="deliveryType"
                                                 value="immediate"
-                                                checked={deliveryType === 'immediate'}
+                                                checked={deliveryType === "immediate"}
                                                 onChange={(e) => setDeliveryType(e.target.value)}
                                                 className="mr-2"
                                             />
-                                            <label htmlFor="immediate">Đặt hàng - Giao hàng ngay</label>
+                                            <label htmlFor="immediate">
+                                                Đặt hàng - Giao hàng ngay
+                                            </label>
                                         </div>
                                         <div className="flex items-center">
                                             <input
@@ -117,7 +138,7 @@ const Payment = () => {
                                                 id="scheduled"
                                                 name="deliveryType"
                                                 value="scheduled"
-                                                checked={deliveryType === 'scheduled'}
+                                                checked={deliveryType === "scheduled"}
                                                 onChange={(e) => setDeliveryType(e.target.value)}
                                                 className="mr-2"
                                             />
@@ -126,10 +147,15 @@ const Payment = () => {
                                     </div>
                                 </div>
 
-                                {deliveryType === 'scheduled' && (
+                                {deliveryType === "scheduled" && (
                                     <div className="space-y-4">
                                         <div className="mb-4">
-                                            <label htmlFor="deliveryTime" className="block text-gray-700 text-sm font-bold mb-2">Chọn giờ giao</label>
+                                            <label
+                                                htmlFor="deliveryTime"
+                                                className="block text-gray-700 text-sm font-bold mb-2"
+                                            >
+                                                Chọn giờ giao
+                                            </label>
                                             <input
                                                 type="time"
                                                 id="deliveryTime"
@@ -145,36 +171,92 @@ const Payment = () => {
                         {/* Phương thức thanh toán */}
                         <div className="bg-white rounded-lg shadow-md p-4 mb-6">
                             {/* Phương thúc thanh toán */}
-                            <h2 className="text-lg font-medium mb-4">Phương thức thanh toán</h2>
+                            <h2 className="text-lg font-medium mb-4">
+                                Phương thức thanh toán
+                            </h2>
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="flex items-center p-3 ml-12 mr-8 border-b hover:border-orange-300 cursor-pointer">
-                                    <input type="radio" id="atm" name="paymentMethod" className="mr-3" />
-                                    <img src="https://img.dominos.vn/icon-payment-method-atm.png" alt="ATM" className="w-8 h-8 mr-2" />
+                                    <input
+                                        type="radio"
+                                        id="atm"
+                                        name="paymentMethod"
+                                        className="mr-3"
+                                    />
+                                    <img
+                                        src="https://img.dominos.vn/icon-payment-method-atm.png"
+                                        alt="ATM"
+                                        className="w-8 h-8 mr-2"
+                                    />
                                     <label htmlFor="atm">ATM</label>
                                 </div>
                                 <div className="flex items-center p-3 ml-12 mr-8 border-b hover:border-orange-300 cursor-pointer">
-                                    <input type="radio" id="creditCard" name="paymentMethod" className="mr-3" />
-                                    <img src="https://img.dominos.vn/icon-payment-method-credit.png" alt="Credit Card" className="w-8 h-8 mr-2" />
+                                    <input
+                                        type="radio"
+                                        id="creditCard"
+                                        name="paymentMethod"
+                                        className="mr-3"
+                                    />
+                                    <img
+                                        src="https://img.dominos.vn/icon-payment-method-credit.png"
+                                        alt="Credit Card"
+                                        className="w-8 h-8 mr-2"
+                                    />
                                     <label htmlFor="creditCard">Thẻ tín dụng / ghi nợ</label>
                                 </div>
                                 <div className="flex items-center p-3 ml-12 mr-8 border-b hover:border-orange-300 cursor-pointer">
-                                    <input type="radio" id="viMomo" name="paymentMethod" className="mr-3" />
-                                    <img src="https://img.dominos.vn/icon-payment-method-mo-mo.png" alt="MoMo" className="w-8 h-8 mr-2" />
+                                    <input
+                                        type="radio"
+                                        id="viMomo"
+                                        name="paymentMethod"
+                                        className="mr-3"
+                                    />
+                                    <img
+                                        src="https://img.dominos.vn/icon-payment-method-mo-mo.png"
+                                        alt="MoMo"
+                                        className="w-8 h-8 mr-2"
+                                    />
                                     <label htmlFor="viMomo">Ví MoMo</label>
                                 </div>
                                 <div className="flex items-center p-3 ml-12 mr-8 border-b hover:border-orange-300 cursor-pointer">
-                                    <input type="radio" id="viZaloPay" name="paymentMethod" className="mr-3" />
-                                    <img src="https://img.dominos.vn/icon-payment-method-zalo-pay.png" alt="ZaloPay" className="w-8 h-8 mr-2" />
+                                    <input
+                                        type="radio"
+                                        id="viZaloPay"
+                                        name="paymentMethod"
+                                        className="mr-3"
+                                    />
+                                    <img
+                                        src="https://img.dominos.vn/icon-payment-method-zalo-pay.png"
+                                        alt="ZaloPay"
+                                        className="w-8 h-8 mr-2"
+                                    />
                                     <label htmlFor="viZaloPay">Ví ZaloPay</label>
                                 </div>
                                 <div className="flex items-center p-3 ml-12 mr-8 border-b hover:border-orange-300 cursor-pointer">
-                                    <input type="radio" id="viShopeePay" name="paymentMethod" className="mr-3" />
-                                    <img src="https://img.dominos.vn/shoppepay.png" alt="ShopeePay" className="w-8 h-8 mr-2" />
+                                    <input
+                                        type="radio"
+                                        id="viShopeePay"
+                                        name="paymentMethod"
+                                        className="mr-3"
+                                    />
+                                    <img
+                                        src="https://img.dominos.vn/shoppepay.png"
+                                        alt="ShopeePay"
+                                        className="w-8 h-8 mr-2"
+                                    />
                                     <label htmlFor="viShopeePay">Ví ShopeePay</label>
                                 </div>
                                 <div className="flex items-center p-3 ml-12 mr-8 border-b hover:border-orange-300 cursor-pointer">
-                                    <input type="radio" id="cash" name="paymentMethod" className="mr-3" />
-                                    <img src="https://img.dominos.vn/cash.png" alt="Cash" className="w-8 h-8 mr-2" />
+                                    <input
+                                        type="radio"
+                                        id="cash"
+                                        name="paymentMethod"
+                                        className="mr-3"
+                                    />
+                                    <img
+                                        src="https://img.dominos.vn/cash.png"
+                                        alt="Cash"
+                                        className="w-8 h-8 mr-2"
+                                    />
                                     <label htmlFor="cash">Tiền mặt</label>
                                 </div>
                             </div>
@@ -196,39 +278,49 @@ const Payment = () => {
                             <div className="space-y-2 mb-8">
                                 <div className="flex justify-between text-sm">
                                     <span>Tổng</span>
-                                    <span>{totalPrice.toLocaleString('vi-VN')}₫</span>
+                                    <span>{totalPrice.toLocaleString("vi-VN")}₫</span>
                                 </div>
                                 <div className="flex justify-between text-sm">
                                     <span>Giảm K.Mãi</span>
-                                    <span>-{PromotionDiscount.toLocaleString('vi-VN')}₫</span>
+                                    <span>-{PromotionDiscount.toLocaleString("vi-VN")}₫</span>
                                 </div>
                                 <div className="flex justify-between text-sm">
                                     <span>Giảm Voucher</span>
-                                    <span>-{voucherDiscount.toLocaleString('vi-VN')}₫</span>
+                                    <span>-{voucherDiscount.toLocaleString("vi-VN")}₫</span>
                                 </div>
                                 <div className="flex justify-between text-sm">
                                     <span>Phí Giao Hàng</span>
-                                    <span>{deliveryFee.toLocaleString('vi-VN')}₫</span>
+                                    <span>{deliveryFee.toLocaleString("vi-VN")}₫</span>
                                 </div>
                                 <hr />
                                 <div className="flex justify-between font-bold pt-2">
                                     <span>Tổng cộng</span>
-                                    <span>{finalTotal.toLocaleString('vi-VN')}₫</span>
+                                    <span>{finalTotal.toLocaleString("vi-VN")}₫</span>
                                 </div>
                             </div>
                             {/* Products list */}
                             <div className="space-y-4">
                                 {cartItems.map((item, index) => (
                                     <div key={index} className="flex items-center mb-4">
-                                        <img src={item.image} alt={item.name} className="w-20 h-20 object-cover mr-4" />
+                                        <img
+                                            src={item.image}
+                                            alt={item.name}
+                                            className="w-20 h-20 object-cover mr-4"
+                                        />
                                         <div className="flex-1">
                                             <div className="flex justify-between items-start">
-                                                <h3 className="text-lg font-medium mb-2">{item.name}</h3>
-                                                <span className="text-sm font-medium text-gray-500">x{item.quantity}</span>
+                                                <h3 className="text-lg font-medium mb-2">
+                                                    {item.name}
+                                                </h3>
+                                                <span className="text-sm font-medium text-gray-500">
+                                                    x{item.quantity}
+                                                </span>
                                             </div>
-                                            <p className="text-gray-600 text-sm">{item.price.toLocaleString('vi-VN')}₫</p>
+                                            <p className="text-gray-600 text-sm">
+                                                {item.price.toLocaleString("vi-VN")}₫
+                                            </p>
                                             <div className="text-sm text-gray-500">
-                                                {item.options.join(', ')}
+                                                {item.options.join(", ")}
                                             </div>
                                         </div>
                                     </div>

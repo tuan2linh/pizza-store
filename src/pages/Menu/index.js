@@ -1,9 +1,7 @@
 //#region Imports
 import React, { useState, useEffect } from 'react';
-import Header from '../../components/Header';
 import { pizzaData } from '../../data/pizzaData';
 import { chickenData } from '../../data/chickenData';
-import CartSidebar from '../../components/CartSidebar';
 import { FaPizzaSlice, FaFish, FaDrumstickBite, FaBacon, FaLeaf, FaList, FaUtensils, FaIceCream, FaCoffee } from 'react-icons/fa';
 import { LuBeef } from "react-icons/lu";
 import { useLocation } from 'react-router-dom';
@@ -13,17 +11,12 @@ import ProductDetailModal from '../../components/ProductDetailModal';
 //#region Menu Component
 function Menu() {   
     const location = useLocation();
-    const [isCartOpen, setIsCartOpen] = useState(false);
     const [activeMainCategory, setActiveMainCategory] = useState(
       location.state?.activeMainCategory || 'pizza'
     );
     const [activeCategory, setActiveCategory] = useState('all');
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-
-    const handleCartToggle = () => {
-        setIsCartOpen(!isCartOpen);
-    };
 
     useEffect(() => {
       if (location.state?.activeMainCategory) {
@@ -149,10 +142,6 @@ function Menu() {
     //#region Main Render
     return (
         <div>
-            <div className="sticky top-0 z-50 bg-white">
-                <Header onCartClick={handleCartToggle} />
-            </div>
-            <CartSidebar isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
             <div className="container mx-auto px-4 py-8">
                 <div className="flex flex-wrap gap-4 mb-8 justify-center">
                     {Object.entries(mainCategories).map(([key, { name, icon }]) => (

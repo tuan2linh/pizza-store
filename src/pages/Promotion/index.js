@@ -1,10 +1,7 @@
 //#region Imports
 import React from 'react';
-import Header from '../../components/Header';
 import designer from '../../assets/Designer.png'
 import promo from '../../assets/promo.png'
-import CartSidebar from '../../components/CartSidebar';
-import { useState } from 'react';
 //#endregion
 
 //#region Promotion Data
@@ -60,19 +57,11 @@ const promotions = [
 //#region Promotion Component
 function Promotion() {
   //#region State and Handlers
-  const [isCartOpen, setIsCartOpen] = useState(false);
-    const handleCartToggle = () => {
-        setIsCartOpen(!isCartOpen);
-    };
   //#endregion
 
   //#region Render
   return (
     <>
-      <div className="sticky top-0 z-50 bg-white">
-        <Header onCartClick={handleCartToggle} />
-      </div>
-      <CartSidebar isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
       <div className="bg-dark bg-cover--black-zone bg-grey-lightes" style={{ backgroundImage: `url(${promo})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
         <div className="container mx-auto px-4 py-8">
           <div className="flex justify-center">

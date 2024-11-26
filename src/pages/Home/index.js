@@ -64,10 +64,7 @@ const Home = () => {
 
   return (
     <>
-      <div className="sticky top-0 z-50 bg-white">
-        <Header onCartClick={handleCartToggle} />
-      </div>
-      <CartSidebar isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+      
       <div
         className="banner h-[34vw] my-[30px] mx-auto bg-no-repeat bg-contain relative"
         style={{ backgroundImage: `url(${bannerImage})` }}

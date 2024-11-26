@@ -1,6 +1,5 @@
 
 import React, { useState } from 'react';
-import Header from '../components/Header';
 import { stores, districts } from '../data/storeData';
 
 function Stores() {
@@ -12,7 +11,6 @@ function Stores() {
 
   return (
     <>
-      <Header />
       <div className="py-8">
         <h1 className="text-3xl font-bold text-center mb-8">Hệ Thống Cửa Hàng</h1>
         

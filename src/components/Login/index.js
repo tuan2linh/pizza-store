@@ -1,9 +1,47 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { postLogin } from "../../services/apiService"
+import { useDispatch } from "react-redux";
+import { doLogin } from "../../redux/action/userAction";
 
 //#region Component Definition
 function LoginModal({ onClose }) {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [activeTab, setActiveTab] = useState("login");
     const [agreeToTerms, setAgreeToTerms] = useState(false);
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+
+    const handleLogin = async (e) => {
+        if (!username) {
+            toast.error('Invalid email')
+            return;
+        }
+        if (!password) {
+            toast.error('Invalid password')
+            return;
+        }
+        console.log("Đăng nhập");
+        let data = await postLogin(username, password);
+        if(data?.message === "Đăng nhập thành công."){
+            // Add username to data before dispatching
+            data.username = username;
+            dispatch(doLogin(data));
+            if(data?.role === "Manager"){
+                navigate('/admin')
+            }
+            else{
+                navigate('/')
+                onClose();
+            }
+            toast.success(data.message);
+        }
+        else{
+            toast.error(data.message);
+        }
+    };
 
     return (
         //#region Main Return
@@ -56,6 +94,8 @@ function LoginModal({ onClose }) {
                                             </label>
                                             <input
                                                 type="text"
+                                                value={username}
+                                                onChange={(e) => setUsername(e.target.value)}
                                                 className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-500"
                                                 placeholder="Nhập số điện thoại"
                                             />
@@ -66,6 +106,8 @@ function LoginModal({ onClose }) {
                                             </label>
                                             <input
                                                 type="password"
+                                                value={password}
+                                                onChange={(e) => setPassword(e.target.value)}
                                                 className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-500"
                                                 placeholder="Nhập mật khẩu"
                                             />
@@ -75,7 +117,10 @@ function LoginModal({ onClose }) {
                                                 Quên mật khẩu?
                                             </a>
                                         </div>
-                                        <button className="w-full bg-orange-400 text-white p-3 rounded-lg hover:bg-orange-600 transition-colors">
+                                        <button
+                                            onClick={handleLogin}
+                                            className="w-full bg-orange-400 text-white p-3 rounded-lg hover:bg-orange-600 transition-colors"
+                                        >
                                             Đăng nhập
                                         </button>
                                     </div>
