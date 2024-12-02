@@ -9,24 +9,24 @@ import ProductDetailModal from '../../components/ProductDetailModal';
 //#endregion
 
 //#region Menu Component
-function Menu() {   
+function Menu() {
     const location = useLocation();
     const [activeMainCategory, setActiveMainCategory] = useState(
-      location.state?.activeMainCategory || 'pizza'
+        location.state?.activeMainCategory || 'pizza'
     );
     const [activeCategory, setActiveCategory] = useState('all');
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
-      if (location.state?.activeMainCategory) {
-        setActiveMainCategory(location.state.activeMainCategory);
-      }
+        if (location.state?.activeMainCategory) {
+            setActiveMainCategory(location.state.activeMainCategory);
+        }
     }, [location.state]);
 
     // Add this new useEffect for scroll to top
     useEffect(() => {
-      window.scrollTo(0, 0);
+        window.scrollTo(0, 0);
     }, []);
 
     const handleProductClick = (product, type) => {
@@ -60,8 +60,8 @@ function Menu() {
     const getAllPizzas = () => {
         if (activeCategory === 'all') {
             return pizzaData.products;
-       } 
-        return pizzaData.products.filter(pizza => 
+        }
+        return pizzaData.products.filter(pizza =>
             pizza.categories.includes(activeCategory)
         );
     };
@@ -87,9 +87,9 @@ function Menu() {
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {getAllPizzas().map((pizza) => (
-                    <div key={pizza.id} 
-                         className="bg-white rounded-lg shadow-md overflow-hidden max-w-xs flex flex-col justify-between h-80 cursor-pointer"
-                         onClick={() => handleProductClick(pizza, 'pizza')}>
+                    <div key={pizza.id}
+                        className="bg-white rounded-lg shadow-md overflow-hidden max-w-xs flex flex-col justify-between h-80 cursor-pointer"
+                        onClick={() => handleProductClick(pizza, 'pizza')}>
                         <div className="relative w-full h-48 bg-gray-100 overflow-hidden group">
                             <img
                                 src={pizza.image}
@@ -98,7 +98,7 @@ function Menu() {
                             />
                         </div>
                         <div className="p-3">
-                        <h3 className="text-lg font-bold mb-1 text-center text-[#0078ae] hover:underline cursor-pointer">{pizza.name}</h3>
+                            <h3 className="text-lg font-bold mb-1 text-center text-[#0078ae] hover:underline cursor-pointer">{pizza.name}</h3>
                         </div>
                         <div className="p-3 text-center">
                             <div className="text-sm font-bold">
@@ -114,9 +114,9 @@ function Menu() {
     const renderChickenSection = () => (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {chickenData.products.map((chicken) => (
-                <div key={chicken.id} 
-                     className="bg-white rounded-lg shadow-md overflow-hidden max-w-xs flex flex-col justify-between h-80 cursor-pointer"
-                     onClick={() => handleProductClick(chicken, 'chicken')}>
+                <div key={chicken.id}
+                    className="bg-white rounded-lg shadow-md overflow-hidden max-w-xs flex flex-col justify-between h-80 cursor-pointer"
+                    onClick={() => handleProductClick(chicken, 'chicken')}>
                     <div className="relative w-full h-48 bg-gray-100 overflow-hidden group">
                         <img
                             src={chicken.image}

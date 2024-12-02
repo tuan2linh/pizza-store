@@ -12,6 +12,8 @@ import Cart from './pages/Cart'
 import Payment from './pages/Payment'
 import Stores from './pages/Stores';
 import Dashboard from './pages/Admin/Dashboard'
+import Products from './pages/Admin/Products';
+import AddProduct from './pages/Admin/AddProduct';
 import AdminLayout from './layouts/AdminLayout';
 import MainLayout from './layouts/MainLayout';
 import PrivateRoute from './pages/Admin/PrivateRoute';
@@ -35,7 +37,8 @@ function App() {
           <Route element={<PrivateRoute />}>
             <Route path='admin' element={<AdminLayout />}>
               <Route index element={<Dashboard />} />
-              <Route path='products' element={<h1>Products</h1>} />
+              <Route path='products' element={<Products />} />
+              <Route path='addproduct' element={<AddProduct />} />
               <Route path='orders' element={<h1>Orders</h1>} />
               <Route path='customers' element={<h1>Customers</h1>} />
               <Route path='promotions' element={<h1>Promotions</h1>} />

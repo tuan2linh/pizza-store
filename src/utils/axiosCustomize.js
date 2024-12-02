@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {store} from '../redux/store';
+import { store } from '../redux/store';
 
 
 const instance = axios.create({
@@ -16,7 +16,7 @@ instance.interceptors.request.use(function
     const token = store?.getState()?.user?.account?.token;
     if (token && config.requiresAuth !== false) {
         config.headers["token"] = token;
-      }
+    }
     return config;
 }, function (error) {
     return Promise.reject(error);
@@ -25,9 +25,9 @@ instance.interceptors.request.use(function
 instance.interceptors.response.use(function (response) {
     return response && response.data ? response.data : response;
 }, function (error) {
-   return error && error.response && error.response.data
-         ? error.response.data
-         : Promise.reject(error);
+    return error && error.response && error.response.data
+        ? error.response.data
+        : Promise.reject(error);
 });
 
 export default instance;

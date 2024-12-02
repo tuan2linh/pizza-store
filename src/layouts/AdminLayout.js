@@ -8,8 +8,6 @@ import { toast } from "react-toastify";
 const AdminLayout = () => {
   const dispatch = useDispatch();
   const account = useSelector((state) => state.user.account);
-  const isAuthenticated = account?.isAuthenticated;
-  const role = account?.role;
   const location = useLocation();
   const navigate = useNavigate();
   const menuItems = [
