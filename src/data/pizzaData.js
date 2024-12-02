@@ -13,7 +13,7 @@ export const pizzaData = {
       name: 'Pizza Siêu Topping Bơ Gơ Bò Mỹ Xốt Habanero',
       description: 'Thịt Bò Bơ Gơ, Thịt Heo Xông Khói, Xốt Habanero, Phô Mai, Dưa Chuột, Cà Chua',
       prices: { medium: 169000, big: 219000 },
-      image: 'https://img.dominos.vn/cheeseburger-habanero-sup.jpg',
+      image: 'z',
       categories: ['beef']
     },
     {
