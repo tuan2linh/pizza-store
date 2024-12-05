@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { pizzaData } from '../../data/pizzaData';
-import { cartItems } from '../../data/cartItems'; // Import cartItems
+import { pizzaDataMock } from '../../data/pizzaData';
+import { cartItemsMock } from '../../data/cartItems'; // Import cartItemsMock
 import order1 from '../../assets/order1.png';
 import order2 from '../../assets/order2.png';
 
 const Cart = () => {
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
-  const recommendedItems = pizzaData.products.slice(0, 10); // Move this line to the top
+  const recommendedItems = pizzaDataMock.products.slice(0, 10); // Move this line to the top
   const handleNext = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % recommendedItems.length);
   };
@@ -25,7 +25,7 @@ const Cart = () => {
     }
   };
 
-  const totalPrice = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const totalPrice = cartItemsMock.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   const handlePayment = () => {
     navigate('/payment');
@@ -40,7 +40,7 @@ const Cart = () => {
         <div className="w-full max-w-3xl z-10 xl:mx-8">
           <h1 className="text-2xs font-bold mb-4 text-left">Giỏ Hàng Của Bạn</h1>
           <div className="bg-white rounded-lg shadow-md p-4 mb-6 flex flex-col items-center w-full">
-            {cartItems.map((item, index) => (
+            {cartItemsMock.map((item, index) => (
               <div key={index} className="flex items-center mb-4 w-full">
                 <div className="w-36 h-28 mr-4 flex-shrink-0">
                   <img src={item.image} alt={item.name} className="w-full h-full object-cover rounded" />

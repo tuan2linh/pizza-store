@@ -32,7 +32,7 @@ const AddProduct = () => {
         setNewProduct({ ...newProduct, SizeWithPrice: updatedSizes });
     };
 
-    // Hàm thêm Size
+    // Hàm thêm Size  
     const addSize = () => {
         setSizes([...sizes, { Size: "", Price: "" }]);
     };
@@ -66,13 +66,15 @@ const AddProduct = () => {
         formData.append("Menu_Name", newProduct.Menu_Name);
         formData.append("Description", newProduct.Description);
         formData.append("SizeWithPrice", JSON.stringify(newProduct.SizeWithPrice)); // Gửi mảng SizeWithPrice dưới dạng chuỗi JSON
-        formData.append("Image", newProduct.Image);  // Gửi URL ảnh
+        formData.append("Image", newProduct.Image); // Gửi ảnh
     
         try {
             // Gửi dữ liệu tới BE
-            await addProduct(formData);
+            // await addProduct(formData);
+            console.log(newProduct);
+            console.log(formData);
             toast.success("Product added successfully!");
-            navigate("/admin/products"); // Điều hướng tới danh sách sản phẩm
+            // navigate("/admin/products"); // Điều hướng tới danh sách sản phẩm
         } catch (error) {
             console.error(error);
             toast.error(error.response?.data?.message || "An error occurred while adding the product.");

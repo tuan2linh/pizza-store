@@ -1,19 +1,27 @@
 
 import React, { useState, useEffect } from 'react';
+import { getCart, addProductToCart } from '../../services/apiService';
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 function ProductDetailModal({ product, isOpen, onClose }) {
+  const dispatch = useDispatch();
+  const account = useSelector((state) => state.user.account);
+  const customer_id = account?.customer_id;
   const [size, setSize] = useState('small');
   const [cheeseOption, setCheeseOption] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [notes, setNotes] = useState('');
 
-  const isPizza = product?.productType === 'pizza';
+  const isPizza = product?.Menu_Name === 'pizza';
 
   useEffect(() => {
-    if (isPizza && !product?.prices?.small) {
-      setSize('medium');
+    const hasSmallSize = product?.SizeWithPrice?.some(item => item.Size === 'small');
+    if (!hasSmallSize) {
+        setSize('medium');
     }
-  }, [product, isPizza]);
+}, [product]);
 
   if (!isOpen || !product) return null;
 
@@ -43,13 +51,34 @@ function ProductDetailModal({ product, isOpen, onClose }) {
 
   const getTotalPrice = () => {
     if (isPizza) {
-      const basePrice = product.prices?.[size] || 0;
+      const basePrice = product.SizeWithPrice?.find(item => item.Size === size)?.Price || 0;
       const totalPrice = (basePrice + getCheeseOptionPrice(cheeseOption)) * quantity;
       return totalPrice.toLocaleString();
     } else {
-      return (product.prices.small * quantity).toLocaleString();
+      return (product.SizeWithPrice?.find(item => item.Size === size)?.Price || 0) * quantity;
     }
   };
+
+  const handleAddToCart = async () => {
+    if (!customer_id) {
+      toast.error('Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng');
+      return;
+    }
+    const data = {
+      customer_id,
+      product_id: product.Product_ID,
+      quantity,
+      size,
+    };
+    try {
+      const response = await addProductToCart(data);
+      toast.success('Thêm sản phẩm vào giỏ hàng thành công');
+      onClose();
+    } catch (error) {
+      toast.error('Thêm sản phẩm vào giỏ hàng thất bại');
+      console.error('Add product to cart error:', error);
+    }
+  }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
@@ -65,19 +94,14 @@ function ProductDetailModal({ product, isOpen, onClose }) {
         <div className="flex flex-col md:flex-row p-4">
           <div className="md:w-2/5">
             <img
-              src={product.image}
+              src={product.Image}
               alt={product.name}
-              className="w-full h-1/2"
-            />
-            <img
-              src={product.image}
-              alt={product.name}
-              className="w-full h-1/2"
+              className="h-full w-full object-cover rounded-lg"
             />
           </div>
           <div className="md:w-3/5 pl-5 pt-3 pr-2 pb-4">
-            <h2 className="text-2xl font-bold text-[#0078ae] mb-4">{product.name}</h2>
-            <p className="text-xs text-gray-500 mb-4 font-bold">{product.description}</p>
+            <h2 className="text-2xl font-bold text-[#0078ae] mb-4">{product.Product_Name}</h2>
+            <p className="text-xs text-gray-500 mb-4 font-bold">{product.Description}</p>
             <hr className="my-4 w-1/2" />
             <div className="space-y-4">
               {isPizza && (
@@ -86,27 +110,27 @@ function ProductDetailModal({ product, isOpen, onClose }) {
                   <div>
                     <h3 className="font-bold text-base mb-2">Chọn Cỡ bánh:</h3>
                     <div className="space-y-2 font-bold text-sm text-gray-500 pl-3 pt-2">
-                      {product.prices?.small && (
+                      {product.SizeWithPrice?.find(item => item.Size === 'small') && (
                         <div className='border-b pb-2'>
                           <label>
                             <input type="radio" value="small" checked={size === 'small'} onChange={handleSizeChange} />
-                            <span className='p-4'> Cỡ Nhỏ = {product.prices.small.toLocaleString()}đ </span>
+                            <span className='p-4'> Cỡ Nhỏ = {product.SizeWithPrice?.find(item => item.Size === 'small')?.Price.toLocaleString()}đ </span>
                           </label>
                         </div>
                       )}
-                      {product.prices?.medium && (
+                      {product.SizeWithPrice?.find(item => item.Size === 'medium') && (
                         <div className='border-b pb-2'>
                           <label>
                             <input type="radio" value="medium" checked={size === 'medium'} onChange={handleSizeChange} className="" />
-                            <span className='p-4'>Cỡ Vừa = {product.prices.medium.toLocaleString()}đ</span>
+                            <span className='p-4'>Cỡ Vừa = {product.SizeWithPrice?.find(item => item.Size === 'medium')?.Price.toLocaleString()}đ</span>
                           </label>
                         </div>
                       )}
-                      {product.prices?.big && (
+                      {product.SizeWithPrice?.find(item => item.Size === 'big') && (
                         <div className='border-b pb-2'>
                           <label>
                             <input type="radio" value="big" checked={size === 'big'} onChange={handleSizeChange} className="" />
-                            <span className='p-4'>Cỡ To = {product.prices.big.toLocaleString()}đ </span>
+                            <span className='p-4'>Cỡ To = {product.SizeWithPrice?.find(item => item.Size === 'big')?.Price.toLocaleString()}đ </span>
                           </label>
                         </div>
                       )}
@@ -189,7 +213,7 @@ function ProductDetailModal({ product, isOpen, onClose }) {
                 </div>
                 <button
                   className="bg-orange-500 text-xs font-bold text-white px-4 h-8 rounded hover:bg-orange-600 flex-shrink-0 "
-                  onClick={() => alert(`Thêm vào giỏ hàng với giá ${getTotalPrice()}đ`)}
+                  onClick={handleAddToCart}
                 >
                   Thêm vào giỏ hàng ({getTotalPrice()}đ)
                 </button>

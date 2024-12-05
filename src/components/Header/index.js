@@ -144,7 +144,7 @@ function Header({ onCartClick }) {
             <li className="max-lg:py-2 px-3 cursor-pointer">
               <span className="relative">
                 <button
-                  onClick={onCartClick}
+                 onClick={isAuthenticated ? onCartClick : () => toast.warning('Vui lòng đăng nhập để sử dụng giỏ hàng')}
                   className="your-existing-cart-button-classes"
                 >
                   <svg
@@ -160,7 +160,7 @@ function Header({ onCartClick }) {
                     ></path>
                   </svg>
                   <span className="absolute left-auto -ml-1 -top-1 rounded-full bg-red-500 px-1 py-0 text-xs text-white">
-                    0
+                    x
                   </span>
                 </button>
               </span>
@@ -299,23 +299,6 @@ function Header({ onCartClick }) {
             >
               {item.name}
             </div>
-            {item.hasSubmenu && isOpen && (
-              <ul className="absolute left-0 mt-2 w-80 bg-white rounded-lg shadow-lg py-2 z-50 grid grid-cols-2 gap-1">
-                {MENU_ITEMS.map((subItem) => (
-                  <li key={subItem.id}>
-                    <div
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleSubmenuClick(subItem.link);
-                      }}
-                      className="block px-4 py-2 text-gray-800 hover:bg-orange-100 hover:text-orange-500 transition-colors duration-200 cursor-pointer"
-                    >
-                      {subItem.name}
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            )}
           </li>
         ))}
       </ul>

@@ -1,4 +1,4 @@
-export const pizzaData = {
+export const pizzaDataMock = {
   products: [
     {
       id: 'b1',
@@ -13,7 +13,7 @@ export const pizzaData = {
       name: 'Pizza Siêu Topping Bơ Gơ Bò Mỹ Xốt Habanero',
       description: 'Thịt Bò Bơ Gơ, Thịt Heo Xông Khói, Xốt Habanero, Phô Mai, Dưa Chuột, Cà Chua',
       prices: { medium: 169000, big: 219000 },
-      image: 'z',
+      image: 'https://img.dominos.vn/cheeseburger-sup.jpg',
       categories: ['beef']
     },
     {

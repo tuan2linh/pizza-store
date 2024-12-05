@@ -80,7 +80,7 @@ const Products = () => {
                                     key={product.Product_ID}
                                     className="bg-white border-b hover:bg-gray-50"
                                 >
-                                    <td className="px-6 py-4">{index + 1}</td>
+                                    <td className="px-6 py-4">{product.Product_ID}</td>
                                     <td className="px-6 py-4">{product.Product_Name}</td>
                                     <td className="px-6 py-4">{product.Menu_Name}</td>
                                     <td className="px-6 py-4">
@@ -105,7 +105,7 @@ const Products = () => {
                                                     {/* Hiển thị các Price tương ứng */}
                                                     {product.SizeWithPrice.map((item, idx) => (
                                                         <div key={idx} className="text-left">
-                                                            ${item.Price}
+                                                            {item.Price}đ
                                                         </div>
                                                     ))}
                                                 </div>

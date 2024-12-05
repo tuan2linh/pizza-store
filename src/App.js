@@ -1,7 +1,8 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom' // Remove BrowserRouter
+import { Routes, Route } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import 'antd/dist/reset.css'
 import './App.css'
 import Home from './pages/Home'
 import Menu from './pages/Menu'
@@ -11,6 +12,7 @@ import Contact from './pages/Contact'
 import Cart from './pages/Cart'
 import Payment from './pages/Payment'
 import Stores from './pages/Stores';
+import Profile from './pages/User/Profile';
 import Dashboard from './pages/Admin/Dashboard'
 import Products from './pages/Admin/Products';
 import AddProduct from './pages/Admin/AddProduct';
@@ -32,6 +34,7 @@ function App() {
             <Route path="/cart" element={<Cart />} />
             <Route path="/payment" element={<Payment />} />
             <Route path="/stores" element={<Stores />} />
+            <Route path="/profile" element={<Profile />} />
           </Route>
 
           <Route element={<PrivateRoute />}>

@@ -1,11 +1,12 @@
 //#region Imports
 import React, { useState, useEffect } from 'react';
-import { pizzaData } from '../../data/pizzaData';
+import { pizzaDataMock } from '../../data/pizzaData';
 import { chickenData } from '../../data/chickenData';
 import { FaPizzaSlice, FaFish, FaDrumstickBite, FaBacon, FaLeaf, FaList, FaUtensils, FaIceCream, FaCoffee } from 'react-icons/fa';
 import { LuBeef } from "react-icons/lu";
 import { useLocation } from 'react-router-dom';
 import ProductDetailModal from '../../components/ProductDetailModal';
+import { getProduct } from '../../services/productService';
 //#endregion
 
 //#region Menu Component
@@ -17,6 +18,9 @@ function Menu() {
     const [activeCategory, setActiveCategory] = useState('all');
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [products, setProducts] = useState([]);
+    const [pizzaProducts, setPizzaProducts] = useState([]);
+    const [chickenProducts, setChickenProducts] = useState([]);
 
     useEffect(() => {
         if (location.state?.activeMainCategory) {
@@ -28,11 +32,25 @@ function Menu() {
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
+    useEffect(() => {
+        fetchProduct();
+    }, []);
 
     const handleProductClick = (product, type) => {
         setSelectedProduct({ ...product, productType: type });
         setIsModalOpen(true);
     };
+    const fetchProduct = async () => {
+        try {
+            const result = await getProduct();
+            setProducts(result);
+            setPizzaProducts(result.filter(product => product.Menu_Name.toLowerCase() === 'pizza'));
+            setChickenProducts(result.filter(product => product.Menu_Name.toLowerCase() === 'chicken'));   
+        } catch (error) {
+            console.error("Failed to get list product:", error);
+            setProducts([]);
+        }
+    }
 
     //#endregion
 
@@ -57,14 +75,20 @@ function Menu() {
     //#endregion
 
     //#region Helper Functions
-    const getAllPizzas = () => {
-        if (activeCategory === 'all') {
-            return pizzaData.products;
-        }
-        return pizzaData.products.filter(pizza =>
-            pizza.categories.includes(activeCategory)
-        );
-    };
+    // const getAllPizzas = () => {
+    //     const filteredPizzas = products.filter(product => 
+    //         product.Menu_Name.toLowerCase() === 'pizza'
+    //     );
+    //     console.log(filteredPizzas);
+    //     setPizzaProducts(filteredPizzas);
+    //     return filteredPizzas;
+    //     // if (activeCategory === 'all') {
+    //     //     return pizzaDataMock.products;
+    //     // }
+    //     // return pizzaDataMock.products.filter(pizza =>
+    //     //     pizza.categories.includes(activeCategory)
+    //     // );
+    // };
     //#endregion
 
     //#region Section Renderers
@@ -86,23 +110,32 @@ function Menu() {
                 ))}
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {getAllPizzas().map((pizza) => (
+                {pizzaProducts.map((pizza) => (
                     <div key={pizza.id}
                         className="bg-white rounded-lg shadow-md overflow-hidden max-w-xs flex flex-col justify-between h-80 cursor-pointer"
                         onClick={() => handleProductClick(pizza, 'pizza')}>
                         <div className="relative w-full h-48 bg-gray-100 overflow-hidden group">
                             <img
-                                src={pizza.image}
+                                src={pizza.Image}
                                 alt={pizza.name}
                                 className="w-full h-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-110"
                             />
                         </div>
                         <div className="p-3">
-                            <h3 className="text-lg font-bold mb-1 text-center text-[#0078ae] hover:underline cursor-pointer">{pizza.name}</h3>
+                            <h3 className="text-lg font-bold mb-1 text-center text-[#0078ae] hover:underline cursor-pointer">{pizza.Product_Name}</h3>
                         </div>
                         <div className="p-3 text-center">
                             <div className="text-sm font-bold">
-                                <p>Medium - {pizza.prices.medium.toLocaleString()}đ</p>
+                                <p>
+                                    {(() => {
+                                        const smallPrice = pizza.SizeWithPrice?.find(item => item.Size === 'small')?.Price;
+                                        const mediumPrice = pizza.SizeWithPrice?.find(item => item.Size === 'medium')?.Price;
+                                        const bigSize = pizza.SizeWithPrice?.find(item => item.Size === 'big')?.Price;
+                                        const priceToShow = smallPrice || mediumPrice || bigSize || 0;
+
+                                        return parseInt(priceToShow).toLocaleString() + 'đ';
+                                    })()}
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -113,24 +146,33 @@ function Menu() {
 
     const renderChickenSection = () => (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {chickenData.products.map((chicken) => (
+            {chickenProducts.map((chicken) => (
                 <div key={chicken.id}
                     className="bg-white rounded-lg shadow-md overflow-hidden max-w-xs flex flex-col justify-between h-80 cursor-pointer"
                     onClick={() => handleProductClick(chicken, 'chicken')}>
                     <div className="relative w-full h-48 bg-gray-100 overflow-hidden group">
                         <img
-                            src={chicken.image}
+                            src={chicken.Image}
                             alt={chicken.name}
                             className="w-full h-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-110"
                         />
                     </div>
                     <div className="p-3">
-                        <h3 className="text-lg font-bold mb-1 text-center text-[#0078ae] hover:underline cursor-pointer">{chicken.name}</h3>
-                        <p className="text-sm text-gray-600 text-center">{chicken.description}</p>
+                        <h3 className="text-lg font-bold mb-1 text-center text-[#0078ae] hover:underline cursor-pointer">{chicken.Product_Name}</h3>
+                        <p className="text-sm text-gray-600 text-center">{chicken.Description}</p>
                     </div>
                     <div className="p-3 text-center">
                         <div className="text-sm font-bold">
-                            <p>Small - {chicken.prices.small.toLocaleString()}đ</p>
+                            <p>
+                                {(() => {
+                                    const smallPrice = chicken.SizeWithPrice?.find(item => item.Size === 'small')?.Price;
+                                    const mediumPrice = chicken.SizeWithPrice?.find(item => item.Size === 'medium')?.Price;
+                                    const bigSize = chicken.SizeWithPrice?.find(item => item.Size === 'big')?.Price;
+                                    const priceToShow = smallPrice || mediumPrice || bigSize || 0;
+
+                                    return parseInt(priceToShow).toLocaleString() + 'đ';
+                                })()}
+                            </p>
                         </div>
                     </div>
                 </div>

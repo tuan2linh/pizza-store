@@ -1,4 +1,4 @@
-export const cartItems = [
+export const cartItemsMock = [
   {
     name: 'Pizza Siêu Topping Bò & Gà Cay - Mỹ Vị',
     image: 'https://img.dominos.vn/cheeseburger-habanero-sup.jpg',

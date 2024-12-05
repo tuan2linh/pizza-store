@@ -4,6 +4,8 @@ const INITIAL_STATE = {
         token: '',
         role: '',
         username: '',
+        customer_id: '',
+        employee_id: '',
         isAuthenticated: false,
     },
 };
@@ -16,6 +18,8 @@ const userReducer = (state = INITIAL_STATE, action) => {
                     token: action?.payload?.token,
                     role: action?.payload?.role,
                     username: action?.payload?.username,
+                    customer_id: action?.payload?.customer_id,
+                    employee_id: action?.payload?.employee_id,
                     isAuthenticated: true
                 },
             };
@@ -26,6 +30,8 @@ const userReducer = (state = INITIAL_STATE, action) => {
                     token: '',
                     role: '',
                     username: '',
+                    customer_id: '',
+                    employee_id: '',
                     isAuthenticated: false
                 }
             };

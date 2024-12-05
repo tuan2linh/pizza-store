@@ -1,6 +1,6 @@
 import React from "react";
-import { useState } from "react";
-import { cartItems } from "../../data/cartItems";
+import { useState, useEffect } from "react";
+import { getCart } from "../../services/apiService";
 
 const Payment = () => {
     const [customerName, setCustomerName] = useState("");
@@ -11,14 +11,32 @@ const Payment = () => {
     const [deliveryType, setDeliveryType] = useState("immediate"); // 'immediate' or 'scheduled'
     const [deliveryTime, setDeliveryTime] = useState("");
     const [deliveryDate, setDeliveryDate] = useState("");
+    const [cart, setCart] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
 
-    const totalPrice = cartItems.reduce(
-        (sum, item) => sum + item.price * item.quantity,
+    useEffect(() => {
+        fetchCart();
+    }, []);
+
+    const fetchCart = async () => {
+        setIsLoading(true);
+        try {
+            const response = await getCart();
+            setCart(response);
+        } catch (error) {
+            console.error('Fetch cart error:', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const totalPrice = cart.reduce(
+        (sum, item) => sum + parseFloat(item.total_price),
         0
     );
-    const PromotionDiscount = 15000; // Replace with actual promotion discount
+    const PromotionDiscount = 0; // Replace with actual promotion discount
     const voucherDiscount = 0; // Replace with actual voucher discount
-    const deliveryFee = 15000; // Replace with actual delivery fee
+    const deliveryFee = 0; // Replace with actual delivery fee
     const finalTotal = totalPrice - PromotionDiscount - voucherDiscount + deliveryFee;
 
     return (
@@ -300,27 +318,29 @@ const Payment = () => {
                             </div>
                             {/* Products list */}
                             <div className="space-y-4">
-                                {cartItems.map((item, index) => (
-                                    <div key={index} className="flex items-center mb-4">
+                                {isLoading ? (
+                                    <div>Loading...</div>
+                                ) : cart.map((item, index) => (
+                                    <div key={item.cart_item_id} className="flex items-center mb-4">
                                         <img
-                                            src={item.image}
-                                            alt={item.name}
+                                            src="https://img.jakpost.net/c/2016/09/29/2016_09_29_12990_1475116504._large.jpg"
+                                            alt={item.Product_Name}
                                             className="w-20 h-20 object-cover mr-4"
                                         />
                                         <div className="flex-1">
                                             <div className="flex justify-between items-start">
                                                 <h3 className="text-lg font-medium mb-2">
-                                                    {item.name}
+                                                    {item.Product_Name}
                                                 </h3>
                                                 <span className="text-sm font-medium text-gray-500">
                                                     x{item.quantity}
                                                 </span>
                                             </div>
                                             <p className="text-gray-600 text-sm">
-                                                {item.price.toLocaleString("vi-VN")}₫
+                                                {parseFloat(item.price_per_item).toLocaleString("vi-VN")}₫
                                             </p>
                                             <div className="text-sm text-gray-500">
-                                                {item.options.join(", ")}
+                                                Size: {item.size}
                                             </div>
                                         </div>
                                     </div>
