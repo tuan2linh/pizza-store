@@ -1,8 +1,12 @@
 import React from 'react';
 import { toast } from 'react-toastify';
 import { FaSearchLocation, FaSearch } from 'react-icons/fa';
+import { useSelector, useDispatch } from "react-redux";
 
 function Order() {
+  const account = useSelector((state) => state.user.account);
+  const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
+  const customer_id = account?.customer_id;
   return (
     <div className="bg-gray-50 min-h-screen">
       <div className="container mx-auto px-4 py-12">

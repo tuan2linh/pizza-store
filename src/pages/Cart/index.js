@@ -4,9 +4,13 @@ import { pizzaDataMock } from '../../data/pizzaData';
 import { cartItemsMock } from '../../data/cartItems'; // Import cartItemsMock
 import order1 from '../../assets/order1.png';
 import order2 from '../../assets/order2.png';
+import { useSelector, useDispatch } from "react-redux";
 
 const Cart = () => {
   const navigate = useNavigate();
+  const account = useSelector((state) => state.user.account);
+  const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
+  const customer_id = account?.customer_id;
   const [currentIndex, setCurrentIndex] = useState(0);
   const recommendedItems = pizzaDataMock.products.slice(0, 10); // Move this line to the top
   const handleNext = () => {

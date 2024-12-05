@@ -12,8 +12,12 @@ import menu_5 from '../../assets/menu_5.png';
 import menu_6 from '../../assets/menu_6.png';
 import menu_7 from '../../assets/menu_7.png';
 import menu_8 from '../../assets/menu_8.png';
+import { useSelector, useDispatch } from "react-redux";
 
 const Home = () => {
+  const account = useSelector((state) => state.user.account);
+  const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
+  const customer_id = account?.customer_id;
   const navigate = useNavigate();
   const [isCartOpen, setIsCartOpen] = useState(false);
 

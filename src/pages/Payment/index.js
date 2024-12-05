@@ -1,8 +1,12 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { getCart } from "../../services/apiService";
+import { useSelector, useDispatch } from "react-redux";
 
 const Payment = () => {
+    const account = useSelector((state) => state.user.account);
+    const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
+    const customer_id = account?.customer_id;
     const [customerName, setCustomerName] = useState("");
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");

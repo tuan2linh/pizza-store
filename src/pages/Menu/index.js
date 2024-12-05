@@ -7,10 +7,14 @@ import { LuBeef } from "react-icons/lu";
 import { useLocation } from 'react-router-dom';
 import ProductDetailModal from '../../components/ProductDetailModal';
 import { getProduct } from '../../services/productService';
+import { useSelector, useDispatch } from "react-redux";
 //#endregion
 
 //#region Menu Component
 function Menu() {
+    const account = useSelector((state) => state.user.account);
+    const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
+    const customer_id = account?.customer_id;
     const location = useLocation();
     const [activeMainCategory, setActiveMainCategory] = useState(
         location.state?.activeMainCategory || 'pizza'

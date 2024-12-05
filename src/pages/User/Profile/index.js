@@ -2,8 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Tabs, Skeleton, Modal, Form, Input } from 'antd';
 import { UserOutlined, HomeOutlined, LockOutlined, PhoneOutlined, MailOutlined, CameraOutlined, EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 import { toast } from 'react-toastify';
+import { useSelector, useDispatch } from "react-redux";
 
 const Profile = () => {
+    const account = useSelector((state) => state.user.account);
+  const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
+  const customer_id = account?.customer_id;
     const [activeTab, setActiveTab] = useState('1');
     const [loading, setLoading] = useState(false);
     const defaultAvatarUrl = "https://api.dicebear.com/7.x/adventurer/svg?seed=Lucky";

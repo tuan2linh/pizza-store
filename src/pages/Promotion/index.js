@@ -2,6 +2,7 @@
 import React from 'react';
 import designer from '../../assets/Designer.png'
 import promo from '../../assets/promo.png'
+import { useSelector, useDispatch } from "react-redux";
 //#endregion
 
 //#region Promotion Data
@@ -56,6 +57,9 @@ const promotions = [
 
 //#region Promotion Component
 function Promotion() {
+  const account = useSelector((state) => state.user.account);
+  const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
+  const customer_id = account?.customer_id;
   //#region State and Handlers
   //#endregion
 

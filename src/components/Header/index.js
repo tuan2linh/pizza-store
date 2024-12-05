@@ -48,6 +48,7 @@ function Header({ onCartClick }) {
   //#region Hooks
   const account = useSelector((state) => state.user.account);
   const isAuthenticated = account?.isAuthenticated;
+  const customer_id = account?.customer_id;
   const timeoutId = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
