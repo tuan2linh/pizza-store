@@ -1,14 +1,20 @@
 import { React, useEffect, useState } from 'react';
 import { getOrderByCusID, cancelOrder } from '../../services/orderService';
 import { toast } from 'react-toastify';
+import { useSelector, useDispatch } from "react-redux";
+
 
 const Promotion = () => {
+    const account = useSelector((state) => state.user.account);
+    const customer_id = account?.customer_id;
     const [orderByCusId, setOrderByCusId] = useState([]);
     const [loading, setLoading] = useState(true);
+    console.log(customer_id)
 
-    const fetchOrderById = async () => {
+    const fetchOrderById = async (customer_id) => {
         try {
-            const result = await getOrderByCusID(12);
+            const result = await getOrderByCusID(customer_id);
+            console.log(result)
             setOrderByCusId(result || []);
             setLoading(false);
         } catch (error) {
@@ -19,8 +25,8 @@ const Promotion = () => {
     };
 
     useEffect(() => {
-        fetchOrderById();
-    }, []);
+        fetchOrderById(customer_id);
+    }, [customer_id]);
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
