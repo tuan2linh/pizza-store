@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getProduct, deleteProduct } from "../../../services/productService";
-import { Link, NavLink } from "react-router-dom";
-import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import { FaEdit, FaTrash } from "react-icons/fa";
 import { toast } from "react-toastify";
 import ModalConfirm from "../../../components/ModalConfirm/ModalConfirm.jsx";
 
@@ -80,7 +80,7 @@ const Products = () => {
                                     key={product.Product_ID}
                                     className="bg-white border-b hover:bg-gray-50"
                                 >
-                                    <td className="px-6 py-4">{product.Product_ID}</td>
+                                    <td className="px-6 py-4">{index+1}</td>
                                     <td className="px-6 py-4">{product.Product_Name}</td>
                                     <td className="px-6 py-4">{product.Menu_Name}</td>
                                     <td className="px-6 py-4">
@@ -124,6 +124,12 @@ const Products = () => {
                                     </td>
                                     <td className="px-6 py-4 text-center">
                                         <div className="flex items-center gap-3">
+                                            <button
+                                                className="font-medium text-red-500"
+
+                                            >
+                                                <FaEdit size={20} />
+                                            </button>
                                             <button
                                                 className="font-medium text-red-500"
                                                 onClick={() => handleDeleteReview(product.Product_ID)}
