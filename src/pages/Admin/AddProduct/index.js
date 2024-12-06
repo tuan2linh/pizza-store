@@ -70,11 +70,11 @@ const AddProduct = () => {
     
         try {
             // Gửi dữ liệu tới BE
-            // await addProduct(formData);
+            await addProduct(formData);
             console.log(newProduct);
             console.log(formData);
             toast.success("Product added successfully!");
-            // navigate("/admin/products"); // Điều hướng tới danh sách sản phẩm
+            navigate("/admin/products"); // Điều hướng tới danh sách sản phẩm
         } catch (error) {
             console.error(error);
             toast.error(error.response?.data?.message || "An error occurred while adding the product.");

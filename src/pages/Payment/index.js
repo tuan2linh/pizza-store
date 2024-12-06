@@ -2,6 +2,8 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { getCart } from "../../services/apiService";
 import { useSelector, useDispatch } from "react-redux";
+import { toast } from "react-toastify";
+import { addOrder, updateAddress } from '../../services/orderService'
 
 const Payment = () => {
     const account = useSelector((state) => state.user.account);
@@ -18,6 +20,9 @@ const Payment = () => {
     const [cart, setCart] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
+    const [orderId, setOrderId] = useState(null);
+
+
     useEffect(() => {
         fetchCart();
     }, []);
@@ -31,6 +36,31 @@ const Payment = () => {
             console.error('Fetch cart error:', error);
         } finally {
             setIsLoading(false);
+        }
+    };
+
+    const createOrder = async () => {
+        try {
+            const result = await addOrder(customer_id);
+            console.log(result)
+            setOrderId(result.order_id);
+            handleAddress(result.order_id, address)
+        } catch (error) {
+            toast.error('Tạo đơn hàng thất bại!');
+        }
+    };
+
+    const handleAddress = async (orderId, address) => {
+        try {
+            if (!orderId) {
+                toast.error('Không tìm thấy ID đơn hàng!');
+                return;
+            }
+            await updateAddress(orderId, address)
+            toast.success('Cập nhật địa chỉ thành công!');
+        } catch (error) {
+            console.error('Failed to update address:', error);
+            toast.error('Cập nhật địa chỉ thất bại!');
         }
     };
 
@@ -285,7 +315,10 @@ const Payment = () => {
                         </div>
                         {/* Nút hoàn tất thanh toán */}
                         <div className="flex justify-center">
-                            <button className="bg-orange-300 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded">
+                            <button
+                                className="bg-orange-300 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded"
+                                onClick={createOrder}
+                            >
                                 HOÀN TẤT THANH TOÁN
                             </button>
                         </div>
