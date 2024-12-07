@@ -4,11 +4,13 @@ import { getCart } from "../../services/apiService";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { addOrder, updateAddress } from '../../services/orderService'
+import { useNavigate } from "react-router-dom";
 
 const Payment = () => {
     const account = useSelector((state) => state.user.account);
     const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
     const customer_id = account?.customer_id;
+    const navigate = useNavigate(); 
     const [customerName, setCustomerName] = useState("");
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
@@ -57,7 +59,8 @@ const Payment = () => {
                 return;
             }
             await updateAddress(orderId, address)
-            toast.success('Cập nhật địa chỉ thành công!');
+            toast.success('Đặt hàng thành công!');
+            navigate('/orders');
         } catch (error) {
             console.error('Failed to update address:', error);
             toast.error('Cập nhật địa chỉ thất bại!');

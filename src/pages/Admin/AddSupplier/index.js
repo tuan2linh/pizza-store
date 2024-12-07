@@ -43,117 +43,114 @@ const AddSupplier = () => {
     };
 
     return (
-        <section className="p-8 relative">
-            <div>
-                <h2 className="font-medium text-3xl">Add New Supplier</h2>
-            </div>
-            <hr className="my-5" />
-            <div className="flex justify-center">
-                <div className="w-[80%] shadow-lg border-2 border-gray-200 rounded-lg">
-                    <form onSubmit={handleSubmit} className="space-y-4 bg-white p-6 rounded-lg">
-                        {/* Supplier Name */}
-                        <div>
-                            <label htmlFor="Supplier_Name" className="block text-gray-700 font-medium">
-                                Supplier Name
-                            </label>
-                            <input
-                                name="Supplier_Name"
-                                type="text"
-                                value={newSupplier.Supplier_Name}
-                                onChange={handleInputChange}
-                                className="w-full px-4 py-2 border rounded-lg"
-                                placeholder="Enter supplier name"
-                                required
-                            />
-                        </div>
+        <section className="min-h-screen  bg-[#e5e7eb] p-8">
+            <div className="max-w-7xl mx-auto">
+                <h2 className="font-bold text-3xl text-gray-800 mb-6">Add New Supplier</h2>
+                <div className="bg-white rounded-xl shadow-md overflow-hidden">
+                    <div className="p-8">
+                        <form onSubmit={handleSubmit} className="space-y-6">
+                            {/* Form Grid */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                {/* Supplier Name */}
+                                <div>
+                                    <label htmlFor="Supplier_Name" className="block text-sm font-semibold text-gray-700 mb-2">
+                                        Supplier Name
+                                    </label>
+                                    <input
+                                        name="Supplier_Name"
+                                        type="text"
+                                        value={newSupplier.Supplier_Name}
+                                        onChange={handleInputChange}
+                                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                                        placeholder="Enter supplier name"
+                                        required
+                                    />
+                                </div>
 
-                        {/* Phone Number */}
-                        <div>
-                            <label htmlFor="PhoneNumber" className="block text-gray-700 font-medium">
-                                Phone Number
-                            </label>
-                            <input
-                                name="PhoneNumber"
-                                type="text"
-                                value={newSupplier.PhoneNumber}
-                                onChange={handleInputChange}
-                                className="w-full px-4 py-2 border rounded-lg"
-                                placeholder="Enter phone number"
-                                required
-                            />
-                        </div>
+                                {/* Phone Number */}
+                                <div>
+                                    <label htmlFor="PhoneNumber" className="block text-sm font-semibold text-gray-700 mb-2">
+                                        Phone Number
+                                    </label>
+                                    <input
+                                        name="PhoneNumber"
+                                        type="text"
+                                        value={newSupplier.PhoneNumber}
+                                        onChange={handleInputChange}
+                                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                                        placeholder="Enter phone number"
+                                        required
+                                    />
+                                </div>
 
-                        {/* Email */}
-                        <div>
-                            <label htmlFor="Email" className="block text-gray-700 font-medium">
-                                Email
-                            </label>
-                            <input
-                                name="Email"
-                                type="email"
-                                value={newSupplier.Email}
-                                onChange={handleInputChange}
-                                className="w-full px-4 py-2 border rounded-lg"
-                                placeholder="Enter email"
-                                required
-                            />
-                        </div>
+                                {/* Email */}
+                                <div>
+                                    <label htmlFor="Email" className="block text-sm font-semibold text-gray-700 mb-2">
+                                        Email
+                                    </label>
+                                    <input
+                                        name="Email"
+                                        type="email"
+                                        value={newSupplier.Email}
+                                        onChange={handleInputChange}
+                                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                                        placeholder="Enter email"
+                                        required
+                                    />
+                                </div>
 
-                        {/* Supplier Address */}
-                        <div>
-                            <label htmlFor="Supplier_Address" className="block text-gray-700 font-medium">
-                                Supplier Address
-                            </label>
-                            <input
-                                name="Supplier_Address"
-                                type="text"
-                                value={newSupplier.Supplier_Address}
-                                onChange={handleInputChange}
-                                className="w-full px-4 py-2 border rounded-lg"
-                                placeholder="Enter supplier address"
-                                required
-                            />
-                        </div>
+                                {/* Rating */}
+                                <div>
+                                    <label htmlFor="Rating" className="block text-sm font-semibold text-gray-700 mb-2">
+                                        Rating
+                                    </label>
+                                    <input
+                                        name="Rating"
+                                        type="number"
+                                        value={newSupplier.Rating}
+                                        onChange={handleInputChange}
+                                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                                        placeholder="Enter rating (1-5)"
+                                        required
+                                        min="1"
+                                        max="5"
+                                    />
+                                </div>
+                            </div>
 
-                        {/* Rating */}
-                        <div>
-                            <label htmlFor="Rating" className="block text-gray-700 font-medium">
-                                Rating
-                            </label>
-                            <input
-                                name="Rating"
-                                type="number"
-                                value={newSupplier.Rating}
-                                onChange={handleInputChange}
-                                className="w-full px-4 py-2 border rounded-lg"
-                                placeholder="Enter rating (1-5)"
-                                required
-                                min="1"
-                                max="5"
-                            />
-                        </div>
+                            {/* Supplier Address - Full Width */}
+                            <div>
+                                <label htmlFor="Supplier_Address" className="block text-sm font-semibold text-gray-700 mb-2">
+                                    Supplier Address
+                                </label>
+                                <input
+                                    name="Supplier_Address"
+                                    type="text"
+                                    value={newSupplier.Supplier_Address}
+                                    onChange={handleInputChange}
+                                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                                    placeholder="Enter supplier address"
+                                    required
+                                />
+                            </div>
 
-                        {/* Buttons */}
-                        <div className="flex justify-between items-center">
-                            <Link to="/admin/suppliers" className="text-accent hover:underline transition-all">
-                                Back to supplier list
-                            </Link>
-                            <button
-                                type="submit"
-                                style={{
-                                    backgroundColor: "#3498db",
-                                    color: "#fff",
-                                    padding: "10px 20px",
-                                    borderRadius: "5px",
-                                    fontWeight: "bold",
-                                    cursor: "pointer",
-                                }}
-                                className="hover:opacity-60 transition-all"
-                            >
-                                Add Supplier
-                            </button>
-                        </div>
-                    </form>
+                            {/* Action Buttons */}
+                            <div className="flex justify-end items-center space-x-4 pt-4">
+                                <Link
+                                    to="/admin/suppliers"
+                                    className="px-6 py-3 text-gray-700 hover:text-gray-900 font-medium transition-all"
+                                >
+                                    Cancel
+                                </Link>
+                                <button
+                                    type="submit"
+                                    className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-all focus:ring-4 focus:ring-blue-300"
+                                >
+                                    Add Supplier
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </section>

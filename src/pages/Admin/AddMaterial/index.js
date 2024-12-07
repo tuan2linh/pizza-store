@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { addIngre } from "../../../services/ingredients";
+import { FaArrowLeft, FaBox, FaCalendarAlt, FaFlask } from "react-icons/fa";
 
 const AddProduct = () => {
     const navigate = useNavigate();
@@ -41,82 +42,98 @@ const AddProduct = () => {
     };
 
     return (
-        <section className="p-8 relative">
-            <div>
-                <h2 className="font-medium text-3xl">Add New Ingredient</h2>
-            </div>
-            <hr className="my-5" />
-            <div className="flex justify-center">
-                <div className="w-[80%] shadow-lg border-2 border-gray-200 rounded-lg">
-                    <form onSubmit={handleSubmit} className="space-y-4 bg-white p-6 rounded-lg">
-                        {/* Name */}
-                        <div>
-                            <label htmlFor="name" className="block text-gray-700 font-medium">
-                                Name
-                            </label>
-                            <input
-                                name="name"
-                                type="text"
-                                value={newIngredient.name}
-                                onChange={handleInputChange}
-                                className="w-full px-4 py-2 border rounded-lg"
-                                placeholder="Enter ingredient name"
-                                required
-                            />
-                        </div>
+        <section className="min-h-screen bg-[#e5e7eb] p-8 relative bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]">
+            <div className="max-w-4xl mx-auto">
+                <div className="flex items-center gap-4 mb-6">
+                    <h2 className="font-semibold text-3xl text-gray-800">Add New Ingredient</h2>
+                </div>
+                <div className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
+                    <div className="p-6 sm:p-8">
+                        <form onSubmit={handleSubmit} className="space-y-6">
+                            {/* Name */}
+                            <div className="relative">
+                                <label htmlFor="name" className="block text-gray-700 font-medium mb-2">
+                                    Name
+                                </label>
+                                <div className="relative">
+                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <FaBox className="text-gray-400" />
+                                    </div>
+                                    <input
+                                        name="name"
+                                        type="text"
+                                        value={newIngredient.name}
+                                        onChange={handleInputChange}
+                                        className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                                        placeholder="Enter ingredient name"
+                                        required
+                                    />
+                                </div>
+                            </div>
 
-                        {/* Quantity */}
-                        <div>
-                            <label htmlFor="quantity" className="block text-gray-700 font-medium">
-                                Quantity
-                            </label>
-                            <input
-                                name="quantity"
-                                type="number"
-                                value={newIngredient.quantity}
-                                onChange={handleInputChange}
-                                className="w-full px-4 py-2 border rounded-lg"
-                                placeholder="Enter quantity"
-                                required
-                            />
-                        </div>
+                            {/* Quantity */}
+                            <div className="relative">
+                                <label htmlFor="quantity" className="block text-gray-700 font-medium mb-2">
+                                    Quantity
+                                </label>
+                                <div className="relative">
+                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <FaFlask className="text-gray-400" />
+                                    </div>
+                                    <input
+                                        name="quantity"
+                                        type="number"
+                                        value={newIngredient.quantity}
+                                        onChange={handleInputChange}
+                                        className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                                        placeholder="Enter quantity"
+                                        required
+                                    />
+                                </div>
+                            </div>
 
-                        {/* Expiration Date */}
-                        <div>
-                            <label htmlFor="expiration_date" className="block text-gray-700 font-medium">
-                                Expiration Date
-                            </label>
-                            <input
-                                name="expiration_date"
-                                type="date"
-                                value={newIngredient.expiration_date}
-                                onChange={handleInputChange}
-                                className="w-full px-4 py-2 border rounded-lg"
-                                required
-                            />
-                        </div>
+                            {/* Expiration Date */}
+                            <div className="relative">
+                                <label htmlFor="expiration_date" className="block text-gray-700 font-medium mb-2">
+                                    Expiration Date
+                                </label>
+                                <div className="relative">
+                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <FaCalendarAlt className="text-gray-400" />
+                                    </div>
+                                    <input
+                                        name="expiration_date"
+                                        type="date"
+                                        value={newIngredient.expiration_date}
+                                        onChange={handleInputChange}
+                                        className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                                        required
+                                    />
+                                </div>
+                            </div>
 
-                        {/* Buttons */}
-                        <div className="flex justify-between items-center">
-                            <Link to="/admin/products" className="text-accent hover:underline transition-all">
-                                Back to ingredient list
-                            </Link>
-                            <button
-                                type="submit"
-                                style={{
-                                    backgroundColor: "#3498db",
-                                    color: "#fff",
-                                    padding: "10px 20px",
-                                    borderRadius: "5px",
-                                    fontWeight: "bold",
-                                    cursor: "pointer",
-                                }}
-                                className="hover:opacity-60 transition-all"
-                            >
-                                Add Ingredient
-                            </button>
-                        </div>
-                    </form>
+                            {/* Buttons */}
+                            <div className="flex justify-between items-center pt-4">
+                                <Link 
+                                    to="/admin/materials" 
+                                    className="flex items-center gap-2 text-gray-600 hover:text-blue-600 transition-all"
+                                >
+                                    <FaArrowLeft />
+                                    Back to ingredient list
+                                </Link>
+                                <button
+                                    type="submit"
+                                    className="px-6 py-2.5 bg-blue-600 text-white font-medium rounded-lg 
+                                             hover:bg-blue-700 active:bg-blue-800 
+                                             transition-all duration-200 ease-in-out
+                                             shadow-lg hover:shadow-xl
+                                             transform hover:-translate-y-0.5"
+                                >
+                                    Add Ingredient
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </section>

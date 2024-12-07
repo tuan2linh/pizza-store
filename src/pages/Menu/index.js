@@ -25,6 +25,7 @@ function Menu() {
     const [products, setProducts] = useState([]);
     const [pizzaProducts, setPizzaProducts] = useState([]);
     const [chickenProducts, setChickenProducts] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         if (location.state?.activeMainCategory) {
@@ -45,6 +46,7 @@ function Menu() {
         setIsModalOpen(true);
     };
     const fetchProduct = async () => {
+        setIsLoading(true);
         try {
             const result = await getProduct();
             setProducts(result);
@@ -53,6 +55,8 @@ function Menu() {
         } catch (error) {
             console.error("Failed to get list product:", error);
             setProducts([]);
+        } finally {
+            setIsLoading(false);
         }
     }
 
@@ -113,28 +117,76 @@ function Menu() {
                     </button>
                 ))}
             </div>
+            {isLoading ? (
+                <div className="flex justify-center items-center min-h-[400px]">
+                    <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-orange-400"></div>
+                </div>
+            ) : (
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    {pizzaProducts.map((pizza) => (
+                        <div key={pizza.id}
+                            className="bg-white rounded-lg shadow-md overflow-hidden max-w-xs flex flex-col justify-between h-80 cursor-pointer"
+                            onClick={() => handleProductClick(pizza, 'pizza')}>
+                            <div className="relative w-full h-48 bg-gray-100 overflow-hidden group">
+                                <img
+                                    src={pizza.Image}
+                                    alt={pizza.name}
+                                    className="w-full h-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-110"
+                                />
+                            </div>
+                            <div className="p-3">
+                                <h3 className="text-lg font-bold mb-1 text-center text-[#0078ae] hover:underline cursor-pointer">{pizza.Product_Name}</h3>
+                            </div>
+                            <div className="p-3 text-center">
+                                <div className="text-sm font-bold">
+                                    <p>
+                                        {(() => {
+                                            const smallPrice = pizza.SizeWithPrice?.find(item => item.Size === 'small')?.Price;
+                                            const mediumPrice = pizza.SizeWithPrice?.find(item => item.Size === 'medium')?.Price;
+                                            const bigSize = pizza.SizeWithPrice?.find(item => item.Size === 'big')?.Price;
+                                            const priceToShow = smallPrice || mediumPrice || bigSize || 0;
+
+                                            return parseInt(priceToShow).toLocaleString() + 'đ';
+                                        })()}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            )}
+        </>
+    );
+
+    const renderChickenSection = () => (
+        isLoading ? (
+            <div className="flex justify-center items-center min-h-[400px]">
+                <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-orange-400"></div>
+            </div>
+        ) : (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {pizzaProducts.map((pizza) => (
-                    <div key={pizza.id}
+                {chickenProducts.map((chicken) => (
+                    <div key={chicken.id}
                         className="bg-white rounded-lg shadow-md overflow-hidden max-w-xs flex flex-col justify-between h-80 cursor-pointer"
-                        onClick={() => handleProductClick(pizza, 'pizza')}>
+                        onClick={() => handleProductClick(chicken, 'chicken')}>
                         <div className="relative w-full h-48 bg-gray-100 overflow-hidden group">
                             <img
-                                src={pizza.Image}
-                                alt={pizza.name}
+                                src={chicken.Image}
+                                alt={chicken.name}
                                 className="w-full h-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-110"
                             />
                         </div>
                         <div className="p-3">
-                            <h3 className="text-lg font-bold mb-1 text-center text-[#0078ae] hover:underline cursor-pointer">{pizza.Product_Name}</h3>
+                            <h3 className="text-lg font-bold mb-1 text-center text-[#0078ae] hover:underline cursor-pointer">{chicken.Product_Name}</h3>
+                            <p className="text-sm text-gray-600 text-center">{chicken.Description}</p>
                         </div>
                         <div className="p-3 text-center">
                             <div className="text-sm font-bold">
                                 <p>
                                     {(() => {
-                                        const smallPrice = pizza.SizeWithPrice?.find(item => item.Size === 'small')?.Price;
-                                        const mediumPrice = pizza.SizeWithPrice?.find(item => item.Size === 'medium')?.Price;
-                                        const bigSize = pizza.SizeWithPrice?.find(item => item.Size === 'big')?.Price;
+                                        const smallPrice = chicken.SizeWithPrice?.find(item => item.Size === 'small')?.Price;
+                                        const mediumPrice = chicken.SizeWithPrice?.find(item => item.Size === 'medium')?.Price;
+                                        const bigSize = chicken.SizeWithPrice?.find(item => item.Size === 'big')?.Price;
                                         const priceToShow = smallPrice || mediumPrice || bigSize || 0;
 
                                         return parseInt(priceToShow).toLocaleString() + 'đ';
@@ -145,43 +197,7 @@ function Menu() {
                     </div>
                 ))}
             </div>
-        </>
-    );
-
-    const renderChickenSection = () => (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {chickenProducts.map((chicken) => (
-                <div key={chicken.id}
-                    className="bg-white rounded-lg shadow-md overflow-hidden max-w-xs flex flex-col justify-between h-80 cursor-pointer"
-                    onClick={() => handleProductClick(chicken, 'chicken')}>
-                    <div className="relative w-full h-48 bg-gray-100 overflow-hidden group">
-                        <img
-                            src={chicken.Image}
-                            alt={chicken.name}
-                            className="w-full h-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-110"
-                        />
-                    </div>
-                    <div className="p-3">
-                        <h3 className="text-lg font-bold mb-1 text-center text-[#0078ae] hover:underline cursor-pointer">{chicken.Product_Name}</h3>
-                        <p className="text-sm text-gray-600 text-center">{chicken.Description}</p>
-                    </div>
-                    <div className="p-3 text-center">
-                        <div className="text-sm font-bold">
-                            <p>
-                                {(() => {
-                                    const smallPrice = chicken.SizeWithPrice?.find(item => item.Size === 'small')?.Price;
-                                    const mediumPrice = chicken.SizeWithPrice?.find(item => item.Size === 'medium')?.Price;
-                                    const bigSize = chicken.SizeWithPrice?.find(item => item.Size === 'big')?.Price;
-                                    const priceToShow = smallPrice || mediumPrice || bigSize || 0;
-
-                                    return parseInt(priceToShow).toLocaleString() + 'đ';
-                                })()}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            ))}
-        </div>
+        )
     );
     //#endregion
 

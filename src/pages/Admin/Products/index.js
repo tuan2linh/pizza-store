@@ -51,107 +51,109 @@ const Products = () => {
 
     return (
         <>
-            <div className="relative overflow-x-auto rounded-lg">
-                <div className="flex justify-end mb-4">
+            <div className="p-6 bg-white rounded-xl shadow-lg">
+                <div className="flex justify-between items-center mb-6">
+                    <h1 className="text-2xl font-bold text-gray-800">Products Management</h1>
                     <Link
                         to="/admin/addproduct"
-                        className="bg-gray-500 hover:opacity-60 transition-all text-black font-medium text-[17px] py-2 px-4 rounded-lg"
+                        className="bg-blue-600 hover:bg-blue-700 text-white font-medium text-[15px] py-2.5 px-5 rounded-lg transition duration-300 flex items-center gap-2"
                     >
-                        Add new product
+                        <span className="material-icons text-xl">Add New Product</span>
                     </Link>
                 </div>
 
-                <table className="w-full text-sm text-left rtl:text-right text-gray-500">
-                    <thead className="text-xs text-gray-700 uppercase bg-gray-300">
-                        <tr>
-                            <th className="px-6 py-3">ID</th>
-                            <th className="px-6 py-3">Name</th>
-                            <th className="px-6 py-3">Menu</th>
-                            <th className="px-6 py-3">Description</th>
-                            <th className="px-6 py-3">Size & Price</th>
-                            <th className="px-6 py-3">Image</th>
-                            <th className="px-6 py-3">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {products.length > 0 ? (
-                            products.map((product, index) => (
-                                <tr
-                                    key={product.Product_ID}
-                                    className="bg-white border-b hover:bg-gray-50"
-                                >
-                                    <td className="px-6 py-4">{index+1}</td>
-                                    <td className="px-6 py-4">{product.Product_Name}</td>
-                                    <td className="px-6 py-4">{product.Menu_Name}</td>
-                                    <td className="px-6 py-4">
-                                        {product.Description.length > 30
-                                            ? product.Description.slice(0, 30) + "..."
-                                            : product.Description}
-                                    </td>
-
-                                    {/* Hiển thị SizeWithPrice theo kiểu đối xứng */}
-                                    <td className="px-6 py-4">
-                                        {product.SizeWithPrice && product.SizeWithPrice.length > 0 ? (
-                                            <div className="flex">
-                                                <div className="flex-1 ">
-                                                    {/* Hiển thị các Size */}
-                                                    {product.SizeWithPrice.map((item, idx) => (
-                                                        <div key={idx} className="text-left">
-                                                            {item.Size}
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                                <div className="flex-1">
-                                                    {/* Hiển thị các Price tương ứng */}
-                                                    {product.SizeWithPrice.map((item, idx) => (
-                                                        <div key={idx} className="text-left">
-                                                            {item.Price}đ
-                                                        </div>
-                                                    ))}
-                                                </div>
+                <div className="overflow-x-auto rounded-lg border border-gray-200">
+                    <table className="w-full text-sm text-left text-gray-500">
+                        <thead className="text-xs text-gray-700 uppercase bg-gray-100">
+                            <tr>
+                                <th className="px-6 py-4">ID</th>
+                                <th className="px-6 py-4">Name</th>
+                                <th className="px-6 py-4">Menu</th>
+                                <th className="px-6 py-4">Description</th>
+                                <th className="px-6 py-4">Size & Price</th>
+                                <th className="px-6 py-4">Image</th>
+                                <th className="px-6 py-4">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {products.length > 0 ? (
+                                products.map((product, index) => (
+                                    <tr
+                                        key={product.Product_ID}
+                                        className="bg-white border-b hover:bg-gray-50 transition duration-200"
+                                    >
+                                        <td className="px-6 py-4 font-medium text-gray-900">{index+1}</td>
+                                        <td className="px-6 py-4 font-medium text-gray-900">{product.Product_Name}</td>
+                                        <td className="px-6 py-4">{product.Menu_Name}</td>
+                                        <td className="px-6 py-4 max-w-xs">
+                                            <div 
+                                                className="cursor-help hover:text-gray-900 transition-colors"
+                                                title={product.Description}
+                                            >
+                                                {product.Description.length > 30
+                                                    ? product.Description.slice(0, 30) + "..."
+                                                    : product.Description}
                                             </div>
-                                        ) : (
-                                            <span>Not available</span>
-                                        )}
-                                    </td>
-
-                                    <td className="px-6 py-4">
-                                        <img
-                                            className="w-20 h-20"
-                                            src={product.Image}
-                                            alt={product.Product_Name}
-                                        />
-                                    </td>
-                                    <td className="px-6 py-4 text-center">
-                                        <div className="flex items-center gap-3">
-                                            <button
-                                                className="font-medium text-red-500"
-
-                                            >
-                                                <FaEdit size={20} />
-                                            </button>
-                                            <button
-                                                className="font-medium text-red-500"
-                                                onClick={() => handleDeleteReview(product.Product_ID)}
-                                            >
-                                                <FaTrash size={20} />
-                                            </button>
-                                        </div>
+                                        </td>
+                                        <td className="px-6 py-4">
+                                            {product.SizeWithPrice && product.SizeWithPrice.length > 0 ? (
+                                                <div className="grid grid-cols-2 gap-2">
+                                                    <div className="space-y-1">
+                                                        {product.SizeWithPrice.map((item, idx) => (
+                                                            <div key={idx} className="text-gray-600 font-medium">
+                                                                {item.Size}
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                    <div className="space-y-1">
+                                                        {product.SizeWithPrice.map((item, idx) => (
+                                                            <div key={idx} className="text-blue-600 font-medium">
+                                                                {new Intl.NumberFormat('vi-VN').format(item.Price)}đ
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            ) : (
+                                                <span className="text-gray-400 italic">Not available</span>
+                                            )}
+                                        </td>
+                                        <td className="px-6 py-4">
+                                            <img
+                                                className="w-20 h-20 rounded-lg object-cover"
+                                                src={product.Image}
+                                                alt={product.Product_Name}
+                                            />
+                                        </td>
+                                        <td className="px-6 py-4">
+                                            <div className="flex items-center gap-4">
+                                                <button
+                                                    className="text-blue-600 hover:text-blue-800 transition-colors"
+                                                >
+                                                    <FaEdit size={20} />
+                                                </button>
+                                                <button
+                                                    className="text-red-600 hover:text-red-800 transition-colors"
+                                                    onClick={() => handleDeleteReview(product.Product_ID)}
+                                                >
+                                                    <FaTrash size={20} />
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td
+                                        colSpan="8"
+                                        className="px-6 py-8 text-center text-gray-500 bg-gray-50 italic"
+                                    >
+                                        No products available
                                     </td>
                                 </tr>
-                            ))
-                        ) : (
-                            <tr>
-                                <td
-                                    colSpan="8"
-                                    className="px-6 py-4 text-center text-gray-500"
-                                >
-                                    No products available
-                                </td>
-                            </tr>
-                        )}
-                    </tbody>
-                </table>
+                            )}
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <ModalConfirm
                 open={isModalOpen}

@@ -16,6 +16,7 @@ const AddProduct = () => {
     });
 
     const [sizes, setSizes] = useState([{ Size: "", Price: "" }]);
+    const [sizeErrors, setSizeErrors] = useState([]);
 
     // Hàm xử lý thay đổi giá trị input
     const handleInputChange = (e) => {
@@ -24,10 +25,27 @@ const AddProduct = () => {
     };
 
     // Hàm xử lý thay đổi Size và Price
+    const validateSize = (size) => {
+        const validSizes = ['small', 'medium', 'big'];
+        return validSizes.includes(size.toLowerCase());
+    };
+
     const handleSizeChange = (index, e) => {
         const { name, value } = e.target;
         const updatedSizes = [...sizes];
         updatedSizes[index][name] = value;
+
+        // Validate size if the changed field is "Size"
+        if (name === 'Size') {
+            const newErrors = [...sizeErrors];
+            if (!validateSize(value)) {
+                newErrors[index] = 'Size must be small, medium, or big';
+            } else {
+                newErrors[index] = '';
+            }
+            setSizeErrors(newErrors);
+        }
+
         setSizes(updatedSizes);
         setNewProduct({ ...newProduct, SizeWithPrice: updatedSizes });
     };
@@ -59,6 +77,13 @@ const AddProduct = () => {
             toast.error("Please provide valid size and price information.");
             return;
         }
+
+        // Check for size validation errors
+        const hasInvalidSizes = sizes.some(size => !validateSize(size.Size));
+        if (hasInvalidSizes) {
+            toast.error("Please use valid sizes (small, medium, or big)");
+            return;
+        }
     
         // Tạo FormData để gửi dữ liệu
         const formData = new FormData();
@@ -83,17 +108,16 @@ const AddProduct = () => {
     
 
     return (
-        <section className="p-8 relative">
-            <div>
-                <h2 className="font-medium text-3xl">Add New Product</h2>
-            </div>
-            <hr className="my-5" />
+        <section className="p-8 pt-0 relative min-h-screen bg-[#e5e7eb] from-gray-50 to-gray-100">
             <div className="flex justify-center">
-                <div className="w-[80%] shadow-lg border-2 border-gray-200 rounded-lg">
-                    <form onSubmit={handleSubmit} className="space-y-4 bg-white p-6 rounded-lg">
+                <div className="w-[90%] max-w-4xl">
+                    <div className="text-center mb-8">
+                        <h2 className="font-bold text-3xl text-gray-800 tracking-tight">Add New Product</h2>
+                    </div>
+                    <form onSubmit={handleSubmit} className="space-y-6 bg-white p-8 rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-gray-100">
                         {/* Product Name */}
                         <div>
-                            <label htmlFor="Product_Name" className="block text-gray-700 font-medium">
+                            <label htmlFor="Product_Name" className="block text-gray-700 font-semibold mb-2">
                                 Product Name
                             </label>
                             <input
@@ -101,7 +125,7 @@ const AddProduct = () => {
                                 type="text"
                                 value={newProduct.Product_Name}
                                 onChange={handleInputChange}
-                                className="w-full px-4 py-2 border rounded-lg"
+                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
                                 placeholder="Enter product name"
                                 required
                             />
@@ -109,7 +133,7 @@ const AddProduct = () => {
 
                         {/* Menu Name */}
                         <div>
-                            <label htmlFor="Menu_Name" className="block text-gray-700 font-medium">
+                            <label htmlFor="Menu_Name" className="block text-gray-700 font-semibold mb-2">
                                 Menu Name
                             </label>
                             <input
@@ -117,7 +141,7 @@ const AddProduct = () => {
                                 type="text"
                                 value={newProduct.Menu_Name}
                                 onChange={handleInputChange}
-                                className="w-full px-4 py-2 border rounded-lg"
+                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
                                 placeholder="Enter menu name"
                                 required
                             />
@@ -125,14 +149,14 @@ const AddProduct = () => {
 
                         {/* Description */}
                         <div>
-                            <label htmlFor="Description" className="block text-gray-700 font-medium">
+                            <label htmlFor="Description" className="block text-gray-700 font-semibold mb-2">
                                 Description
                             </label>
                             <textarea
                                 name="Description"
                                 value={newProduct.Description}
                                 onChange={handleInputChange}
-                                className="w-full px-4 py-2 border rounded-lg"
+                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 min-h-[100px]"
                                 placeholder="Enter product description"
                                 required
                             />
@@ -140,48 +164,64 @@ const AddProduct = () => {
 
                         {/* Size With Price */}
                         <div>
-                            <label className="block text-gray-700 font-medium">Sizes and Prices</label>
-                            {sizes.map((size, index) => (
-                                <div key={index} className="flex space-x-4 mb-2">
-                                    <input
-                                        name="Size"
-                                        type="text"
-                                        value={size.Size}
-                                        onChange={(e) => handleSizeChange(index, e)}
-                                        className="w-1/2 px-4 py-2 border rounded-lg"
-                                        placeholder="Size"
-                                        required
-                                    />
-                                    <input
-                                        name="Price"
-                                        type="number"
-                                        value={size.Price}
-                                        onChange={(e) => handleSizeChange(index, e)}
-                                        className="w-1/2 px-4 py-2 border rounded-lg"
-                                        placeholder="Price"
-                                        required
-                                    />
-                                    <button
-                                        type="button"
-                                        onClick={() => removeSize(index)}
-                                        className="text-red-500 font-bold"
-                                    >
-                                        Remove
-                                    </button>
-                                </div>
-                            ))}
+                            <label className="block text-gray-700 font-semibold mb-3">Sizes and Prices</label>
+                            <div className="space-y-3">
+                                {sizes.map((size, index) => (
+                                    <div key={index} className="flex flex-col space-y-2">
+                                        <div className="flex items-center space-x-4">
+                                            <div className="w-1/2">
+                                                <input
+                                                    name="Size"
+                                                    type="text"
+                                                    value={size.Size}
+                                                    onChange={(e) => handleSizeChange(index, e)}
+                                                    className={`w-full px-4 py-3 border ${
+                                                        sizeErrors[index] ? 'border-red-500' : 'border-gray-300'
+                                                    } rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200`}
+                                                    placeholder="Size (small, medium, big)"
+                                                    required
+                                                />
+                                                {sizeErrors[index] && (
+                                                    <p className="mt-1 text-sm text-red-500">{sizeErrors[index]}</p>
+                                                )}
+                                            </div>
+                                            <input
+                                                name="Price"
+                                                type="number"
+                                                value={size.Price}
+                                                onChange={(e) => handleSizeChange(index, e)}
+                                                className="w-1/2 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                                                placeholder="Price"
+                                                required
+                                            />
+                                            <button
+                                                type="button"
+                                                onClick={() => removeSize(index)}
+                                                className="p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-full transition-all duration-200"
+                                            >
+                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                                    <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
                             <button
                                 type="button"
                                 onClick={addSize}
-                                className="text-blue-500 font-bold"
+                                className="mt-3 flex items-center text-blue-600 hover:text-blue-800 font-semibold transition-colors duration-200"
                             >
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
+                                </svg>
                                 Add Size
                             </button>
                         </div>
 
-                        {/* Image URL input */}
+                        {/* Image URL */}
                         <div>
-                            <label htmlFor="Image" className="block text-gray-700 font-medium">
+                            <label htmlFor="Image" className="block text-gray-700 font-semibold mb-2">
                                 Image URL
                             </label>
                             <input
@@ -190,28 +230,26 @@ const AddProduct = () => {
                                 name="Image"
                                 value={newProduct.Image}
                                 onChange={handleInputChange}
-                                className="w-full px-4 py-2 border rounded-lg"
+                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
                                 placeholder="Enter image URL"
                                 required
                             />
                         </div>
 
                         {/* Buttons */}
-                        <div className="flex justify-between items-center">
-                            <Link to="/admin/products" className="text-accent hover:underline transition-all">
+                        <div className="flex justify-between items-center pt-4">
+                            <Link 
+                                to="/admin/products" 
+                                className="text-gray-600 hover:text-gray-800 flex items-center transition-colors duration-200"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
+                                </svg>
                                 Back to product list
                             </Link>
                             <button
                                 type="submit"
-                                style={{
-                                    backgroundColor: "#3498db",
-                                    color: "#fff",
-                                    padding: "10px 20px",
-                                    borderRadius: "5px",
-                                    fontWeight: "bold",
-                                    cursor: "pointer",
-                                }}
-                                className="hover:opacity-60 transition-all"
+                                className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200"
                             >
                                 Add Product
                             </button>
