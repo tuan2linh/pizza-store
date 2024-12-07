@@ -67,10 +67,10 @@ const Payment = () => {
         }
     };
 
-    const totalPrice = cart.reduce(
-        (sum, item) => sum + parseFloat(item.total_price),
+    const totalPrice = cart.items?.reduce(
+        (sum, item) => sum + (parseFloat(item.price_per_item) * item.quantity),
         0
-    );
+    ) || 0;
     const PromotionDiscount = 0; // Replace with actual promotion discount
     const voucherDiscount = 0; // Replace with actual voucher discount
     const deliveryFee = 0; // Replace with actual delivery fee
@@ -360,7 +360,7 @@ const Payment = () => {
                             <div className="space-y-4">
                                 {isLoading ? (
                                     <div>Loading...</div>
-                                ) : cart.map((item, index) => (
+                                ) : cart.items?.map((item) => (
                                     <div key={item.cart_item_id} className="flex items-center mb-4">
                                         <img
                                             src="https://img.jakpost.net/c/2016/09/29/2016_09_29_12990_1475116504._large.jpg"
