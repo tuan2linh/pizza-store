@@ -192,15 +192,36 @@ const CartSidebar = ({ isOpen, onClose }) => {
                   <span>Tạm tính:</span>
                   <span>{parseFloat(cartData.subTotal).toLocaleString()}đ</span>
                 </div>
-                {cartData.voucher?.Discount_Value && (
+                {cartData.loyaltyDiscount > 0 && (
                   <div className="flex justify-between text-green-600">
-                    <span>Giảm giá:</span>
-                    <span>-{parseFloat(cartData.voucher.DiscountLytP).toLocaleString()}đ</span>
+                    <span>Giảm giá khuyến mãi:</span>
+                    <span>-{parseFloat(cartData.loyaltyDiscount).toLocaleString()}đ</span>
+                  </div>
+                )}
+                {cartData.voucher && (
+                  <div className="flex justify-between text-green-600">
+                    <span>Giảm giá voucher ({cartData.voucher.Voucher_Code}):</span>
+                    <span>
+                      {cartData.voucher.Discount_Type === 'Percent' 
+                        ? `-${(parseFloat(cartData.subTotal) * parseFloat(cartData.voucher.Discount_Value) / 100).toLocaleString()}đ`
+                        : `-${parseFloat(cartData.voucher.Discount_Value).toLocaleString()}đ`
+                      }
+                    </span>
                   </div>
                 )}
                 <div className="flex justify-between text-lg font-bold border-t pt-3">
                   <span>Tổng cộng:</span>
-                  <span className="text-orange-500">{parseFloat(cartData.subTotal).toLocaleString()}đ</span>
+                  <span className="text-orange-500">
+                    {(
+                      parseFloat(cartData.subTotal) - 
+                      (parseFloat(cartData.loyaltyDiscount) || 0) - 
+                      (cartData.voucher 
+                        ? (cartData.voucher.Discount_Type === 'Percent'
+                          ? parseFloat(cartData.subTotal) * parseFloat(cartData.voucher.Discount_Value) / 100
+                          : parseFloat(cartData.voucher.Discount_Value))
+                        : 0)
+                    ).toLocaleString()}đ
+                  </span>
                 </div>
               </div>
               <button onClick={handleCart}

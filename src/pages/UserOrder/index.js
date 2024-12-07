@@ -89,6 +89,27 @@ const Promotion = () => {
         return items.reduce((sum, item) => sum + parseFloat(item.total_price), 0);
     };
 
+    const DiscountDisplay = ({ discountAmount, voucherId, loyaltyDiscount }) => {
+        if (!discountAmount && !loyaltyDiscount) return null;
+        
+        return (
+            <div className="space-y-2 text-sm">
+                {discountAmount > 0 && (
+                    <div className="flex justify-between items-center text-green-600">
+                        <span>Giảm giá (Voucher {voucherId}):</span>
+                        <span>-{parseInt(discountAmount).toLocaleString()}đ</span>
+                    </div>
+                )}
+                {loyaltyDiscount > 0 && (
+                    <div className="flex justify-between items-center text-blue-600">
+                        <span>Giảm giá (Loyalty):</span>
+                        <span>-{parseInt(loyaltyDiscount).toLocaleString()}đ</span>
+                    </div>
+                )}
+            </div>
+        );
+    };
+
     const toggleOrderExpand = (orderId) => {
         setExpandedOrders(prev => ({
             ...prev,
@@ -322,11 +343,22 @@ const Promotion = () => {
                                 </div>
 
                                 {/* Order Summary */}
-                                <div className="mt-4 pt-4 border-t">
-                                    <div className="flex justify-between items-center">
+                                <div className="mt-4 pt-4 border-t space-y-3">
+                                    <div className="flex justify-between items-center text-gray-600">
+                                        <span>Tạm tính:</span>
+                                        <span>{calculateOrderTotal(order.items).toLocaleString()}đ</span>
+                                    </div>
+                                    
+                                    <DiscountDisplay 
+                                        discountAmount={order.DiscountAmount}
+                                        voucherId={order.Voucher_ID}
+                                        loyaltyDiscount={order.DiscountLytP}
+                                    />
+                                    
+                                    <div className="flex justify-between items-center pt-2 border-t">
                                         <span className="font-semibold text-lg">Tổng cộng:</span>
                                         <span className="text-xl font-bold text-red-600">
-                                            {calculateOrderTotal(order.items).toLocaleString()}đ
+                                            {parseInt(order.finalPrice).toLocaleString()}đ
                                         </span>
                                     </div>
                                 </div>
