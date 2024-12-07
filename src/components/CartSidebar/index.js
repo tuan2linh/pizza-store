@@ -22,21 +22,34 @@ const CartItem = ({ Product_Name, price_per_item, quantity: initialQuantity, onU
   };
 
   return (
-    <div className="flex items-center gap-4 py-4 border-b">
-      <img src="https://img.jakpost.net/c/2016/09/29/2016_09_29_12990_1475116504._large.jpg" alt={Product_Name} className="w-20 h-20 object-cover rounded-lg" />
-      <div className="flex-1">
-        <h3 className="font-semibold">{Product_Name}</h3>
-        <p className="text-sm text-gray-600">Size: {size}</p>
-        <div className="flex items-center justify-between mt-2">
-          <div className="flex items-center border rounded-lg">
-            <button onClick={handleDecrease} className="px-2 py-1 hover:bg-gray-100">-</button>
-            <span className="px-4 py-1">{quantity}</span>
-            <button onClick={handleIncrease} className="px-2 py-1 hover:bg-gray-100">+</button>
+    <div className="flex items-center gap-4 py-4 border-b hover:bg-gray-50 transition-colors">
+      <div className="relative w-24 h-24">
+        <img src="https://img.jakpost.net/c/2016/09/29/2016_09_29_12990_1475116504._large.jpg" 
+             alt={Product_Name} 
+             className="w-full h-full object-cover rounded-lg shadow-sm" />
+      </div>
+      <div className="flex-1 min-w-0">
+        <h3 className="font-semibold text-gray-900 truncate">{Product_Name}</h3>
+        <p className="text-sm text-gray-500 mt-1">Size: {size}</p>
+        <div className="flex items-center justify-between mt-3">
+          <div className="flex items-center bg-gray-100 rounded-lg overflow-hidden">
+            <button onClick={handleDecrease} 
+                    className="px-3 py-1 hover:bg-gray-200 transition-colors text-gray-600">
+              −
+            </button>
+            <span className="px-4 py-1 font-medium bg-white">{quantity}</span>
+            <button onClick={handleIncrease} 
+                    className="px-3 py-1 hover:bg-gray-200 transition-colors text-gray-600">
+              +
+            </button>
           </div>
-          <span className="font-bold">{(parseFloat(price_per_item) * quantity).toLocaleString()}đ</span>
+          <span className="font-bold text-orange-500">
+            {(parseFloat(price_per_item) * quantity).toLocaleString()}đ
+          </span>
         </div>
       </div>
-      <button onClick={onDelete} className="p-2 hover:bg-gray-100 rounded-full">
+      <button onClick={onDelete} 
+              className="p-2 hover:bg-red-50 hover:text-red-500 rounded-full transition-colors">
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
         </svg>
@@ -54,7 +67,7 @@ const CartSidebar = ({ isOpen, onClose }) => {
   const account = useSelector((state) => state.user.account);
   const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
   const customer_id = account?.customer_id;
-  const [cart, setCart] = useState([]);
+  const [cartData, setCartData] = useState({ items: [], subTotal: "0" });
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -67,7 +80,8 @@ const CartSidebar = ({ isOpen, onClose }) => {
     setIsLoading(true);
     try {
       const response = await getCart();
-      setCart(response);
+      console.log(response);
+      setCartData(response);
     } catch (error) {
       console.error('Fetch cart error:', error);
     } finally {
@@ -120,67 +134,82 @@ const CartSidebar = ({ isOpen, onClose }) => {
 
   return (
     <>
-      <div 
-        className={`fixed inset-0 bg-black bg-opacity-50 transition-opacity z-50 ${
-          isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
-        }`}
-        onClick={onClose}
-      />
-      <div 
-        className={`fixed right-0 top-0 h-full w-96 bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-50 ${
-          isOpen ? 'translate-x-0' : 'translate-x-full'
-        }`}
-      >
-        <div className="h-full flex flex-col p-4">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-bold">Giỏ hàng</h2>
-            <button 
-              onClick={onClose}
-              className="p-2 hover:bg-gray-100 rounded-full"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
+      <div className={`fixed inset-0 bg-black bg-opacity-50 transition-opacity z-50 ${
+        isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+      }`} onClick={onClose} />
+      
+      <div className={`fixed right-0 top-0 h-full w-[400px] bg-white shadow-xl transform transition-transform duration-300 ease-in-out z-50 ${
+        isOpen ? 'translate-x-0' : 'translate-x-full'
+      }`}>
+        <div className="h-full flex flex-col">
+          <div className="px-6 py-4 border-b">
+            <div className="flex justify-between items-center">
+              <div className="flex items-center gap-3">
+                <svg className="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" 
+                        d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                </svg>
+                <h2 className="text-xl font-bold text-gray-900">Giỏ hàng của bạn</h2>
+              </div>
+              <button onClick={onClose} 
+                      className="p-2 hover:bg-gray-100 rounded-full transition-colors">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
           </div>
 
-          <div className="flex-1 overflow-y-auto">
+          <div className="flex-1 overflow-y-auto px-6">
             {isLoading ? (
-              <div className="flex justify-center items-center h-full">
-                <span>Loading...</span>
+              <div className="flex flex-col items-center justify-center h-full gap-4">
+                <div className="w-8 h-8 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"/>
+                <p className="text-gray-500">Đang tải giỏ hàng...</p>
               </div>
-            ) : cart.length === 0 ? (
-              <div className="flex justify-center items-center h-full">
-                <span>Giỏ hàng trống</span>
+            ) : cartData.items.length === 0 ? (
+              <div className="flex flex-col items-center justify-center h-full gap-4 text-gray-400">
+                <svg className="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" 
+                        d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                </svg>
+                <p className="text-lg font-medium">Giỏ hàng của bạn đang trống</p>
               </div>
             ) : (
-              cart.map((item) => (
-                <CartItem
-                  key={item.cart_item_id}
-                  {...item}
-                  onDelete={() => handleDelete(item.cart_item_id)}
-                  onUpdateQuantity={(quantity) => handleChangeQuantity(item.cart_item_id, quantity)}
-                />
-              ))
+              <div className="py-4 space-y-4">
+                {cartData.items.map((item) => (
+                  <CartItem key={item.cart_item_id} {...item} 
+                           onDelete={() => handleDelete(item.cart_item_id)}
+                           onUpdateQuantity={(quantity) => handleChangeQuantity(item.cart_item_id, quantity)} />
+                ))}
+              </div>
             )}
           </div>
 
-          <div className="border-t pt-4 mt-auto">
-            <div className="flex justify-between mb-4">
-              <span className="font-bold">Tổng cộng:</span>
-              <span className="font-bold">
-                {cart
-                  .reduce((total, item) => total + Number(item.total_price), 0)
-                  .toLocaleString()}đ
-              </span>
+          {cartData.items.length > 0 && (
+            <div className="border-t px-6 pt-4 pb-6 bg-gray-50">
+              <div className="space-y-3 mb-4">
+                <div className="flex justify-between text-gray-600">
+                  <span>Tạm tính:</span>
+                  <span>{parseFloat(cartData.subTotal).toLocaleString()}đ</span>
+                </div>
+                {cartData.voucher?.Discount_Value && (
+                  <div className="flex justify-between text-green-600">
+                    <span>Giảm giá:</span>
+                    <span>-{parseFloat(cartData.voucher.DiscountLytP).toLocaleString()}đ</span>
+                  </div>
+                )}
+                <div className="flex justify-between text-lg font-bold border-t pt-3">
+                  <span>Tổng cộng:</span>
+                  <span className="text-orange-500">{parseFloat(cartData.subTotal).toLocaleString()}đ</span>
+                </div>
+              </div>
+              <button onClick={handleCart}
+                      className="w-full bg-orange-500 text-white py-3 rounded-lg font-medium hover:bg-orange-600 
+                               transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2">
+                Tiến hành đặt hàng
+              </button>
             </div>
-            <button 
-              className="w-full bg-orange-400 text-white py-2 rounded-md hover:bg-orange-500"
-              onClick={handleCart}
-            >
-              Tiến hành đặt hàng
-            </button>
-          </div>
+          )}
         </div>
       </div>
     </>
