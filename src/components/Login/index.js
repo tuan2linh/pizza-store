@@ -25,6 +25,7 @@ function LoginModal({ onClose }) {
         }
         console.log("Đăng nhập");
         let data = await postLogin(username, password);
+        console.log(data);
         if(data?.message === "Đăng nhập thành công."){
             // Add username to data before dispatching
             data.username = username;
