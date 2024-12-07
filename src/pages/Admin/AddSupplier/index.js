@@ -27,7 +27,7 @@ const AddSupplier = () => {
 
         const { Supplier_Name, PhoneNumber, Email, Supplier_Address, Rating } = newSupplier;
         if (!Supplier_Name || !PhoneNumber || !Email || !Supplier_Address || !Rating) {
-            toast.error("Please fill in all required fields.");
+            toast.error("Please fill in all required fields");
             return;
         }
 
