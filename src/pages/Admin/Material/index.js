@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getIngre, deleteIngre } from '../../../services/ingredients.js';
+import { getIngre, deleteIngre } from '../../../services/ingredientsService.js';
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";

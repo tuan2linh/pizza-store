@@ -1,17 +1,18 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { addProduct } from "../../../services/productService";
+import { getProductByID, updateProduct } from "../../../services/productService";
 
-const AddProduct = () => {
+const UpdateProduct = () => {
     const navigate = useNavigate();
+    const { id } = useParams(); // Lấy Product_ID từ URL
 
     // State lưu trữ thông tin sản phẩm
     const [newProduct, setNewProduct] = useState({
         Product_Name: "",
         Menu_Name: "",
         Description: "",
-        SizeWithPrice: [],  // Mảng Size với giá
+        SizeWithPrice: [],
         Image: "",
     });
 
@@ -26,7 +27,7 @@ const AddProduct = () => {
 
     // Hàm xử lý thay đổi Size và Price
     const validateSize = (size) => {
-        const validSizes = ['small', 'medium', 'big'];
+        const validSizes = ["small", "medium", "big"];
         return validSizes.includes(size.toLowerCase());
     };
 
@@ -35,13 +36,13 @@ const AddProduct = () => {
         const updatedSizes = [...sizes];
         updatedSizes[index][name] = value;
 
-        // Validate size if the changed field is "Size"
-        if (name === 'Size') {
+        // Validate size nếu trường bị thay đổi là "Size"
+        if (name === "Size") {
             const newErrors = [...sizeErrors];
             if (!validateSize(value)) {
-                newErrors[index] = 'Size must be small, medium, or big';
+                newErrors[index] = "Size must be small, medium, or big";
             } else {
-                newErrors[index] = '';
+                newErrors[index] = "";
             }
             setSizeErrors(newErrors);
         }
@@ -50,71 +51,81 @@ const AddProduct = () => {
         setNewProduct({ ...newProduct, SizeWithPrice: updatedSizes });
     };
 
-    // Hàm thêm Size  
     const addSize = () => {
         setSizes([...sizes, { Size: "", Price: "" }]);
     };
 
-    // Hàm xóa Size
     const removeSize = (index) => {
         const updatedSizes = sizes.filter((_, i) => i !== index);
         setSizes(updatedSizes);
         setNewProduct({ ...newProduct, SizeWithPrice: updatedSizes });
     };
 
-    // Hàm xử lý submit form
+    // Fetch sản phẩm khi component được tải
+    useEffect(() => {
+        const fetchProduct = async () => {
+            try {
+                const product = await getProductByID(id); // Lấy dữ liệu sản phẩm từ API
+                setNewProduct(product); // Điền dữ liệu vào state
+                setSizes(product.SizeWithPrice || []); // Điền SizeWithPrice
+            } catch (error) {
+                toast.error("Failed to fetch product details.");
+                console.error(error);
+            }
+        };
+        fetchProduct();
+    }, [id]);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Kiểm tra dữ liệu trước khi gửi
+        // Kiểm tra thông tin đầu vào
         if (!newProduct.Product_Name || !newProduct.Menu_Name || !newProduct.Description || !newProduct.Image) {
             toast.error("Please fill in all required fields.");
             return;
         }
 
-        // Kiểm tra Size và Price
         if (newProduct.SizeWithPrice.length === 0 || newProduct.SizeWithPrice.some(size => !size.Size || !size.Price)) {
             toast.error("Please provide valid size and price information.");
             return;
         }
 
-        // Check for size validation errors
         const hasInvalidSizes = sizes.some(size => !validateSize(size.Size));
         if (hasInvalidSizes) {
             toast.error("Please use valid sizes (small, medium, or big)");
             return;
         }
 
-        // Tạo FormData để gửi dữ liệu
+        // Chuẩn bị dữ liệu để gửi
         const formData = new FormData();
         formData.append("Product_Name", newProduct.Product_Name);
         formData.append("Menu_Name", newProduct.Menu_Name);
         formData.append("Description", newProduct.Description);
-        formData.append("SizeWithPrice", JSON.stringify(newProduct.SizeWithPrice)); // Gửi mảng SizeWithPrice dưới dạng chuỗi JSON
-        formData.append("Image", newProduct.Image); // Gửi ảnh
+        formData.append("SizeWithPrice", JSON.stringify(newProduct.SizeWithPrice));
+        formData.append("Image", newProduct.Image);
 
         try {
-            // Gửi dữ liệu tới BE
-            await addProduct(formData);
-            console.log(newProduct);
-            console.log(formData);
-            toast.success("Product added successfully!");
+            // Gửi dữ liệu cập nhật về backend
+            await updateProduct(id, formData);
+            toast.success("Product updated successfully!");
             navigate("/admin/products"); // Điều hướng tới danh sách sản phẩm
         } catch (error) {
             console.error(error);
-            toast.error(error.response?.data?.message || "An error occurred while adding the product.");
+            toast.error(error.response?.data?.message || "An error occurred while updating the product.");
         }
     };
-
 
     return (
         <section className="p-8 pt-0 relative min-h-screen bg-[#e5e7eb] from-gray-50 to-gray-100">
             <div className="flex justify-center">
                 <div className="w-[90%] max-w-4xl">
                     <div className="text-center mb-8">
-                        <h2 className="font-bold text-3xl text-gray-800 tracking-tight">Add New Product</h2>
+                        <h2 className="font-bold text-3xl text-gray-800 tracking-tight">Update Product</h2>
                     </div>
-                    <form onSubmit={handleSubmit} className="space-y-6 bg-white p-8 rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-gray-100">
+                    <form
+                        onSubmit={handleSubmit}
+                        className="space-y-6 bg-white p-8 rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-gray-100"
+                    >
                         {/* Product Name */}
                         <div>
                             <label htmlFor="Product_Name" className="block text-gray-700 font-semibold mb-2">
@@ -175,7 +186,7 @@ const AddProduct = () => {
                                                     type="text"
                                                     value={size.Size}
                                                     onChange={(e) => handleSizeChange(index, e)}
-                                                    className={`w-full px-4 py-3 border ${sizeErrors[index] ? 'border-red-500' : 'border-gray-300'
+                                                    className={`w-full px-4 py-3 border ${sizeErrors[index] ? "border-red-500" : "border-gray-300"
                                                         } rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200`}
                                                     placeholder="Size (small, medium, big)"
                                                     required
@@ -205,35 +216,50 @@ const AddProduct = () => {
                                         </div>
                                     </div>
                                 ))}
+                                <button
+                                    type="button"
+                                    onClick={addSize}
+                                    className="px-4 py-2 text-white bg-blue-500 hover:bg-blue-700 rounded-lg transition-all duration-200"
+                                >
+                                    Add Size
+                                </button>
                             </div>
-                            <button
-                                type="button"
-                                onClick={addSize}
-                                className="mt-3 flex items-center text-blue-600 hover:text-blue-800 font-semibold transition-colors duration-200"
-                            >
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
-                                </svg>
-                                Add Size
-                            </button>
                         </div>
 
-                        {/* Image URL */}
+                        {/* Image */}
                         <div>
                             <label htmlFor="Image" className="block text-gray-700 font-semibold mb-2">
-                                Image URL
+                                Product Image URL
                             </label>
                             <input
-                                id="Image"
-                                type="text"
                                 name="Image"
-                                value={newProduct.Image}
-                                onChange={handleInputChange}
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                                type="text"
+                                value={newProduct.Image} // Thay đổi ở đây
+                                onChange={handleInputChange} // Cập nhật URL
+                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
                                 placeholder="Enter image URL"
                                 required
                             />
+                            <div className="mt-4">
+                                {newProduct.Image && ( // Hiển thị ảnh từ URL
+                                    <img
+                                        src={newProduct.Image} // Hiển thị ảnh từ URL
+                                        alt="Product"
+                                        className="max-w-full h-40 object-contain border border-gray-300 rounded-lg"
+                                    />
+                                )}
+                            </div>
                         </div>
+                        {/* Submit */}
+                        {/* <div>
+                            <button
+                                type="submit"
+                                className="px-4 py-2 w-full text-white bg-blue-500 hover:bg-blue-700 rounded-lg transition-all duration-200"
+                            >
+                                Update Product
+                            </button>
+                        </div> */}
+
 
                         <div className="flex justify-between items-center pt-6">
                             <Link
@@ -264,7 +290,7 @@ const AddProduct = () => {
                                 type="submit"
                                 className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200"
                             >
-                                Add Product
+                                Update Product
                             </button>
                         </div>
                     </form>
@@ -274,4 +300,4 @@ const AddProduct = () => {
     );
 };
 
-export default AddProduct;
+export default UpdateProduct;
