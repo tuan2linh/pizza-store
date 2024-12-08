@@ -27,6 +27,7 @@ import Suppliers from './pages/Admin/Suppliers'
 import AddSupplier from './pages/Admin/AddSupplier'
 import UpdateSupplier from './pages/Admin/UpdateSupplier'
 import Voucher from './pages/Admin/Voucher';
+import OrderAdmin from './pages/Admin/OrderAdmin';
 
 
 
@@ -53,7 +54,7 @@ function App() {
               <Route index element={<Dashboard />} />
               <Route path='products' element={<Products />} />
               <Route path='addproduct' element={<AddProduct />} />
-              <Route path='orders' element={<h1>Orders</h1>} />
+              <Route path='orders' element={<OrderAdmin/>} />
               <Route path='customers' element={<h1>Customers</h1>} />
               <Route path='promotions' element={<h1>Promotions</h1>} />
               <Route path='vouchers' element={<Voucher/>} />

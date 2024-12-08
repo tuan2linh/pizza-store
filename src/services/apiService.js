@@ -26,7 +26,6 @@ const updateProductInCart = async (cart_item_id,quantity) => {
 const getCartId = async () => {
     return axios.get('/cart/getID');
 }
-
 const createVoucher = async (data) => {
     return axios.post('/voucher/createVch', data);
 }
@@ -58,6 +57,20 @@ const applyLoyatyPoint = async (data) => {
 const removeLoyatyPoint = async (cartId) => {
     return axios.post(`//voucher/removeLytP?cartId=${cartId}`);
 }
+const getLoyalPoint = async () => {
+    return axios.get('/user/getloyaltyPnt');
+}
+
+// Order
+const getAllOrder = async () => {
+    return axios.get('/order/get');
+}
+const getOrderbyId = async (orderId) => {
+    return axios.get(`/order/getOrderById?orderId=${orderId}`);
+}
+const updateOrderStatus = async (orderId,status) => {
+    return axios.put(`/order/update?newStatus=${status}&orderId=${orderId}`);
+}
 
 export {
     postLogin,
@@ -76,5 +89,9 @@ export {
     removeVoucherFromCart,
     applyLoyatyPoint,
     removeLoyatyPoint,
-    getCartId
+    getCartId,
+    getLoyalPoint,
+    getAllOrder,
+    getOrderbyId,
+    updateOrderStatus
 }

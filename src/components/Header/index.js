@@ -1,11 +1,12 @@
 //#region Imports
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import logo from "../../assets/logo.png";
 import LoginModal from "../Login";
 import { doLogout } from "../../redux/action/userAction";
 import { toast } from "react-toastify";
+import { getLoyalPoint } from "../../services/apiService";
 //#endregion
 
 //#region Constants
@@ -43,6 +44,7 @@ function Header({ onCartClick }) {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [user, setUser] = useState(null);
   const [isAccountDropdownOpen, setIsAccountDropdownOpen] = useState(false);
+  const [loyaltyPoints, setLoyaltyPoints] = useState(0);
   //#endregion
 
   //#region Hooks
@@ -53,6 +55,21 @@ function Header({ onCartClick }) {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      fetchLoyaltyPoints();
+    }
+  }, [isAuthenticated]);
+
+  const fetchLoyaltyPoints = async () => {
+    try {
+      const response = await getLoyalPoint();
+      setLoyaltyPoints(response.data.loyalty_points);
+    } catch (error) {
+      console.error('Error fetching loyalty points:', error);
+    }
+  };
   //#endregion
 
   //#region Event Handlers
@@ -199,7 +216,7 @@ function Header({ onCartClick }) {
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                           <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
                         </svg>
-                        Điểm thưởng: <span className="font-semibold ml-1">20</span>
+                        Điểm thưởng: <span className="font-semibold ml-1">{loyaltyPoints}</span>
                       </div>
                       <a href="/orders" className="block px-4 py-2 text-gray-800 hover:bg-orange-100 hover:text-orange-500 flex items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
