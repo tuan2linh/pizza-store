@@ -4,6 +4,14 @@ const getSuppliers = async () => {
     return axios.get('/supplier/list');
 }
 
+const getSupplierById = async (id) => {
+    return axios.get(`/supplier/${id}`);
+}
+
+const getIngredientOfSupplier = async (id) => {
+    return axios.get(`/supplier/${id}/ingredients`)
+}
+
 const deleteSupplier = async (id) => {
     return axios.delete(`/supplier/remove/${id}`)
 }
@@ -33,4 +41,6 @@ export {
     deleteSupplier,
     addSupplier,
     updateSupplier,
+    getSupplierById,
+    getIngredientOfSupplier
 }
