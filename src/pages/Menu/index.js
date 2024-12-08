@@ -25,6 +25,10 @@ function Menu() {
     const [products, setProducts] = useState([]);
     const [pizzaProducts, setPizzaProducts] = useState([]);
     const [chickenProducts, setChickenProducts] = useState([]);
+    const [pastaProducts, setPastaProducts] = useState([]);
+    const [appetizerProducts, setAppetizerProducts] = useState([]);
+    const [dessertProducts, setDessertProducts] = useState([]);
+    const [drinkProducts, setDrinkProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
@@ -51,7 +55,11 @@ function Menu() {
             const result = await getProduct();
             setProducts(result);
             setPizzaProducts(result.filter(product => product.Menu_Name.toLowerCase() === 'pizza'));
-            setChickenProducts(result.filter(product => product.Menu_Name.toLowerCase() === 'chicken'));   
+            setChickenProducts(result.filter(product => product.Menu_Name.toLowerCase() === 'chicken'));
+            setPastaProducts(result.filter(product => product.Menu_Name.toLowerCase() === 'pasta'));
+            setAppetizerProducts(result.filter(product => product.Menu_Name.toLowerCase() === 'appetizers'));
+            setDessertProducts(result.filter(product => product.Menu_Name.toLowerCase() === 'desserts'));
+            setDrinkProducts(result.filter(product => product.Menu_Name.toLowerCase() === 'drinks'));
         } catch (error) {
             console.error("Failed to get list product:", error);
             setProducts([]);
@@ -80,6 +88,15 @@ function Menu() {
         pork: { name: 'Pizza Heo', icon: <FaBacon /> },
         vegetarian: { name: 'Pizza Chay', icon: <FaLeaf /> }
     };
+
+    const PIZZA_CATEGORY_IDS = {
+        beef: [68, 80, 85, 90, 99, 100, 101, 102, 105],
+        seafood: [82, 83, 84, 85, 88, 89, 90, 91, 92, 93, 95],
+        chicken: [98],
+        pork: [86, 87, 94, 96, 97, 98, 102, 105, 106, 108],
+        vegetarian: [103, 104, 107]
+    };
+
     //#endregion
 
     //#region Helper Functions
@@ -123,36 +140,41 @@ function Menu() {
                 </div>
             ) : (
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                    {pizzaProducts.map((pizza) => (
-                        <div key={pizza.id}
-                            className="bg-white rounded-lg shadow-md overflow-hidden max-w-xs flex flex-col justify-between h-80 cursor-pointer"
-                            onClick={() => handleProductClick(pizza, 'pizza')}>
-                            <div className="relative w-full h-48 bg-gray-100 overflow-hidden group">
-                                <img
-                                    src={pizza.Image}
-                                    alt={pizza.name}
-                                    className="w-full h-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-110"
-                                />
-                            </div>
-                            <div className="p-3">
-                                <h3 className="text-lg font-bold mb-1 text-center text-[#0078ae] hover:underline cursor-pointer">{pizza.Product_Name}</h3>
-                            </div>
-                            <div className="p-3 text-center">
-                                <div className="text-sm font-bold">
-                                    <p>
-                                        {(() => {
-                                            const smallPrice = pizza.SizeWithPrice?.find(item => item.Size === 'small')?.Price;
-                                            const mediumPrice = pizza.SizeWithPrice?.find(item => item.Size === 'medium')?.Price;
-                                            const bigSize = pizza.SizeWithPrice?.find(item => item.Size === 'big')?.Price;
-                                            const priceToShow = smallPrice || mediumPrice || bigSize || 0;
+                    {pizzaProducts
+                        .filter(pizza => {
+                            if (activeCategory === 'all') return true;
+                            return PIZZA_CATEGORY_IDS[activeCategory]?.includes(pizza.Product_ID);
+                        })
+                        .map((pizza) => (
+                            <div key={pizza.id}
+                                className="bg-white rounded-lg shadow-md overflow-hidden max-w-xs flex flex-col justify-between h-80 cursor-pointer"
+                                onClick={() => handleProductClick(pizza, 'pizza')}>
+                                <div className="relative w-full h-48 bg-gray-100 overflow-hidden group">
+                                    <img
+                                        src={pizza.Image}
+                                        alt={pizza.name}
+                                        className="w-full h-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-110"
+                                    />
+                                </div>
+                                <div className="p-3">
+                                    <h3 className="text-lg font-bold mb-1 text-center text-[#0078ae] hover:underline cursor-pointer">{pizza.Product_Name}</h3>
+                                </div>
+                                <div className="p-3 text-center">
+                                    <div className="text-sm font-bold">
+                                        <p>
+                                            {(() => {
+                                                const smallPrice = pizza.SizeWithPrice?.find(item => item.Size === 'small')?.Price;
+                                                const mediumPrice = pizza.SizeWithPrice?.find(item => item.Size === 'medium')?.Price;
+                                                const bigSize = pizza.SizeWithPrice?.find(item => item.Size === 'big')?.Price;
+                                                const priceToShow = smallPrice || mediumPrice || bigSize || 0;
 
-                                            return parseInt(priceToShow).toLocaleString() + 'đ';
-                                        })()}
-                                    </p>
+                                                return parseInt(priceToShow).toLocaleString() + 'đ';
+                                            })()}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    ))}
+                        ))}
                 </div>
             )}
         </>
@@ -199,6 +221,171 @@ function Menu() {
             </div>
         )
     );
+    const renderPastaSection = () => (
+        isLoading ? (
+            <div className="flex justify-center items-center min-h-[400px]">
+                <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-orange-400"></div>
+            </div>
+        ) : (
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {pastaProducts.map((pasta) => (
+                    <div key={pasta.id}
+                        className="bg-white rounded-lg shadow-md overflow-hidden max-w-xs flex flex-col justify-between h-80 cursor-pointer"
+                        onClick={() => handleProductClick(pasta, 'pasta')}>
+                        <div className="relative w-full h-48 bg-gray-100 overflow-hidden group">
+                            <img
+                                src={pasta.Image}
+                                alt={pasta.name}
+                                className="w-full h-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-110"
+                            />
+                        </div>
+                        <div className="p-3">
+                            <h3 className="text-lg font-bold mb-1 text-center text-[#0078ae] hover:underline cursor-pointer">{pasta.Product_Name}</h3>
+                            <p className="text-sm text-gray-600 text-center">{pasta.Description}</p>
+                        </div>
+                        <div className="p-3 text-center">
+                            <div className="text-sm font-bold">
+                                <p>
+                                    {(() => {
+                                        const smallPrice = pasta.SizeWithPrice?.find(item => item.Size === 'small')?.Price;
+                                        const mediumPrice = pasta.SizeWithPrice?.find(item => item.Size === 'medium')?.Price;
+                                        const bigSize = pasta.SizeWithPrice?.find(item => item.Size === 'big')?.Price;
+                                        const priceToShow = smallPrice || mediumPrice || bigSize || 0;
+
+                                        return parseInt(priceToShow).toLocaleString() + 'đ';
+                                    })()}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        )
+    );
+    const renderAppetizersSection = () => (
+        isLoading ? (
+            <div className="flex justify-center items-center min-h-[400px]">
+                <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-orange-400"></div>
+            </div>
+        ) : (
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {appetizerProducts.map((appetizer) => (
+                    <div key={appetizer.id}
+                        className="bg-white rounded-lg shadow-md overflow-hidden max-w-xs flex flex-col justify-between h-80 cursor-pointer"
+                        onClick={() => handleProductClick(appetizer, 'appetizer')}>
+                        <div className="relative w-full h-48 bg-gray-100 overflow-hidden group">
+                            <img
+                                src={appetizer.Image}
+                                alt={appetizer.name}
+                                className="w-full h-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-110"
+                            />
+                        </div>
+                        <div className="p-3">
+                            <h3 className="text-lg font-bold mb-1 text-center text-[#0078ae] hover:underline cursor-pointer">{appetizer.Product_Name}</h3>
+                            <p className="text-sm text-gray-600 text-center">{appetizer.Description}</p>
+                        </div>
+                        <div className="p-3 text-center">
+                            <div className="text-sm font-bold">
+                                <p>
+                                    {(() => {
+                                        const smallPrice = appetizer.SizeWithPrice?.find(item => item.Size === 'small')?.Price;
+                                        const mediumPrice = appetizer.SizeWithPrice?.find(item => item.Size === 'medium')?.Price;
+                                        const bigSize = appetizer.SizeWithPrice?.find(item => item.Size === 'big')?.Price;
+                                        const priceToShow = smallPrice || mediumPrice || bigSize || 0;
+
+                                        return parseInt(priceToShow).toLocaleString() + 'đ';
+                                    })()}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        )
+    );
+    const renderDessertsSection = () => (
+        isLoading ? (
+            <div className="flex justify-center items-center min-h-[400px]">
+                <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-orange-400"></div>
+            </div>
+        ) : (
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {dessertProducts.map((dessert) => (
+                    <div key={dessert.id}
+                        className="bg-white rounded-lg shadow-md overflow-hidden max-w-xs flex flex-col justify-between h-80 cursor-pointer"
+                        onClick={() => handleProductClick(dessert, 'dessert')}>
+                        <div className="relative w-full h-48 bg-gray-100 overflow-hidden group">
+                            <img
+                                src={dessert.Image}
+                                alt={dessert.name}
+                                className="w-full h-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-110"
+                            />
+                        </div>
+                        <div className="p-3">
+                            <h3 className="text-lg font-bold mb-1 text-center text-[#0078ae] hover:underline cursor-pointer">{dessert.Product_Name}</h3>
+                            <p className="text-sm text-gray-600 text-center">{dessert.Description}</p>
+                        </div>
+                        <div className="p-3 text-center">
+                            <div className="text-sm font-bold">
+                                <p>
+                                    {(() => {
+                                        const smallPrice = dessert.SizeWithPrice?.find(item => item.Size === 'small')?.Price;
+                                        const mediumPrice = dessert.SizeWithPrice?.find(item => item.Size === 'medium')?.Price;
+                                        const bigSize = dessert.SizeWithPrice?.find(item => item.Size === 'big')?.Price;
+                                        const priceToShow = smallPrice || mediumPrice || bigSize || 0;
+
+                                        return parseInt(priceToShow).toLocaleString() + 'đ';
+                                    })()}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        )
+    );
+    const renderDrinksSection = () => (
+        isLoading ? (
+            <div className="flex justify-center items-center min-h-[400px]">
+                <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-orange-400"></div>
+            </div>
+        ) : (
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {drinkProducts.map((drink) => (
+                    <div key={drink.id}
+                        className="bg-white rounded-lg shadow-md overflow-hidden max-w-xs flex flex-col justify-between h-80 cursor-pointer"
+                        onClick={() => handleProductClick(drink, 'drink')}>
+                        <div className="relative w-full h-48 bg-gray-100 overflow-hidden group">
+                            <img
+                                src={drink.Image}
+                                alt={drink.name}
+                                className="w-full h-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-110"
+                            />
+                        </div>
+                        <div className="p-3">
+                            <h3 className="text-lg font-bold mb-1 text-center text-[#0078ae] hover:underline cursor-pointer">{drink.Product_Name}</h3>
+                            <p className="text-sm text-gray-600 text-center">{drink.Description}</p>
+                        </div>
+                        <div className="p-3 text-center">
+                            <div className="text-sm font-bold">
+                                <p>
+                                    {(() => {
+                                        const smallPrice = drink.SizeWithPrice?.find(item => item.Size === 'small')?.Price;
+                                        const mediumPrice = drink.SizeWithPrice?.find(item => item.Size === 'medium')?.Price;
+                                        const bigSize = drink.SizeWithPrice?.find(item => item.Size === 'big')?.Price;
+                                        const priceToShow = smallPrice || mediumPrice || bigSize || 0;
+
+                                        return parseInt(priceToShow).toLocaleString() + 'đ';
+                                    })()}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        )
+    );
+
     //#endregion
 
     //#region Main Render
@@ -224,10 +411,10 @@ function Menu() {
                 {/* Conditional Rendering of Sections */}
                 {activeMainCategory === 'pizza' && renderPizzaSection()}
                 {activeMainCategory === 'chicken' && renderChickenSection()}
-                {activeMainCategory === 'pasta' && <div>Pasta Section</div>}
-                {activeMainCategory === 'appetizers' && <div>Appetizers Section</div>}
-                {activeMainCategory === 'desserts' && <div>Desserts Section</div>}
-                {activeMainCategory === 'drinks' && <div>Drinks Section</div>}
+                {activeMainCategory === 'pasta' && renderPastaSection()}
+                {activeMainCategory === 'appetizers' && renderAppetizersSection()}
+                {activeMainCategory === 'desserts' && renderDessertsSection()}
+                {activeMainCategory === 'drinks' && renderDrinksSection()}
             </div>
             <ProductDetailModal
                 product={selectedProduct}

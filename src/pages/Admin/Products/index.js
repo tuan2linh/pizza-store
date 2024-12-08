@@ -9,6 +9,12 @@ const Products = () => {
     const [products, setProducts] = useState([]);
     const [isModalOpen, setModalOpen] = useState(false);
     const [productToDelete, setProductToDelete] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [selectedMenu, setSelectedMenu] = useState("all");
+    const productsPerPage = 6;
+
+    const menuOptions = ["all", "pizza", "chicken", "pasta", "appetizers", "desserts", "drinks"];
 
     // Fetch products from the backend
     const fetchProduct = async () => {
@@ -49,6 +55,23 @@ const Products = () => {
         }
     };
 
+    // Filter products based on search term and selected menu
+    const filteredProducts = products.filter(product => {
+        const matchesSearch = product.Product_Name.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesMenu = selectedMenu === "all" || product.Menu_Name.toLowerCase() === selectedMenu.toLowerCase();
+        return matchesSearch && matchesMenu;
+    });
+
+    // Get current products for pagination
+    const indexOfLastProduct = currentPage * productsPerPage;
+    const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+    const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
+    const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+
     return (
         <>
             <div className="p-6 bg-white rounded-xl shadow-lg">
@@ -60,6 +83,28 @@ const Products = () => {
                     >
                         <span className="material-icons text-xl">Add New Product</span>
                     </Link>
+                </div>
+
+                {/* Search and Filter Controls */}
+                <div className="mb-6 flex gap-4">
+                    <input
+                        type="text"
+                        placeholder="Search products..."
+                        className="px-4 py-2 border rounded-lg w-64"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                    <select
+                        value={selectedMenu}
+                        onChange={(e) => setSelectedMenu(e.target.value)}
+                        className="px-4 py-2 border rounded-lg"
+                    >
+                        {menuOptions.map((menu) => (
+                            <option key={menu} value={menu}>
+                                {menu.charAt(0).toUpperCase() + menu.slice(1)}
+                            </option>
+                        ))}
+                    </select>
                 </div>
 
                 <div className="overflow-x-auto rounded-lg border border-gray-200">
@@ -76,13 +121,13 @@ const Products = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {products.length > 0 ? (
-                                products.map((product, index) => (
+                            {currentProducts.length > 0 ? (
+                                currentProducts.map((product, index) => (
                                     <tr
                                         key={product.Product_ID}
                                         className="bg-white border-b hover:bg-gray-50 transition duration-200"
                                     >
-                                        <td className="px-6 py-4 font-medium text-gray-900">{index + 1}</td>
+                                        <td className="px-6 py-4 font-medium text-gray-900">{product.Product_ID}</td>
                                         <td className="px-6 py-4 font-medium text-gray-900">{product.Product_Name}</td>
                                         <td className="px-6 py-4">{product.Menu_Name}</td>
                                         <td className="px-6 py-4 max-w-xs">
@@ -155,6 +200,37 @@ const Products = () => {
                         </tbody>
                     </table>
                 </div>
+
+                {/* Pagination Controls */}
+                {filteredProducts.length > productsPerPage && (
+                    <div className="flex justify-center gap-2 mt-4">
+                        <button
+                            onClick={() => handlePageChange(currentPage - 1)}
+                            disabled={currentPage === 1}
+                            className="px-4 py-2 border rounded-lg disabled:opacity-50"
+                        >
+                            Previous
+                        </button>
+                        {[...Array(totalPages)].map((_, i) => (
+                            <button
+                                key={i + 1}
+                                onClick={() => handlePageChange(i + 1)}
+                                className={`px-4 py-2 border rounded-lg ${
+                                    currentPage === i + 1 ? 'bg-blue-600 text-white' : ''
+                                }`}
+                            >
+                                {i + 1}
+                            </button>
+                        ))}
+                        <button
+                            onClick={() => handlePageChange(currentPage + 1)}
+                            disabled={currentPage === totalPages}
+                            className="px-4 py-2 border rounded-lg disabled:opacity-50"
+                        >
+                            Next
+                        </button>
+                    </div>
+                )}
             </div>
             <ModalConfirm
                 open={isModalOpen}
