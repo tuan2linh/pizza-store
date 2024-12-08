@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { getSuppliers, deleteSupplier } from "../../../services/supplier.js";
-import { FaEdit, FaTrash, FaSearch, FaSpinner } from "react-icons/fa";
+import { getSuppliers, deleteSupplier } from "../../../services/supplierService.js";
+import { FaEdit, FaTrash, FaSearch, FaSpinner, FaEye } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import ModalConfirm from "../../../components/ModalConfirm/ModalConfirm.jsx";
 
-const Products = () => {
+const Suppliers = () => {
     const [suppliers, setSuppliers] = useState([]);
     const [isModalOpen, setModalOpen] = useState(false);
     const [supplierToDelete, setSupplierToDelete] = useState(null);
@@ -99,8 +99,8 @@ const Products = () => {
                         <table className="w-full text-sm text-left">
                             <thead className="text-xs bg-gray-50 border-b border-gray-200">
                                 <tr>
-                                    {["ID", "Name", "Phone Number", "Email", "Address", "Rating", "Actions"].map((header) => (
-                                        <th key={header} className="px-6 py-4 font-semibold text-gray-700">
+                                    {["ID", "Name", "Phone Number", "Email", "Address", "Rating", "Description", "Ingredients", "Actions"].map((header) => (
+                                        <th key={header} className="px-1 py-4 font-semibold text-gray-700">
                                             {header}
                                         </th>
                                     ))}
@@ -113,17 +113,28 @@ const Products = () => {
                                             key={supplier.Supplier_ID}
                                             className="hover:bg-gray-50 transition duration-200"
                                         >
-                                            <td className="px-6 py-4 font-medium text-gray-900">{index + 1}</td>
-                                            <td className="px-6 py-4">
+                                            <td className="px-1 py-4 font-medium text-gray-900">{index + 1}</td>
+                                            <td className="px-1 py-4">
                                                 <div className="font-medium text-gray-900">{supplier.Supplier_Name}</div>
                                             </td>
-                                            <td className="px-6 py-4 text-gray-600">{supplier.PhoneNumber}</td>
-                                            <td className="px-6 py-4 text-gray-600">{supplier.Email}</td>
-                                            <td className="px-6 py-4 text-gray-600 max-w-xs truncate">{supplier.Supplier_Address}</td>
-                                            <td className="px-6 py-4">
+                                            <td className="px-1 py-4 text-gray-600">{supplier.PhoneNumber}</td>
+                                            <td className="px-1 py-4 text-gray-600">{supplier.Email}</td>
+                                            <td className="px-1 py-4 text-gray-600 max-w-xs truncate">{supplier.Supplier_Address}</td>
+                                            <td className="px-1 py-4">
                                                 {getRatingBadge(supplier.Rating)}
                                             </td>
-                                            <td className="px-6 py-4">
+                                            <td className="px-1 py-4 text-gray-600 max-w-xs truncate">{supplier.Description}</td>
+                                            <td className="px-1 py-4">
+                                                <div className="flex items-center gap-4">
+                                                    <Link
+                                                        to={`/admin/viewsupplier/${supplier.Supplier_ID}`}
+                                                        className="p-2 text-blue-600 hover:bg-blue-50 rounded-full transition-colors"
+                                                    >
+                                                        <FaEye size={18} />
+                                                    </Link>
+                                                </div>
+                                            </td>
+                                            <td className="px-1 py-4">
                                                 <div className="flex items-center gap-4">
                                                     <Link
                                                         to={`/admin/updatesupplier/${supplier.Supplier_ID}`}
@@ -191,4 +202,4 @@ const getRatingBadge = (rating) => {
     );
 };
 
-export default Products;
+export default Suppliers;

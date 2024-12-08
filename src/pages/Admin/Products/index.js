@@ -82,11 +82,11 @@ const Products = () => {
                                         key={product.Product_ID}
                                         className="bg-white border-b hover:bg-gray-50 transition duration-200"
                                     >
-                                        <td className="px-6 py-4 font-medium text-gray-900">{index+1}</td>
+                                        <td className="px-6 py-4 font-medium text-gray-900">{index + 1}</td>
                                         <td className="px-6 py-4 font-medium text-gray-900">{product.Product_Name}</td>
                                         <td className="px-6 py-4">{product.Menu_Name}</td>
                                         <td className="px-6 py-4 max-w-xs">
-                                            <div 
+                                            <div
                                                 className="cursor-help hover:text-gray-900 transition-colors"
                                                 title={product.Description}
                                             >
@@ -126,11 +126,12 @@ const Products = () => {
                                         </td>
                                         <td className="px-6 py-4">
                                             <div className="flex items-center gap-4">
-                                                <button
+                                                <Link
+                                                    to={`/admin/updateproduct/${product.Product_ID}`}
                                                     className="text-blue-600 hover:text-blue-800 transition-colors"
                                                 >
                                                     <FaEdit size={20} />
-                                                </button>
+                                                </Link>
                                                 <button
                                                     className="text-red-600 hover:text-red-800 transition-colors"
                                                     onClick={() => handleDeleteReview(product.Product_ID)}

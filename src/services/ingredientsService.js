@@ -4,6 +4,10 @@ const getIngre = async () => {
     return axios.get('/ingredient/list');
 }
 
+const getInpredientById = async (id) => {
+    return axios.get(`/ingredient/${id}`);
+}
+
 const deleteIngre = async (id) => {
     return axios.delete(`/ingredient/remove/${id}`)
 }
@@ -33,4 +37,5 @@ export {
     deleteIngre,
     addIngre,
     updateIngre,
+    getInpredientById,
 }

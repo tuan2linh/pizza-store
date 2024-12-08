@@ -1,51 +1,64 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { addSupplier } from "../../../services/supplier";
+import { getSupplierById, updateSupplier } from "../../../services/supplierService";
 
-const AddSupplier = () => {
+const UpdateSupplier = () => {
+    const { id } = useParams(); // Lấy id từ URL
     const navigate = useNavigate();
 
     // State lưu trữ thông tin nhà cung cấp
-    const [newSupplier, setNewSupplier] = useState({
+    const [supplier, setSupplier] = useState({
         Supplier_Name: "",
         PhoneNumber: "",
         Email: "",
         Supplier_Address: "",
         Rating: "",
+        Description: "",
     });
+
+    useEffect(() => {
+        const fetchSupplier = async () => {
+            try {
+                const result = await getSupplierById(id);
+                setSupplier(result);
+                console.log(result)
+            } catch (error) {
+                console.error("Error fetching supplier:", error);
+                toast.error("Failed to load supplier data.");
+            }
+        };
+
+        fetchSupplier();
+    }, [id]);
 
     // Hàm xử lý thay đổi giá trị input
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setNewSupplier({ ...newSupplier, [name]: value });
+        setSupplier({ ...supplier, [name]: value });
     };
 
     // Hàm xử lý submit form
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const { Supplier_Name, PhoneNumber, Email, Supplier_Address, Rating } = newSupplier;
-        if (!Supplier_Name || !PhoneNumber || !Email || !Supplier_Address || !Rating) {
-            toast.error("Please fill in all required fields.");
-            return;
-        }
+        const { Supplier_Name, PhoneNumber, Email, Supplier_Address, Rating, Description } = supplier;
 
         try {
-            // Gửi dữ liệu tới backend
-            await addSupplier(newSupplier);
-            toast.success("Supplier added successfully!");
+            // Gửi yêu cầu cập nhật nhà cung cấp
+            await updateSupplier(id, supplier);
+            toast.success("Supplier updated successfully!");
             navigate("/admin/suppliers");
         } catch (error) {
             console.error(error);
-            toast.error(error.response?.data?.message || "An error occurred while adding the supplier.");
+            toast.error(error.response?.data?.message || "An error occurred while updating the supplier.");
         }
     };
 
     return (
         <section className="p-8 relative">
             <div>
-                <h2 className="font-medium text-3xl">Add New Supplier</h2>
+                <h2 className="font-medium text-3xl">Update Supplier</h2>
             </div>
             <hr className="my-5" />
             <div className="flex justify-center">
@@ -59,7 +72,7 @@ const AddSupplier = () => {
                             <input
                                 name="Supplier_Name"
                                 type="text"
-                                value={newSupplier.Supplier_Name}
+                                value={supplier.Supplier_Name}
                                 onChange={handleInputChange}
                                 className="w-full px-4 py-2 border rounded-lg"
                                 placeholder="Enter supplier name"
@@ -75,7 +88,7 @@ const AddSupplier = () => {
                             <input
                                 name="PhoneNumber"
                                 type="text"
-                                value={newSupplier.PhoneNumber}
+                                value={supplier.PhoneNumber}
                                 onChange={handleInputChange}
                                 className="w-full px-4 py-2 border rounded-lg"
                                 placeholder="Enter phone number"
@@ -91,7 +104,7 @@ const AddSupplier = () => {
                             <input
                                 name="Email"
                                 type="email"
-                                value={newSupplier.Email}
+                                value={supplier.Email}
                                 onChange={handleInputChange}
                                 className="w-full px-4 py-2 border rounded-lg"
                                 placeholder="Enter email"
@@ -107,7 +120,7 @@ const AddSupplier = () => {
                             <input
                                 name="Supplier_Address"
                                 type="text"
-                                value={newSupplier.Supplier_Address}
+                                value={supplier.Supplier_Address}
                                 onChange={handleInputChange}
                                 className="w-full px-4 py-2 border rounded-lg"
                                 placeholder="Enter supplier address"
@@ -123,7 +136,7 @@ const AddSupplier = () => {
                             <input
                                 name="Rating"
                                 type="number"
-                                value={newSupplier.Rating}
+                                value={supplier.Rating}
                                 onChange={handleInputChange}
                                 className="w-full px-4 py-2 border rounded-lg"
                                 placeholder="Enter rating (1-5)"
@@ -133,10 +146,44 @@ const AddSupplier = () => {
                             />
                         </div>
 
-                        {/* Buttons */}
-                        <div className="flex justify-between items-center">
-                            <Link to="/admin/suppliers" className="text-accent hover:underline transition-all">
-                                Back to supplier list
+                        {/* Description */}
+                        <div>
+                            <label htmlFor="Description" className="block text-gray-700 font-medium">
+                                Description
+                            </label>
+                            <textarea
+                                name="Description"
+                                value={supplier.Description}
+                                onChange={handleInputChange}
+                                className="w-full h-32 px-4 py-2 border rounded-lg"
+                                placeholder="Enter supplier description"
+                            />
+                        </div>
+
+                        <div className="flex justify-between items-center pt-6">
+                            <Link
+                                to="/admin/suppliers"
+                                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-blue-600 
+                   bg-white border border-blue-600 rounded-lg shadow-md 
+                   hover:bg-blue-600 hover:text-white hover:shadow-lg
+                   focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1
+                   transition-all duration-200"
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="h-4 w-4"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                    strokeWidth={2}
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        d="M10 19l-7-7m0 0l7-7m-7 7h18"
+                                    />
+                                </svg>
+                                Back to Supplier List
                             </Link>
                             <button
                                 type="submit"
@@ -150,7 +197,7 @@ const AddSupplier = () => {
                                 }}
                                 className="hover:opacity-60 transition-all"
                             >
-                                Add Supplier
+                                Update Supplier
                             </button>
                         </div>
                     </form>
@@ -160,4 +207,4 @@ const AddSupplier = () => {
     );
 };
 
-export default AddSupplier;
+export default UpdateSupplier;

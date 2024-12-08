@@ -1,18 +1,19 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { addSupplier } from "../../../services/supplier";
+import { addSupplier } from "../../../services/supplierService";
+import { Description } from "@headlessui/react";
 
 const AddSupplier = () => {
     const navigate = useNavigate();
 
-    // State lưu trữ thông tin nhà cung cấp
     const [newSupplier, setNewSupplier] = useState({
         Supplier_Name: "",
         PhoneNumber: "",
         Email: "",
         Supplier_Address: "",
         Rating: "",
+        Description: "",
     });
 
     // Hàm xử lý thay đổi giá trị input
@@ -25,14 +26,13 @@ const AddSupplier = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const { Supplier_Name, PhoneNumber, Email, Supplier_Address, Rating } = newSupplier;
-        if (!Supplier_Name || !PhoneNumber || !Email || !Supplier_Address || !Rating) {
+        const { Supplier_Name, PhoneNumber, Email, Supplier_Address, Rating, Description } = newSupplier;
+        if (!Supplier_Name || !PhoneNumber || !Email || !Supplier_Address || !Rating || !Description) {
             toast.error("Please fill in all required fields");
             return;
         }
 
         try {
-            // Gửi dữ liệu tới backend
             await addSupplier(newSupplier);
             toast.success("Supplier added successfully!");
             navigate("/admin/suppliers");
@@ -132,6 +132,21 @@ const AddSupplier = () => {
                                     placeholder="Enter supplier address"
                                     required
                                 />
+                            </div>
+
+                            <div>
+                                <label htmlFor="Supplier_Address" className="block text-sm font-semibold text-gray-700 mb-2">
+                                    Supplier Description
+                                </label>
+                                <textarea
+                                    name="Description"
+                                    type="text"
+                                    value={newSupplier.Description}
+                                    onChange={handleInputChange}
+                                    className="w-full h-36 px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all resize-none"
+                                    placeholder="Enter description"
+                                    required
+                                ></textarea>
                             </div>
 
                             {/* Action Buttons */}
