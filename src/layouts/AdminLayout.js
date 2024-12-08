@@ -12,10 +12,10 @@ const AdminLayout = () => {
   const navigate = useNavigate();
   const menuItems = [
     { path: '/admin', label: 'Dashboard', icon: '📊' },
-    { path: '/admin/products', label: 'Quản lý sản phầm', icon: '🍕' },
+    { path: '/admin/products', label: 'Quản lý sản phẩm', icon: '🍕' },
     { path: '/admin/orders', label: 'Quản lý đơn hàng', icon: '🛒' },
     { path: '/admin/customers', label: 'Quản lý người dùng', icon: '👥' },
-    { path: '/admin/employees', label: 'Quản lý nhân viên', icon: '👥' },
+    { path: '/admin/employees', label: 'Quản lý nhân viên', icon: '👨‍💼' },
     { path: '/admin/promotions', label: 'Chương trình khuyến mãi', icon: '🎉' },
     { path: '/admin/vouchers', label: 'Quản lý Vouchers', icon: '🎟️' },
     { path: '/admin/suppliers', label: 'Nhà cung cấp', icon: '🏢' },

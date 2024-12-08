@@ -52,10 +52,10 @@ const removeVoucherFromCart = async (cartId,data) => {
     return axios.post(`/voucher/removeVch?cartId=${cartId}`);
 }
 const applyLoyatyPoint = async (data) => {
-    return axios.post('/voucher/applyLoyaltyPoint', data);
+    return axios.post('/voucher/applyLytPoints', data);
 }
 const removeLoyatyPoint = async (cartId) => {
-    return axios.post(`//voucher/removeLytP?cartId=${cartId}`);
+    return axios.post(`/voucher/removeLytP?cartId=${cartId}`);
 }
 const getLoyalPoint = async () => {
     return axios.get('/user/getloyaltyPnt');

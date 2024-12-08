@@ -3,7 +3,7 @@ import { getCart } from "../../services/apiService";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { addOrder, updateAddress } from '../../services/orderService'
-import { getCartId, applyVoucherToCart, removeVoucherFromCart } from "../../services/apiService";
+import { getCartId, applyVoucherToCart, removeVoucherFromCart, getLoyalPoint, applyLoyatyPoint, removeLoyatyPoint } from "../../services/apiService";
 import { useNavigate } from "react-router-dom";
 
 const Payment = () => {
@@ -21,6 +21,8 @@ const Payment = () => {
     const [voucher, setVoucher] = useState("");
     const [cartId, setCartId] = useState(null);
     const [voucherDiscount, setVoucherDiscount] = useState(0);
+    const [loyaltyPoints, setLoyaltyPoints] = useState(0);
+    const [pointApplied, setPointApplied] = useState(0);
 
     useEffect(() => {
         fetchCart();
@@ -32,6 +34,8 @@ const Payment = () => {
             setCart(response);
             const cartID_res = await getCartId();
             setCartId(cartID_res.cart_id);
+            const loyaltyPoints_res = await getLoyalPoint();
+            setLoyaltyPoints(loyaltyPoints_res.loyalty_points);
         } catch (error) {
             console.error('Fetch cart error:', error);
         } finally {
@@ -72,7 +76,6 @@ const Payment = () => {
             toast.error('Vui lòng nhập mã giảm giá!');
             return;
         }
-        
         // Check if a voucher is already applied
         if (cart.voucher?.Voucher_Code) {
             toast.error('Vui lòng gỡ mã giảm giá hiện tại trước khi thêm mã mới!');
@@ -116,6 +119,54 @@ const Payment = () => {
             return totalPrice * parseFloat(voucher.Discount_Value) / 100;
         }
         return parseFloat(voucher.Discount_Value);
+    };
+    const handleApplyLoyaltyPoints = async () => {
+        console.log(cartId, account.customer_id, pointApplied);
+        if (cart.loyaltyDiscount > 0) {
+            toast.error('Đã sử dụng điểm tích lũy cho đơn hàng này!');
+            return;
+        }
+        if (pointApplied <= 0) {
+            toast.error('Vui lòng nhập số điểm muốn đổi!');
+            return;
+        }
+        if (pointApplied > loyaltyPoints) {
+            toast.error('Không đủ điểm để đổi!');
+            return;
+        }
+        if (!loyaltyPoints) {
+            toast.error('Không đủ điểm để đổi!');
+            return;
+        }
+        console.log('Loyalty Points:', loyaltyPoints);
+        try {
+            const data = { cartId: cartId, customerId: account.customer_id, pointsToUse: pointApplied,  voucherCode: 'Loyalty2024' };
+            const response = await applyLoyatyPoint(data);
+            console.log('Apply Loyalty Points:', response);
+            if (response?.message === 'Loyalty points applied successfully!') {
+                toast.success('Đổi điểm thành công!');
+                fetchCart(); // Refresh cart data
+            } else {
+                toast.error('Đổi điểm thất bại!');
+            }
+        } catch (error) {
+            toast.error('Đổi điểm thất bại!');
+        }
+    };
+
+    const handleRemoveLoyaltyPoints = async () => {
+        try {
+            const response = await removeLoyatyPoint(cartId);
+            if (response?.message === 'Loyalty points revoked successfully!') {
+                toast.success('Đã gỡ điểm tích lũy!');
+                setPointApplied(0);
+                fetchCart(); // Refresh cart data
+            } else {
+                toast.error('Gỡ điểm tích lũy thất bại!');
+            }
+        } catch (error) {
+            toast.error('Không thể gỡ điểm tích lũy!');
+        }
     };
 
     // Update calculations object
@@ -226,6 +277,48 @@ const Payment = () => {
                                         className="bg-orange-300 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded ml-2"
                                     >
                                         Áp dụng
+                                    </button>
+                                </div>
+                            </div>
+                            {/* Add Loyalty Points Display and Redemption */}
+                            <div className="mb-4">
+                                <div className="flex items-center mb-2">
+                                    <span className="text-gray-700 text-sm font-bold mr-2">
+                                        Điểm tích lũy:
+                                    </span>
+                                    <span className="text-orange-500 font-bold flex items-center">
+                                        {(loyaltyPoints || 0).toLocaleString("vi-VN")} điểm
+                                        {cart?.loyaltyDiscount > 0 && (
+                                            <>
+                                                {` (Đã dùng: ${parseInt(cart.loyaltyDiscount).toLocaleString("vi-VN")} điểm)`}
+                                                <button
+                                                    onClick={handleRemoveLoyaltyPoints}
+                                                    className="ml-2 text-red-500 hover:text-red-700"
+                                                >
+                                                    ⨉
+                                                </button>
+                                            </>
+                                        )}
+                                    </span>
+                                </div>
+                                <div className="flex">
+                                    <input
+                                        type="number"
+                                        id="loyaltyRedeem"
+                                        name="loyaltyRedeem"
+                                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                        placeholder="Nhập số tiền muốn giảm"
+                                        min="0"
+                                        step="1000"
+                                        value={cart?.loyaltyDiscount > 0 ? cart.loyaltyDiscount : pointApplied}
+                                        onChange={(e) => setPointApplied(e.target.value)}
+                                        disabled={cart.loyaltyDiscount > 0}
+                                    />
+                                    <button
+                                        onClick={handleApplyLoyaltyPoints}
+                                        className="bg-orange-300 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded ml-2"
+                                    >
+                                        Đổi điểm
                                     </button>
                                 </div>
                             </div>
