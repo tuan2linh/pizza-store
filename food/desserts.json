@@ -1,0 +1,43 @@
+
+{
+    "success": true,
+    "count": 3,
+    "data": [
+        {
+            "Product_Name": "Bánh Cuộn Xốt Sô-Cô-La",
+            "Image": "https://img.dominos.vn/MENU-PC-Chocolate-Roll-nen-xam_360X240px.jpg",
+            "Description": "Bánh Cuộn Mềm Xốp, Sô-cô-la chip Đen Và Trắng, Xốt Sô-cô-la Đen",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "49000"
+                }
+            ],
+            "Menu_Name": "desserts"
+        },
+        {
+            "Product_Name": "Bánh Sô-Cô-La Đút Lò",
+            "Image": "https://img.dominos.vn/MENU-MB_BA%CC%81NH-SO%CC%82-CO%CC%82-LA-%C4%90U%CC%81T-LO%CC%80.jpg",
+            "Description": "Bánh Sô-Cô-La Nguyên Chất",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "49000"
+                }
+            ],
+            "Menu_Name": "desserts"
+        },
+        {
+            "Product_Name": "Chocochips (Đế dày xốp)",
+            "Image": "https://img.dominos.vn/MENU-PC_choco-pizza+(1).jpg",
+            "Description": "Sô-cô-la chip Đen Và Trắng, Xốt Sô-cô-la Đen, Phô Mai Mozarella, Xốt Kem Chua, Đế Dày Xốp",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "39000"
+                }
+            ],
+            "Menu_Name": "desserts"
+        }
+    ]
+}

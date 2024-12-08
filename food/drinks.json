@@ -1,0 +1,79 @@
+
+{
+    "success": true,
+    "count": 6,
+    "data": [
+        {
+            "Product_Name": "Chai Sprite 390ml - Sprite 390ml Bottle",
+            "Image": "https://img.dominos.vn/Sprite-390.jpg",
+            "Description": "Sprite 390m",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "25000"
+                }
+            ],
+            "Menu_Name": "drinks"
+        },
+        {
+            "Product_Name": "Chai Coca-Cola 390ml",
+            "Image": "https://img.dominos.vn/coke-390.jpg",
+            "Description": "Chai Coca-Cola 390ml",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "25000"
+                }
+            ],
+            "Menu_Name": "drinks"
+        },
+        {
+            "Product_Name": "Chai Fanta 390ml",
+            "Image": "https://img.dominos.vn/coke-390.jpg",
+            "Description": "Chai Fanta 390ml",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "25000"
+                }
+            ],
+            "Menu_Name": "drinks"
+        },
+        {
+            "Product_Name": "Chai Coca-Cola Zero Sugar 1.5L",
+            "Image": "https://img.dominos.vn/MENU-MB_Coca-Zero-1L5_trang.png",
+            "Description": "Chai Coca-Cola Zero Sugar 1.5L",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "40000"
+                }
+            ],
+            "Menu_Name": "drinks"
+        },
+        {
+            "Product_Name": "CHAI SPRITE 1.85L",
+            "Image": "https://img.dominos.vn/Sprite-1.5L.jpg",
+            "Description": "CHAI SPRITE 1.85L",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "39000"
+                }
+            ],
+            "Menu_Name": "drinks"
+        },
+        {
+            "Product_Name": "Lon Coca-Cola zero 320ml",
+            "Image": "https://img.dominos.vn/coke-zero.jpg",
+            "Description": "Lon Coca-Cola zero 320ml",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "25000"
+                }
+            ],
+            "Menu_Name": "drinks"
+        }
+    ]
+}

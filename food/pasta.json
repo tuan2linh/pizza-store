@@ -1,0 +1,91 @@
+
+{
+    "success": true,
+    "count": 7,
+    "data": [
+        {
+            "Product_Name": "Mỳ Ý Thịt Heo Xông Khói Xốt Marinara Cay",
+            "Image": "https://img.dominos.vn/detail-pasta-+(13).jpg",
+            "Description": "Mỳ Ý, Thịt Xông Khói, Thịt Xông Khói Miếng, Xốt Marinara, Ớt Vẩy, Bột Rong Biển, Bột Tỏi",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "89000"
+                }
+            ],
+            "Menu_Name": "pasta"
+        },
+        {
+            "Product_Name": "Mỳ Ý Thịt Heo Xông Khói Xốt Kem",
+            "Image": "https://img.dominos.vn/detail-pasta-+(10).jpg",
+            "Description": "Mỳ Ý, Xốt Carbonara, Thịt Xông Khói, Bột Rong Biển, Bột Tỏi",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "99000"
+                }
+            ],
+            "Menu_Name": "pasta"
+        },
+        {
+            "Product_Name": "Mỳ Ý Tôm Xốt Marinara Cay",
+            "Image": "https://img.dominos.vn/detail-pasta-+(9).jpg",
+            "Description": "Mỳ Ý, Hành Tây, Tôm, Xốt Marinara, Ớt Vẩy, Bột Rong Biển, Bột Tỏi",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "99000"
+                }
+            ],
+            "Menu_Name": "pasta"
+        },
+        {
+            "Product_Name": "Mỳ Ý Hải Sản Xốt Pesto",
+            "Image": "https://img.dominos.vn/detail-pasta-+(12).jpg",
+            "Description": "Mỳ Ý, Hành Tây, Tôm, Xốt Marinara, Ớt Vẩy, Bột Rong Biển, Bột Tỏi",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "99000"
+                }
+            ],
+            "Menu_Name": "pasta"
+        },
+        {
+            "Product_Name": "Mỳ Ý Bò Bằm Xốt Marinara",
+            "Image": "https://img.dominos.vn/detail-pasta-+(8).jpg",
+            "Description": "Mỳ Ý, Xốt Bò Bằm, Bột Rong Biển, Bột Tỏi",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "99000"
+                }
+            ],
+            "Menu_Name": "pasta"
+        },
+        {
+            "Product_Name": "Mỳ Ý Rau Củ Xốt Marinara",
+            "Image": "https://img.dominos.vn/detail-pasta-+(14).jpg",
+            "Description": "Mỳ Ý, Ớt Chuông Xanh, Nấm, Cà Chua, Dứa, Ô-Liu Đen, Xốt Marinara, Bột Rong Biển, Bột Tỏi",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "89000"
+                }
+            ],
+            "Menu_Name": "pasta"
+        },
+        {
+            "Product_Name": "Mỳ Ý Xúc Xích Xốt Marinara",
+            "Image": "https://img.dominos.vn/detail-pasta-+(11).jpg",
+            "Description": "Mỳ Ý, Xúc Xích Parsley, Thịt Xông Khói, Xúc Xích Pepperoni, Xốt Marinara, Bột Rong Biển, Bột Tỏi",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "89000"
+                }
+            ],
+            "Menu_Name": "pasta"
+        }
+    ]
+}

@@ -1,0 +1,870 @@
+{
+    "success": true,
+    "count": 60,
+    "data": [
+        {
+            "Product_Name": "Pizza Siêu Topping Hải Sản Xốt Pesto \"Chanh Sả\"",
+            "Image": "https://img.dominos.vn/PC-MB1000X667px+super+topping%402x.png",
+            "Description": "Tăng 50% lượng topping protein: Mưc Khoanh, Tôm Có Đuôi; Thêm Phô Mai Mozzarella, Cà Chua, Hành Tây, Xốt Pesto, Xốt Chanh, Parsley",
+            "SizeWithPrice": [
+                {
+                    "Size": "big",
+                    "Price": "345000"
+                },
+                {
+                    "Size": "medium", 
+                    "Price": "235000"
+                }
+            ],
+            "Menu_Name": "pizza"
+        },
+        {
+            "Product_Name": "Pizza Siêu Topping Hải Sản Xốt Mayonnaise Hảo Hạng",
+            "Image": "https://img.dominos.vn/PC-MB1000X667px+super+topping%402x.png",
+            "Description": "Tăng 50% lượng topping protein: Mưc Khoanh, Tôm Có Đuôi; Thêm Phô Mai Mozzarella, Cà Chua, Hành Tây, Xốt Mayonnaise, Parsley",
+            "SizeWithPrice": [
+                {
+                    "Size": "big",
+                    "Price": "345000"
+                },
+                {
+                    "Size": "medium", 
+                    "Price": "235000"
+                }
+            ],
+            "Menu_Name": "pizza"
+        },
+        {
+            "Product_Name": "Pizza Siêu Topping Hải Sản Xốt Mayonnaise",
+            "Image": "https://img.dominos.vn/Pizza+Extra+Topping+(2).jpg",
+            "Description": "Tăng 50% lượng topping protein: Tôm, Mực, Thanh Cua; Thêm Phô Mai Mozzarella, Xốt Mayonnaise, Húng Tây, Hành",
+            "SizeWithPrice": [
+                {
+                    "Size": "big",
+                    "Price": "345000"
+                },
+                {
+                    "Size": "medium", 
+                    "Price": "235000"
+                }
+            ],
+            "Menu_Name": "pizza"
+        },
+        {
+            "Product_Name": "Pizza Siêu Topping Hải Sản Nhiệt Đới Xốt Tiêu",
+            "Image": "https://img.dominos.vn/Pizza+Extra+Topping+(3).jpg",
+            "Description": "Tăng 50% lượng topping protein: Tôm, Mực; Thêm Phô Mai Mozzarella, Phô Mai Cheddar, Thơm, Hành Tây, Xốt Mayonnaise, Xốt Tiêu Đen",
+            "SizeWithPrice": [
+                {
+                    "Size": "big",
+                    "Price": "345000"
+                },
+                {
+                    "Size": "medium", 
+                    "Price": "235000"
+                }
+            ],
+            "Menu_Name": "pizza"
+        },
+        {
+            "Product_Name": "Pizza Siêu Topping Bò Và Tôm Nướng Kiểu Mỹ",
+            "Image": "https://img.dominos.vn/Pizza+Extra+Topping+(4).jpg",
+            "Description": "Tăng 50% lượng topping protein: Tôm, Thịt Bò Mexico; Thêm Phô Mai Mozzarella, Cà Chua, Hành, Xốt Cà Chua, Xốt Mayonnaise Xốt Phô Mai",
+            "SizeWithPrice": [
+                {
+                    "Size": "big",
+                    "Price": "345000"
+                },
+                {
+                    "Size": "medium", 
+                    "Price": "235000"
+                }
+            ],
+            "Menu_Name": "pizza"
+        },
+        {
+            "Product_Name": "Pizza Siêu Topping Dăm Bông Dứa Kiểu Hawaiian",
+            "Image": "https://img.dominos.vn/Pizza+Extra+Topping+(1).jpg",
+            "Description": "Tăng 50% lượng topping protein: Thịt Dăm Bông; Thêm Phô Mai Mozzarella, Dứa, Xốt Mayonnaise, Xốt Cà Chua",
+            "SizeWithPrice": [
+                {
+                    "Size": "big",
+                    "Price": "305000"
+                },
+                {
+                    "Size": "medium", 
+                    "Price": "205000"
+                }
+            ],
+            "Menu_Name": "pizza"
+        },
+        {
+            "Product_Name": "Pizza Siêu Topping Xúc Xích Ý Truyền Thống",
+            "Image": "https://img.dominos.vn/Pizza+Extra+Topping+(5).jpg",
+            "Description": "Tăng 50% lượng topping protein: Xúc Xích Pepperoni; Thêm Phô Mai Mozzarella, Xốt Cà Chua",
+            "SizeWithPrice": [
+                {
+                    "Size": "big",
+                    "Price": "345000"
+                },
+                {
+                    "Size": "medium", 
+                    "Price": "235000"
+                }
+            ],
+            "Menu_Name": "pizza"
+        },
+        {
+            "Product_Name": "Pizza Hải Sản Xốt Pesto \"Chanh Sả\"",
+            "Image": "https://img.dominos.vn/lime.png",
+            "Description": "Mưc Khoanh, Tôm Có Đuôi, Phô Mai Mozzarella, Cà Chua, Hành Tây, Xốt Pesto, Xốt Chanh, Parsley",
+            "SizeWithPrice": [
+                {
+                    "Size": "big",
+                    "Price": "315000"
+                },
+                {
+                    "Size": "medium", 
+                    "Price": "215000"
+                }
+            ],
+            "Menu_Name": "pizza"
+        },
+        {
+            "Product_Name": "Pizza Hải Sản Xốt Mayonnaise Hảo Hạng",
+            "Image": "https://img.dominos.vn/lime.png",
+            "Description": "Pizza Hải Sản Xốt Mayonnaise Hảo Hạng",
+            "SizeWithPrice": [
+                {
+                    "Size": "big",
+                    "Price": "315000"
+                },
+                {
+                    "Size": "medium", 
+                    "Price": "215000"
+                }
+            ],
+            "Menu_Name": "pizza"
+        },
+        {
+            "Product_Name": "Pizza Bò & Tôm Nướng Kiểu Mỹ -",
+            "Image": "https://img.dominos.vn/Surf-turf-Pizza-Bo-Tom-Nuong-Kieu-My-1.jpg",
+            "Description": "Xốt Cà Chua, Xốt Phô Mai, Phô Mai Mozzarella, Tôm, Thịt Bò Mexico, Cà Chua, Hành Tây",
+            "SizeWithPrice": [
+                {
+                    "Size": "big",
+                    "Price": "285000"
+                },
+                {
+                    "Size": "medium", 
+                    "Price": "205000"
+                },
+                {
+                    "Size": "small",
+                    "Price": "115000"
+                }
+            ],
+            "Menu_Name": "pizza"
+        },
+        {
+            "Product_Name": "Pizza Hải Sản Xốt Mayonnaise - Ocean Mania",
+            "Image": "https://img.dominos.vn/Pizza-Hai-San-Xot-Mayonnaise-Ocean-Mania.jpg",
+            "Description": "Xốt Mayonnaise , Phô Mai Mozzarella, Tôm, Mực, Thanh Cua, Hành Tây",
+            "SizeWithPrice": [
+                {
+                    "Size": "big",
+                    "Price": "285000"
+                },
+                {
+                    "Size": "medium", 
+                    "Price": "205000"
+                },
+                {
+                    "Size": "small",
+                    "Price": "115000"
+                }
+            ],
+            "Menu_Name": "pizza"
+        },
+        {
+            "Product_Name": "Pizza Hải Sản Nhiệt Đới Xốt Tiêu",
+            "Image": "https://img.dominos.vn/Pizzaminsea-Hai-San-Nhiet-Doi-Xot-Tieu.jpg",
+            "Description": "Xốt tiêu đen, Phô Mai Mozzarella, Phô Mai Cheddar, Thơm, Hành Tây, Tôm, Mực",
+            "SizeWithPrice": [
+                {
+                    "Size": "big",
+                    "Price": "285000"
+                },
+                {
+                    "Size": "medium", 
+                    "Price": "205000"
+                },
+                {
+                    "Size": "small",
+                    "Price": "115000"
+                }
+            ],
+            "Menu_Name": "pizza"
+        },
+        {
+            "Product_Name": "Pizza Hải Sản Xốt Cà Chua",
+            "Image": "https://img.dominos.vn/Pizza-Hai-San-Xot-Ca-Chua-Seafood-Delight.jpg",
+            "Description": "Xốt Cà Chua, Phô Mai Mozzarella, Tôm, Mực, Thanh Cua, Hành Tây",
+            "SizeWithPrice": [
+                {
+                    "Size": "big",
+                    "Price": "285000"
+                },
+                {
+                    "Size": "medium", 
+                    "Price": "205000"
+                },
+                {
+                    "Size": "small",
+                    "Price": "115000"
+                }
+            ],
+            "Menu_Name": "pizza"
+        },
+        {
+            "Product_Name": "Pizza Xúc Xích Dứa Xốt BBQ Mayo",
+            "Image": "https://img.dominos.vn/bbq-mayo+(2).png",
+            "Description": "Xốt BBQ, Phô Mai Mozzarella, Xúc Xích Parsley, Thịt Xông Khói, Dứa",
+            "SizeWithPrice": [
+                {
+                    "Size": "big",
+                    "Price": "245000"
+                },
+                {
+                    "Size": "medium", 
+                    "Price": "175000"
+                },
+                {
+                    "Size": "small",
+                    "Price": "95000"
+                }
+            ],
+            "Menu_Name": "pizza"
+        },
+        {
+            "Product_Name": "Pizza Thanh Cua Dứa Xốt Phô Mai",
+            "Image": "https://img.dominos.vn/cheesy-crab-stick-+(3).png",
+            "Description": "Xốt Mayonnasie, Phô Mai Mozzarella, Thanh Cua, Dứa",
+            "SizeWithPrice": [
+                {
+                    "Size": "big",
+                    "Price": "245000"
+                },
+                {
+                    "Size": "medium", 
+                    "Price": "175000"
+                },
+                {
+                    "Size": "small",
+                    "Price": "95000"
+                }
+            ],
+            "Menu_Name": "pizza"
+        },
+        {
+            "Product_Name": "Pizza Dăm Bông Bắp Xốt Phô Mai",
+            "Image": "https://img.dominos.vn/cheesy-ha%2C-corn-+(3).png",
+            "Description": "Xốt Phô Mai, Phô Mai Mozzarella, Thịt Dăm Bông, Thịt Xông Khói, Bắp",
+            "SizeWithPrice": [
+                {
+                    "Size": "big",
+                    "Price": "245000"
+                },
+                {
+                    "Size": "medium", 
+                    "Price": "175000"
+                },
+                {
+                    "Size": "small",
+                    "Price": "95000"
+                }
+            ],
+            "Menu_Name": "pizza"
+        },
+        {
+            "Product_Name": "Pizza Xúc Xích Xốt Phô Mai",
+            "Image": "https://img.dominos.vn/Sausage-Kid-Mania-1.jpg",
+            "Description": "Xốt phô mai, Phô mai Mozzarella, Xúc Xích, Thịt Heo Xông Khói, Bắp (Ngô), Thơm (Dứa)",
+            "SizeWithPrice": [
+                {
+                    "Size": "big",
+                    "Price": "245000"
+                },
+                {
+                    "Size": "medium", 
+                    "Price": "175000"
+                },
+                {
+                    "Size": "small",
+                    "Price": "95000"
+                }
+            ],
+            "Menu_Name": "pizza"
+        },
+        {
+            "Product_Name": "Pizza Gà Phô Mai Thịt Heo Xông Khói",
+            "Image": "https://img.dominos.vn/Pizza-Ga-Pho-Mai-Thit-Heo-Xong-Khoi-Cheesy-Chicken-Bacon.jpg",
+            "Description": "Xốt Phô Mai, Gà Viên, Thịt Heo Xông Khói, Phô Mai Mozzarella, Cà Chua",
+            "SizeWithPrice": [
+                {
+                    "Size": "big",
+                    "Price": "245000"
+                },
+                {
+                    "Size": "medium", 
+                    "Price": "175000"
+                },
+                {
+                    "Size": "small",
+                    "Price": "95000"
+                }
+            ],
+            "Menu_Name": "pizza"
+        },
+        {
+            "Product_Name": "Pizza Bơ Gơ Bò Mỹ Xốt Phô Mai Ngập Vị",
+            "Image": "https://img.dominos.vn/cheeseburger.jpg",
+            "Description": "Thịt Bò Bơ Gơ Nhập Khẩu, Thịt Heo Xông Khói, Xốt Phô Mai, Xốt Mayonnaise, Phô Mai Mozzarella, Phô Mai Cheddar, Dưa Chuột Muối, Cà Chua, Hành Tây, Nấm, Bột Paprika Hun Khói",
+            "SizeWithPrice": [
+                {
+                    "Size": "big",
+                    "Price": "305000"
+                },
+                {
+                    "Size": "medium", 
+                    "Price": "205000"
+                }
+            ],
+            "Menu_Name": "pizza"
+        },
+        {
+            "Product_Name": "Pizza Bơ Gơ Bò Mỹ Xốt Habanero",
+            "Image": "https://img.dominos.vn/cheeseburger-habanero.jpg",
+            "Description": "Thịt Bò Bơ Gơ Nhập Khẩu, Thịt Heo Xông Khói, Xốt Phô Mai, Xốt Habanero, Phô Mai Mozzarella, Phô Mai Cheddar, Dưa Chuột Muối, Cà Chua, Hành Tây, Nấm, Ớt Chuông, Bột Paprika Hun Khói",
+            "SizeWithPrice": [
+                {
+                    "Size": "big",
+                    "Price": "305000"
+                },
+                {
+                    "Size": "medium", 
+                    "Price": "205000"
+                }
+            ],
+            "Menu_Name": "pizza"
+        },
+        {
+            "Product_Name": "Pizza New York Bò Beefsteak Phô Mai",
+            "Image": "https://img.dominos.vn/Menu+BG+1.jpg",
+            "Description": "Bò Beefsteak, Xốt Demi-Glace (Xốt Bít Tết), Xốt Kem Chua, Phô Mai Mozzarella, Nấm, Cà Chua, Hành Tây, Bột Rong Biển",
+            "SizeWithPrice": [
+                {
+                    "Size": "big",
+                    "Price": "305000"
+                },
+                {
+                    "Size": "medium", 
+                    "Price": "215000"
+                }
+            ],
+            "Menu_Name": "pizza"
+        },
+        {
+            "Product_Name": "Pizza Thập Cẩm Thượng Hạng",
+            "Image": "https://img.dominos.vn/Pizza-Thap-Cam-Thuong-Hang-Extravaganza.jpg",
+            "Description": "Xốt Cà Chua, Phô Mai Mozzarella, Xúc Xích Pepperoni, Thịt Dăm Bông, Xúc Xich Ý, Thịt Bò Viên, Ớt Chuông Xanh, Nấm Mỡ, Hành Tây, Ô-liu",
+            "SizeWithPrice": [
+                {
+                    "Size": "big",
+                    "Price": "285000"
+                },
+                {
+                    "Size": "medium", 
+                    "Price": "205000"
+                },
+                {
+                    "Size": "small",
+                    "Price": "115000"
+                }
+            ],
+            "Menu_Name": "pizza"
+        },
+        {
+            "Product_Name": "Pizza Ngập Vị Phô Mai Hảo Hạng",
+            "Image": "https://img.dominos.vn/CHEESY+MADNESS+NO+NEW+PC.jpg",
+            "Description": "Phô Mai Cheddar, Phô Mai Mozzarella, Phô Mai Xanh Viên, Viền Phô Mai, Xốt Phô Mai Và Phục Vụ Cùng Mật Ong.",
+            "SizeWithPrice": [
+                {
+                    "Size": "big",
+                    "Price": "245000"
+                },
+                {
+                    "Size": "medium", 
+                    "Price": "175000"
+                }
+            ],
+            "Menu_Name": "pizza"
+        },
+        {
+            "Product_Name": "Pizza Rau Củ Thập Cẩm",
+            "Image": "https://img.dominos.vn/Veggie-mania-Pizza-Rau-Cu-Thap-Cam.jpg",
+            "Description": "Xốt Cà Chua, Phô Mai Mozzarella, Hành Tây, Ớt Chuông Xanh, Ô-liu, Nấm Mỡ, Cà Chua, Thơm (dứa)",
+            "SizeWithPrice": [
+                {
+                    "Size": "big",
+                    "Price": "225000"
+                },
+                {
+                    "Size": "medium", 
+                    "Price": "155000"
+                },
+                {
+                    "Size": "small",
+                    "Price": "85000"
+                }
+            ],
+            "Menu_Name": "pizza"
+        },
+        {
+            "Product_Name": "Pizza 5 Loại Thịt Thượng Hạng",
+            "Image": "https://img.dominos.vn/Pepperoni-feast-Pizza-Xuc-Xich-Y.jpg",
+            "Description": "Xốt Cà Chua, Phô Mai Mozzarella, Xúc Xích Pepperoni, Thịt Dăm Bông, Xúc Xich Ý, Thịt Bò Viên, Thịt Heo Xông Khói",
+            "SizeWithPrice": [
+                {
+                    "Size": "big",
+                    "Price": "285000"
+                },
+                {
+                    "Size": "medium", 
+                    "Price": "205000"
+                },
+                {
+                    "Size": "small",
+                    "Price": "115000"
+                }
+            ],
+            "Menu_Name": "pizza"
+        },
+        {
+            "Product_Name": "Pizza Dăm Bông Dứa Kiểu Hawaii",
+            "Image": "https://img.dominos.vn/Pizza-Dam-Bong-Dua-Kieu-Hawaii-Hawaiian.jpg",
+            "Description": "Xốt Cà Chua, Phô Mai Mozzarella, Thịt Dăm Bông, Thơm",
+            "SizeWithPrice": [
+                {
+                    "Size": "big",
+                    "Price": "245000"
+                },
+                {
+                    "Size": "medium", 
+                    "Price": "175000"
+                },
+                {
+                    "Size": "small",
+                    "Price": "95000"
+                }
+            ],
+            "Menu_Name": "pizza"
+        },
+        {
+            "Product_Name": "Pizza Phô Mai Truyền Thống -",
+            "Image": "https://img.dominos.vn/Pizza-Pho-Mai-Hao-Hang-Cheese-Mania.jpg",
+            "Description": "Xốt Cà Chua, phô Mai Mozzarella",
+            "SizeWithPrice": [
+                {
+                    "Size": "big",
+                    "Price": "225000"
+                },
+                {
+                    "Size": "medium", 
+                    "Price": "155000"
+                }
+            ],
+            "Menu_Name": "pizza"
+        },
+        {
+            "Product_Name": "Pizza Xúc Xích Ý Truyền Thống",
+            "Image": "https://img.dominos.vn/Pepperoni-feast-Pizza-Xuc-Xich-Y.jpg",
+            "Description": "Xốt Cà Chua, Phô Mai Mozzarella, Xúc Xích Pepperoni",
+            "SizeWithPrice": [
+                {
+                    "Size": "big",
+                    "Price": "285000"
+                },
+                {
+                    "Size": "medium", 
+                    "Price": "205000"
+                },
+                {
+                    "Size": "small",
+                    "Price": "115000"
+                }
+            ],
+            "Menu_Name": "pizza"
+        },
+        {
+            "Product_Name": "Gà Viên Phô Mai Đút Lò",
+            "Image": "https://img.dominos.vn/375x200+G%C3%A0+Vi%C3%AAn+Ph%C3%B4+Mai+%C4%90%C3%BAt+L%C3%B2+new%402x.png",
+            "Description": "Gà Viên Popcorn, Thịt Heo Xông Khói, Phô Mai Mozzarella, Xốt Pizza",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "69000"
+                }
+            ],
+            "Menu_Name": "chicken"
+        },
+        {
+            "Product_Name": "Gà Viên Xốt Chua Ngọt Đút Lò",
+            "Image": "https://img.dominos.vn/360x240+G%C3%A0+Vi%C3%AAn+X%E1%BB%91t+Chua+Ng%E1%BB%8Dt+%C4%90%C3%BAt+L%C3%B2+new%402x.png",
+            "Description": "Gà Popcorn, Dứa, Cà Chua, Mè, Xốt Hàn Quốc",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "69000"
+                }
+            ],
+            "Menu_Name": "chicken"
+        },
+        {
+            "Product_Name": "Gà Viên Xốt BBQ Mayo Đút Lò",
+            "Image": "https://img.dominos.vn/360x240+G%C3%A0+Vi%C3%AAn+X%E1%BB%91t+BBQ+Mayo+%C4%90%C3%BAt+L%C3%B2+new%402x.png",
+            "Description": "Gà Viên Popcorn, Khoai Tây, Dăm Bông, Thịt Heo Xông Khói, Phô Mai Mozzarella, Xốt Mayonnaise, Xốt BBQ",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "69000"
+                }
+            ],
+            "Menu_Name": "chicken"
+        },
+        {
+            "Product_Name": "Cánh Gà Nướng BBQ (4 miếng)",
+            "Image": "https://img.dominos.vn/360x240+C%C3%A1nh+G%C3%A0+n%C6%B0%E1%BB%9Bng+BBQ+new+4+mieng%402x.png",
+            "Description": "Cánh Gà, Xốt BBQ",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "99000"
+                }
+            ],
+            "Menu_Name": "chicken"
+        },
+        {
+            "Product_Name": "Cánh Gà Nướng BBQ (6 miếng)",
+            "Image": "https://img.dominos.vn/360x240+C%C3%A1nh+G%C3%A0+n%C6%B0%E1%BB%9Bng+BBQ+new%402x.png",
+            "Description": "Cánh Gà, Xốt BBQ",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "129000"
+                }
+            ],
+            "Menu_Name": "chicken"
+        },
+        {
+            "Product_Name": "Cánh Gà Phủ Xốt Hàn Quốc (4 Miếng)",
+            "Image": "https://img.dominos.vn/360x240+C%C3%A1nh+G%C3%A0+Ph%E1%BB%A7+X%E1%BB%91t+BBQ+HQ+new+4+mi%E1%BA%BFng%402x.png",
+            "Description": "Cánh Gà, Xốt Hàn Quốc",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "99000"
+                }
+            ],
+            "Menu_Name": "chicken"
+        },
+        {
+            "Product_Name": "Cánh Gà Phủ Xốt Hàn Quốc (6 Miếng)",
+            "Image": "https://img.dominos.vn/360x240+C%C3%A1nh+G%C3%A0+Ph%E1%BB%A7+X%E1%BB%91t+BBQ+HQ+new%402x.png",
+            "Description": "Cánh Gà, Xốt Hàn Quốc",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "129000"
+                }
+            ],
+            "Menu_Name": "chicken"
+        },
+        {
+            "Product_Name": "Cánh Gà Phủ Xốt BBQ Kiểu Mỹ (4 miếng)",
+            "Image": "https://img.dominos.vn/360x240C%C3%A1nh+G%C3%A0+Ph%E1%BB%A7+X%E1%BB%91t+BBQ+Ki%E1%BB%83u+M%E1%BB%B9+new+4+mi%E1%BA%BFng%402x.png",
+            "Description": "Cánh Gà, Xốt BBQ",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "99000"
+                }
+            ],
+            "Menu_Name": "chicken"
+        },
+        {
+            "Product_Name": "Cánh Gà Phủ Xốt BBQ Kiểu Mỹ (6 Miếng)",
+            "Image": "https://img.dominos.vn/360x240C%C3%A1nh+G%C3%A0+Ph%E1%BB%A7+X%E1%BB%91t+BBQ+Ki%E1%BB%83u+M%E1%BB%B9+new%402x.png",
+            "Description": "Cánh Gà, Xốt BBQ",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "129000"
+                }
+            ],
+            "Menu_Name": "chicken"
+        },
+        {
+            "Product_Name": "Chai Sprite 390ml - Sprite 390ml Bottle",
+            "Image": "https://img.dominos.vn/Sprite-390.jpg",
+            "Description": "Sprite 390m",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "25000"
+                }
+            ],
+            "Menu_Name": "drinks"
+        },
+        {
+            "Product_Name": "Mỳ Ý Thịt Heo Xông Khói Xốt Marinara Cay",
+            "Image": "https://img.dominos.vn/detail-pasta-+(13).jpg",
+            "Description": "Mỳ Ý, Thịt Xông Khói, Thịt Xông Khói Miếng, Xốt Marinara, Ớt Vẩy, Bột Rong Biển, Bột Tỏi",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "89000"
+                }
+            ],
+            "Menu_Name": "pasta"
+        },
+        {
+            "Product_Name": "Mỳ Ý Thịt Heo Xông Khói Xốt Kem",
+            "Image": "https://img.dominos.vn/detail-pasta-+(10).jpg",
+            "Description": "Mỳ Ý, Xốt Carbonara, Thịt Xông Khói, Bột Rong Biển, Bột Tỏi",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "99000"
+                }
+            ],
+            "Menu_Name": "pasta"
+        },
+        {
+            "Product_Name": "Mỳ Ý Tôm Xốt Marinara Cay",
+            "Image": "https://img.dominos.vn/detail-pasta-+(9).jpg",
+            "Description": "Mỳ Ý, Hành Tây, Tôm, Xốt Marinara, Ớt Vẩy, Bột Rong Biển, Bột Tỏi",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "99000"
+                }
+            ],
+            "Menu_Name": "pasta"
+        },
+        {
+            "Product_Name": "Mỳ Ý Hải Sản Xốt Pesto",
+            "Image": "https://img.dominos.vn/detail-pasta-+(12).jpg",
+            "Description": "Mỳ Ý, Hành Tây, Tôm, Xốt Marinara, Ớt Vẩy, Bột Rong Biển, Bột Tỏi",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "99000"
+                }
+            ],
+            "Menu_Name": "pasta"
+        },
+        {
+            "Product_Name": "Mỳ Ý Bò Bằm Xốt Marinara",
+            "Image": "https://img.dominos.vn/detail-pasta-+(8).jpg",
+            "Description": "Mỳ Ý, Xốt Bò Bằm, Bột Rong Biển, Bột Tỏi",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "99000"
+                }
+            ],
+            "Menu_Name": "pasta"
+        },
+        {
+            "Product_Name": "Mỳ Ý Rau Củ Xốt Marinara",
+            "Image": "https://img.dominos.vn/detail-pasta-+(14).jpg",
+            "Description": "Mỳ Ý, Ớt Chuông Xanh, Nấm, Cà Chua, Dứa, Ô-Liu Đen, Xốt Marinara, Bột Rong Biển, Bột Tỏi",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "89000"
+                }
+            ],
+            "Menu_Name": "pasta"
+        },
+        {
+            "Product_Name": "Mỳ Ý Xúc Xích Xốt Marinara",
+            "Image": "https://img.dominos.vn/detail-pasta-+(11).jpg",
+            "Description": "Mỳ Ý, Xúc Xích Parsley, Thịt Xông Khói, Xúc Xích Pepperoni, Xốt Marinara, Bột Rong Biển, Bột Tỏi",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "89000"
+                }
+            ],
+            "Menu_Name": "pasta"
+        },
+        {
+            "Product_Name": "Xúc Xích Xông Khói Đút Lò (4 miếng)",
+            "Image": "https://img.dominos.vn/MENU-MB_Xu%CC%81c-Xi%CC%81ch-Xo%CC%82ng-Kho%CC%81i-%C4%90u%CC%81t-Lo%CC%80+-+4.jpg",
+            "Description": "Xúc Xích Xông Khói, Xốt BBQ",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "49000"
+                }
+            ],
+            "Menu_Name": "appetizers"
+        },
+        {
+            "Product_Name": "Xúc Xích Xông Khói Đút Lò (8 miếng)",
+            "Image": "https://img.dominos.vn/MENU-MB_Xu%CC%81c-Xi%CC%81ch-Xo%CC%82ng-Kho%CC%81i-%C4%90u%CC%81t-Lo%CC%80.jpg",
+            "Description": "Xúc Xích Xông Khói, Xốt BBQ",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "89000"
+                }
+            ],
+            "Menu_Name": "appetizers"
+        },
+        {
+            "Product_Name": "Khai Vị Tổng Hợp",
+            "Image": "https://img.dominos.vn/Khai-Vi%CC%A3-To%CC%82%CC%89ng-Ho%CC%9B%CC%A3p-PC-nen-xam-1_360X240px_1.jpg",
+            "Description": "2 miếng Cánh gà nướng BBQ, 3 miếng Xúc Xích Xông Khói Đút Lò và Khoai tây phô mai đút lò",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "99000"
+                }
+            ],
+            "Menu_Name": "appetizers"
+        },
+        {
+            "Product_Name": "Bánh Mì Nướng Bơ Tỏi",
+            "Image": "https://img.dominos.vn/MENU-MB_Ba%CC%81nh-Mi%CC%80-Nu%CC%9Bo%CC%9B%CC%81ng-Bo%CC%9B-To%CC%89i.jpg",
+            "Description": "Bánh Mì, Bơ, Bột Tỏi, Xốt Pizza",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "49000"
+                }
+            ],
+            "Menu_Name": "appetizers"
+        },
+        {
+            "Product_Name": "Bánh Mì Nướng Phô Mai",
+            "Image": "https://img.dominos.vn/MENU-MB_Ba%CC%81nh-Mi%CC%80-Nu%CC%9Bo%CC%9B%CC%81ng-Pho%CC%82-Mai.jpg",
+            "Description": "Bánh Mì, Bơ, Phô Mai, Bột Tỏi, Xốt Pizza",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "59000"
+                }
+            ],
+            "Menu_Name": "appetizers"
+        },
+        {
+            "Product_Name": "Bánh Cuộn Xốt Sô-Cô-La",
+            "Image": "https://img.dominos.vn/MENU-PC-Chocolate-Roll-nen-xam_360X240px.jpg",
+            "Description": "Bánh Cuộn Mềm Xốp, Sô-cô-la chip Đen Và Trắng, Xốt Sô-cô-la Đen",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "49000"
+                }
+            ],
+            "Menu_Name": "desserts"
+        },
+        {
+            "Product_Name": "Bánh Sô-Cô-La Đút Lò",
+            "Image": "https://img.dominos.vn/MENU-MB_BA%CC%81NH-SO%CC%82-CO%CC%82-LA-%C4%90U%CC%81T-LO%CC%80.jpg",
+            "Description": "Bánh Sô-Cô-La Nguyên Chất",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "49000"
+                }
+            ],
+            "Menu_Name": "desserts"
+        },
+        {
+            "Product_Name": "Chocochips (Đế dày xốp)",
+            "Image": "https://img.dominos.vn/MENU-PC_choco-pizza+(1).jpg",
+            "Description": "Sô-cô-la chip Đen Và Trắng, Xốt Sô-cô-la Đen, Phô Mai Mozarella, Xốt Kem Chua, Đế Dày Xốp",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "39000"
+                }
+            ],
+            "Menu_Name": "desserts"
+        },
+        {
+            "Product_Name": "Chai Coca-Cola 390ml",
+            "Image": "https://img.dominos.vn/coke-390.jpg",
+            "Description": "Chai Coca-Cola 390ml",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "25000"
+                }
+            ],
+            "Menu_Name": "drinks"
+        },
+        {
+            "Product_Name": "Chai Fanta 390ml",
+            "Image": "https://img.dominos.vn/coke-390.jpg",
+            "Description": "Chai Fanta 390ml",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "25000"
+                }
+            ],
+            "Menu_Name": "drinks"
+        },
+        {
+            "Product_Name": "Chai Coca-Cola Zero Sugar 1.5L",
+            "Image": "https://img.dominos.vn/MENU-MB_Coca-Zero-1L5_trang.png",
+            "Description": "Chai Coca-Cola Zero Sugar 1.5L",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "40000"
+                }
+            ],
+            "Menu_Name": "drinks"
+        },
+        {
+            "Product_Name": "CHAI SPRITE 1.85L",
+            "Image": "https://img.dominos.vn/Sprite-1.5L.jpg",
+            "Description": "CHAI SPRITE 1.85L",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "39000"
+                }
+            ],
+            "Menu_Name": "drinks"
+        },
+        {
+            "Product_Name": "Lon Coca-Cola zero 320ml",
+            "Image": "https://img.dominos.vn/coke-zero.jpg",
+            "Description": "Lon Coca-Cola zero 320ml",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "25000"
+                }
+            ],
+            "Menu_Name": "drinks"
+        }
+    ]
+}

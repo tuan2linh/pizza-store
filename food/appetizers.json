@@ -1,0 +1,67 @@
+
+{
+    "success": true,
+    "count": 4,
+    "data": [
+        {
+            "Product_Name": "Xúc Xích Xông Khói Đút Lò (4 miếng)",
+            "Image": "https://img.dominos.vn/MENU-MB_Xu%CC%81c-Xi%CC%81ch-Xo%CC%82ng-Kho%CC%81i-%C4%90u%CC%81t-Lo%CC%80+-+4.jpg",
+            "Description": "Xúc Xích Xông Khói, Xốt BBQ",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "49000"
+                }
+            ],
+            "Menu_Name": "appetizers"
+        },
+        {
+            "Product_Name": "Xúc Xích Xông Khói Đút Lò (8 miếng)",
+            "Image": "https://img.dominos.vn/MENU-MB_Xu%CC%81c-Xi%CC%81ch-Xo%CC%82ng-Kho%CC%81i-%C4%90u%CC%81t-Lo%CC%80.jpg",
+            "Description": "Xúc Xích Xông Khói, Xốt BBQ",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "89000"
+                }
+            ],
+            "Menu_Name": "appetizers"
+        },
+        {
+            "Product_Name": "Khai Vị Tổng Hợp",
+            "Image": "https://img.dominos.vn/Khai-Vi%CC%A3-To%CC%82%CC%89ng-Ho%CC%9B%CC%A3p-PC-nen-xam-1_360X240px_1.jpg",
+            "Description": "2 miếng Cánh gà nướng BBQ, 3 miếng Xúc Xích Xông Khói Đút Lò và Khoai tây phô mai đút lò",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "99000"
+                }
+            ],
+            "Menu_Name": "appetizers"
+        },
+        {
+            "Product_Name": "Bánh Mì Nướng Bơ Tỏi",
+            "Image": "https://img.dominos.vn/MENU-MB_Ba%CC%81nh-Mi%CC%80-Nu%CC%9Bo%CC%9B%CC%81ng-Bo%CC%9B-To%CC%89i.jpg",
+            "Description": "Bánh Mì, Bơ, Bột Tỏi, Xốt Pizza",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "49000"
+                }
+            ],
+            "Menu_Name": "appetizers"
+        },
+        {
+            "Product_Name": "Bánh Mì Nướng Phô Mai",
+            "Image": "https://img.dominos.vn/MENU-MB_Ba%CC%81nh-Mi%CC%80-Nu%CC%9Bo%CC%9B%CC%81ng-Pho%CC%82-Mai.jpg",
+            "Description": "Bánh Mì, Bơ, Phô Mai, Bột Tỏi, Xốt Pizza",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "59000"
+                }
+            ],
+            "Menu_Name": "appetizers"
+        }
+    ]
+}

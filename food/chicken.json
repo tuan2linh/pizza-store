@@ -1,0 +1,103 @@
+
+{
+    "success": true,
+    "count": 8,
+    "data": [
+        {
+            "Product_Name": "Gà Viên Xốt Chua Ngọt Đút Lò",
+            "Image": "https://img.dominos.vn/360x240+G%C3%A0+Vi%C3%AAn+X%E1%BB%91t+Chua+Ng%E1%BB%8Dt+%C4%90%C3%BAt+L%C3%B2+new%402x.png",
+            "Description": "Gà Popcorn, Dứa, Cà Chua, Mè, Xốt Hàn Quốc",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "69000"
+                }
+            ],
+            "Menu_Name": "chicken"
+        },
+        {
+            "Product_Name": "Gà Viên Xốt BBQ Mayo Đút Lò",
+            "Image": "https://img.dominos.vn/360x240+G%C3%A0+Vi%C3%AAn+X%E1%BB%91t+BBQ+Mayo+%C4%90%C3%BAt+L%C3%B2+new%402x.png",
+            "Description": "Gà Viên Popcorn, Khoai Tây, Dăm Bông, Thịt Heo Xông Khói, Phô Mai Mozzarella, Xốt Mayonnaise, Xốt BBQ",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "69000"
+                }
+            ],
+            "Menu_Name": "chicken"
+        },
+        {
+            "Product_Name": "Cánh Gà Nướng BBQ (4 miếng)",
+            "Image": "https://img.dominos.vn/360x240+C%C3%A1nh+G%C3%A0+n%C6%B0%E1%BB%9Bng+BBQ+new+4+mieng%402x.png",
+            "Description": "Cánh Gà, Xốt BBQ",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "99000"
+                }
+            ],
+            "Menu_Name": "chicken"
+        },
+        {
+            "Product_Name": "Cánh Gà Nướng BBQ (6 miếng)",
+            "Image": "https://img.dominos.vn/360x240+C%C3%A1nh+G%C3%A0+n%C6%B0%E1%BB%9Bng+BBQ+new%402x.png",
+            "Description": "Cánh Gà, Xốt BBQ",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "129000"
+                }
+            ],
+            "Menu_Name": "chicken"
+        },
+        {
+            "Product_Name": "Cánh Gà Phủ Xốt Hàn Quốc (4 Miếng)",
+            "Image": "https://img.dominos.vn/360x240+C%C3%A1nh+G%C3%A0+Ph%E1%BB%A7+X%E1%BB%91t+BBQ+HQ+new+4+mi%E1%BA%BFng%402x.png",
+            "Description": "Cánh Gà, Xốt Hàn Quốc",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "99000"
+                }
+            ],
+            "Menu_Name": "chicken"
+        },
+        {
+            "Product_Name": "Cánh Gà Phủ Xốt Hàn Quốc (6 Miếng)",
+            "Image": "https://img.dominos.vn/360x240+C%C3%A1nh+G%C3%A0+Ph%E1%BB%A7+X%E1%BB%91t+BBQ+HQ+new%402x.png",
+            "Description": "Cánh Gà, Xốt Hàn Quốc",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "129000"
+                }
+            ],
+            "Menu_Name": "chicken"
+        },
+        {
+            "Product_Name": "Cánh Gà Phủ Xốt BBQ Kiểu Mỹ (4 miếng)",
+            "Image": "https://img.dominos.vn/360x240C%C3%A1nh+G%C3%A0+Ph%E1%BB%A7+X%E1%BB%91t+BBQ+Ki%E1%BB%83u+M%E1%BB%B9+new+4+mi%E1%BA%BFng%402x.png",
+            "Description": "Cánh Gà, Xốt BBQ",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "99000"
+                }
+            ],
+            "Menu_Name": "chicken"
+        },
+        {
+            "Product_Name": "Cánh Gà Phủ Xốt BBQ Kiểu Mỹ (6 Miếng)",
+            "Image": "https://img.dominos.vn/360x240C%C3%A1nh+G%C3%A0+Ph%E1%BB%A7+X%E1%BB%91t+BBQ+Ki%E1%BB%83u+M%E1%BB%B9+new%402x.png",
+            "Description": "Cánh Gà, Xốt BBQ",
+            "SizeWithPrice": [
+                {
+                    "Size": "medium",
+                    "Price": "129000"
+                }
+            ],
+            "Menu_Name": "chicken"
+        }
+    ]
+}
