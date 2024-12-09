@@ -24,6 +24,7 @@ import PrivateRoute from './pages/Admin/PrivateRoute';
 import Material from './pages/Admin/Material'
 import AddMaterial from './pages/Admin/AddMaterial'
 import UpdateMaterial from './pages/Admin/UpdateMaterial'
+import BuyMaterial from './pages/Admin/BuyMaterial'
 import Suppliers from './pages/Admin/Suppliers'
 import AddSupplier from './pages/Admin/AddSupplier'
 import UpdateSupplier from './pages/Admin/UpdateSupplier'
@@ -76,6 +77,7 @@ function App() {
               <Route path='materials' element={<Material />} />
               <Route path='addmaterial' element={<AddMaterial />} />
               <Route path='updatematerial/:id' element={<UpdateMaterial />} />
+              <Route path='buymaterial/:id' element={<BuyMaterial />} />
               <Route path='support' element={<h1>Customer Support</h1>} />
             </Route>
           </Route>
