@@ -198,7 +198,7 @@ const CartSidebar = ({ isOpen, onClose }) => {
                     <span>-{parseFloat(cartData.loyaltyDiscount).toLocaleString()}đ</span>
                   </div>
                 )}
-                {cartData.voucher && (
+                {cartData.voucher?.Voucher_Code && (
                   <div className="flex justify-between text-green-600">
                     <span>Giảm giá voucher ({cartData.voucher.Voucher_Code}):</span>
                     <span>
@@ -215,7 +215,7 @@ const CartSidebar = ({ isOpen, onClose }) => {
                     {(
                       parseFloat(cartData.subTotal) - 
                       (parseFloat(cartData.loyaltyDiscount) || 0) - 
-                      (cartData.voucher 
+                      (cartData.voucher?.Voucher_Code
                         ? (cartData.voucher.Discount_Type === 'Percent'
                           ? parseFloat(cartData.subTotal) * parseFloat(cartData.voucher.Discount_Value) / 100
                           : parseFloat(cartData.voucher.Discount_Value))
