@@ -118,6 +118,7 @@ const CartSidebar = ({ isOpen, onClose }) => {
       }
       else
       {
+          console.log(response);
           toast.error('Cập nhật số lượng sản phẩm thất bại');
       }
     } catch (error) {
