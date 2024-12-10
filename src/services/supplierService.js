@@ -29,6 +29,9 @@ const updateSupplier = async (id, formData) => {
 const addSupplier = async (formData) => {
     try {
         const response = await axios.post("/supplier/add", formData, {
+            headers: {
+                "Content-Type": "application/json",
+            },
         });
         return response.data;
     } catch (error) {
