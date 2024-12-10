@@ -6,34 +6,46 @@ import { addEmployee } from "../../../services/employeeService"; // Đường d�
 const AddEmployee = () => {
     const navigate = useNavigate();
 
-    // State lưu trữ thông tin nhân viên mới
     const [newEmployee, setNewEmployee] = useState({
         username: "",
         password: "",
         email: "",
-        store_id: "",
+        store_id: "102", // Store ID mặc định
         birth_date: "",
         gender: "",
         phone: "",
         role: "",
     });
 
-    // Hàm xử lý thay đổi giá trị input
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setNewEmployee({ ...newEmployee, [name]: value });
+
+        // Chỉ validate phone khi nhập ký tự không phải số
+        if (name === "phone" && (value === "" || /^[0-9]*$/.test(value))) {
+            setNewEmployee({ ...newEmployee, [name]: value });
+        } else if (name !== "phone") {
+            setNewEmployee({ ...newEmployee, [name]: value });
+        }
+
+        // setNewEmployee({ ...newEmployee, [name]: value });
     };
 
-    // Hàm xử lý khi submit form
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Kiểm tra dữ liệu đầu vào
+        // Validate tuổi (18 đến 64)
+        const birthDate = new Date(newEmployee.birth_date);
+        const age = Math.floor((new Date() - birthDate) / (365.25 * 24 * 60 * 60 * 1000));
+        if (age < 18 || age > 64) {
+            toast.error("Age must be between 18 and 64 years.");
+            return;
+        }
+
+        // Validate dữ liệu
         if (
             !newEmployee.username ||
             !newEmployee.password ||
             !newEmployee.email ||
-            !newEmployee.store_id ||
             !newEmployee.birth_date ||
             !newEmployee.gender ||
             !newEmployee.phone ||
@@ -43,19 +55,11 @@ const AddEmployee = () => {
             return;
         }
 
-        // Tạo FormData để gửi dữ liệu
-        const formData = new FormData();
-        formData.append("username", newEmployee.username);
-        formData.append("password", newEmployee.password);
-        formData.append("email", newEmployee.email);
-        formData.append("store_id", newEmployee.store_id);
-        formData.append("birth_date", newEmployee.birth_date);
-        formData.append("gender", newEmployee.gender);
-        formData.append("phone", newEmployee.phone);
-        formData.append("role", newEmployee.role);
-
         try {
-            // Gọi API thêm nhân viên
+            const formData = new FormData();
+            for (const key in newEmployee) {
+                formData.append(key, newEmployee[key]);
+            }
             await addEmployee(formData);
             toast.success("Employee added successfully!");
             navigate("/admin/employees");
@@ -126,10 +130,8 @@ const AddEmployee = () => {
                         name="store_id"
                         type="text"
                         value={newEmployee.store_id}
-                        onChange={handleInputChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                        placeholder="Enter store ID"
-                        required
+                        readOnly // Store ID cố định
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-100"
                     />
                 </div>
 
@@ -187,15 +189,20 @@ const AddEmployee = () => {
                     <label htmlFor="role" className="block text-gray-700 font-semibold mb-2">
                         Role
                     </label>
-                    <input
+                    <select
                         name="role"
-                        type="text"
                         value={newEmployee.role}
                         onChange={handleInputChange}
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                        placeholder="Enter role (e.g., Kitchen)"
                         required
-                    />
+                    >
+                        <option value="">Select role</option>
+                        <option value="Sales">Sales</option>
+                        <option value="Customer Support">Customer Support</option>
+                        <option value="Kitchen">Kitchen</option>
+                        <option value="Delivery">Delivery</option>
+                        <option value="Manager">Manager</option>
+                    </select>
                 </div>
 
                 {/* Submit Button */}

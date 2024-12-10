@@ -5,13 +5,13 @@ import { getEmployeeByID, updateEmployee } from "../../../services/employeeServi
 
 const UpdateEmployee = () => {
     const navigate = useNavigate();
-    const { id } = useParams(); // Lấy employee_id từ URL
+    const { id } = useParams(); // Lấy `id` từ URL
 
     // State lưu trữ thông tin nhân viên
     const [employee, setEmployee] = useState({
         employee_id: "",
         account_id: "",
-        store_id: "",
+        store_id: "102", // Mặc định là 102
         birth_date: "",
         gender: "",
         phone: "",
@@ -41,17 +41,36 @@ const UpdateEmployee = () => {
         fetchEmployee();
     }, [id]);
 
+    // Kiểm tra hợp lệ cho trường tuổi
+    const isAgeValid = (birth_date) => {
+        const today = new Date();
+        const birthDate = new Date(birth_date);
+        const age = today.getFullYear() - birthDate.getFullYear();
+        const monthDifference = today.getMonth() - birthDate.getMonth();
+        if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+            return age - 1; // Điều chỉnh nếu chưa qua ngày sinh
+        }
+        return age;
+    };
+
+    // Xử lý submit form
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         // Kiểm tra thông tin đầu vào
-        if (!employee.store_id || !employee.birth_date || !employee.gender || !employee.role) {
+        const age = isAgeValid(employee.birth_date);
+        if (age < 18 || age > 64) {
+            toast.error("Employee age must be between 18 and 64 years.");
+            return;
+        }
+
+        if (!employee.gender || !employee.role) {
             toast.error("Please fill in all required fields.");
             return;
         }
 
+        // Gửi dữ liệu cập nhật
         try {
-            // Gửi dữ liệu cập nhật về backend
             await updateEmployee(id, employee);
             toast.success("Employee updated successfully!");
             navigate("/admin/employees"); // Điều hướng tới danh sách nhân viên
@@ -72,19 +91,17 @@ const UpdateEmployee = () => {
                         onSubmit={handleSubmit}
                         className="space-y-6 bg-white p-8 rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-gray-100"
                     >
-                        {/* Store ID */}
+                        {/* Store ID (Mặc định 102, không cho chỉnh sửa) */}
                         <div>
                             <label htmlFor="store_id" className="block text-gray-700 font-semibold mb-2">
                                 Store ID
                             </label>
                             <input
                                 name="store_id"
-                                type="number"
+                                type="text"
                                 value={employee.store_id}
-                                onChange={handleInputChange}
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
-                                placeholder="Enter store ID"
-                                required
+                                disabled
+                                className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-700"
                             />
                         </div>
 
@@ -98,7 +115,7 @@ const UpdateEmployee = () => {
                                 type="date"
                                 value={employee.birth_date}
                                 onChange={handleInputChange}
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                                 required
                             />
                         </div>
@@ -112,7 +129,7 @@ const UpdateEmployee = () => {
                                 name="gender"
                                 value={employee.gender}
                                 onChange={handleInputChange}
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                                 required
                             >
                                 <option value="">Select Gender</option>
@@ -130,8 +147,13 @@ const UpdateEmployee = () => {
                                 name="phone"
                                 type="text"
                                 value={employee.phone}
-                                onChange={handleInputChange}
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                                onChange={(e) => {
+                                    const regex = /^[0-9]*$/; // Chỉ cho phép số
+                                    if (regex.test(e.target.value)) {
+                                        handleInputChange(e);
+                                    }
+                                }}
+                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                                 placeholder="Enter phone number"
                             />
                         </div>
@@ -141,15 +163,20 @@ const UpdateEmployee = () => {
                             <label htmlFor="role" className="block text-gray-700 font-semibold mb-2">
                                 Role
                             </label>
-                            <input
+                            <select
                                 name="role"
-                                type="text"
                                 value={employee.role}
                                 onChange={handleInputChange}
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
-                                placeholder="Enter role (e.g., Manager, Kitchen)"
+                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                                 required
-                            />
+                            >
+                                <option value="">Select Role</option>
+                                <option value="Sales">Sales</option>
+                                <option value="Customer Support">Customer Support</option>
+                                <option value="Kitchen">Kitchen</option>
+                                <option value="Delivery">Delivery</option>
+                                <option value="Manager">Manager</option>
+                            </select>
                         </div>
 
                         <div className="flex justify-between items-center pt-6">
