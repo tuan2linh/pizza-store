@@ -60,7 +60,10 @@ const removeLoyatyPoint = async (cartId) => {
 const getLoyalPoint = async () => {
     return axios.get('/user/getloyaltyPnt');
 }
-
+// voucher/deleteVch/:id
+const deleteVoucher = async (id) => {
+    return axios.delete(`/voucher/deleteVch/${id}`);
+}
 // Order
 const getAllOrder = async () => {
     return axios.get('/order/get');
@@ -93,5 +96,6 @@ export {
     getLoyalPoint,
     getAllOrder,
     getOrderbyId,
-    updateOrderStatus
+    updateOrderStatus,
+    deleteVoucher
 }

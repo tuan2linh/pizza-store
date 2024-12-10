@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Table, Button, Modal, Form, Input, Select, DatePicker, message, Space, Tag } from 'antd';
-import { getAllVoucher, updateVoucherStatus, createVoucher } from "../../../services/apiService";
+import { getAllVoucher, updateVoucherStatus, createVoucher, deleteVoucher  } from "../../../services/apiService";
 import moment from 'moment';
 
 const Voucher = () => {
@@ -169,15 +169,27 @@ const Voucher = () => {
         setIsEditModalOpen(true);
     };
 
-    const handleDelete = (voucher) => {
+    const handleDelete = async (voucher) => {
         Modal.confirm({
             title: 'Are you sure you want to delete this voucher?',
             content: `Voucher code: ${voucher.Voucher_Code}`,
-            onOk() {
-                // Implement delete logic here
-                const newVouchers = vouchers.filter(v => v.Voucher_ID !== voucher.Voucher_ID);
-                setVouchers(newVouchers);
-                message.success('Voucher deleted successfully');
+            async onOk() {  // Add async here
+                try {
+                    console.log('Deleting voucher:', voucher);
+                    const response = await deleteVoucher(voucher.Voucher_ID);
+                    console.log('response', response);
+                    
+                    if (response?.message === 'Voucher deleted successfully') {
+                        const newVouchers = vouchers.filter(v => v.Voucher_ID !== voucher.Voucher_ID);
+                        setVouchers(newVouchers);
+                        message.success('Voucher deleted successfully');
+                    } else {
+                        message.error('Failed to delete voucher');
+                    }
+                } catch (error) {
+                    console.error('Delete error:', error);
+                    message.error('Failed to delete voucher');
+                }
             },
         });
     };
