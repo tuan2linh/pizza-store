@@ -35,6 +35,7 @@ import Customer from './pages/Admin/Customer'
 import Employees from './pages/Admin/Employees'
 import AddEmployee from './pages/Admin/AddEmployee'
 import UpdateEmployee from './pages/Admin/UpdateEmployee'
+import PromotionManagement from './pages/Admin/Promotion';
 
 
 
@@ -68,7 +69,7 @@ function App() {
               <Route path='employees' element={<Employees />} />
               <Route path='add_employee' element={<AddEmployee />} />
               <Route path='update_employee/:id' element={<UpdateEmployee />} />
-              <Route path='promotions' element={<h1>Promotions</h1>} />
+              <Route path='promotions' element={<PromotionManagement/>} />
               <Route path='vouchers' element={<Voucher/>} />
               <Route path='suppliers' element={<Suppliers/>} />
               <Route path='addsupplier' element={<AddSupplier />} />
