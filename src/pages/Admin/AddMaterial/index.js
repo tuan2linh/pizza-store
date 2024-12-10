@@ -1,42 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { addIngre } from "../../../services/ingredientsService";
-import { getProduct } from "../../../services/productService";
-import { getSuppliers } from "../../../services/supplierService";
-import { FaArrowLeft, FaBox, FaCalendarAlt, FaFlask } from "react-icons/fa";
 
 const AddMaterial = () => {
     const navigate = useNavigate();
 
+    // State chỉ lưu trữ tên nguyên liệu
     const [newIngredient, setNewIngredient] = useState({
         name: "",
-        quantity: "",
-        expiration_date: "",
-        Product_ID: "",
-        Supplier_ID: ""
     });
-
-    const [products, setProducts] = useState([]); // Danh sách sản phẩm
-    const [suppliers, setSuppliers] = useState([]); // Danh sách nhà cung cấp
-
-    // Lấy dữ liệu sản phẩm và nhà cung cấp khi component được mount
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const productData = await getProduct(); // Gọi API lấy sản phẩm
-                console.log("product", productData)
-                const supplierData = await getSuppliers(); // Gọi API lấy nhà cung cấp
-                console.log("supllier", supplierData)
-                setProducts(productData);
-                setSuppliers(supplierData);
-            } catch (error) {
-                console.error("Failed to fetch products or suppliers:", error);
-            }
-        };
-
-        fetchData();
-    }, []);
 
     // Hàm xử lý thay đổi giá trị input
     const handleInputChange = (e) => {
@@ -48,15 +21,15 @@ const AddMaterial = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const { name, quantity, expiration_date, Product_ID, Supplier_ID } = newIngredient;
-        if (!name || !quantity || !expiration_date || !Product_ID || !Supplier_ID) {
-            toast.error("Please fill in all required fields.");
+        const { name } = newIngredient;
+        if (!name) {
+            toast.error("Please enter the ingredient name.");
             return;
         }
 
         try {
-            // Gửi dữ liệu tới backend
-            await addIngre(newIngredient);
+            // Gửi dữ liệu chỉ chứa trường name tới backend
+            await addIngre({ name });
             toast.success("Ingredient added successfully!");
             navigate("/admin/materials");
         } catch (error) {
@@ -90,79 +63,6 @@ const AddMaterial = () => {
                                 />
                             </div>
 
-                            {/* Quantity */}
-                            <div className="relative">
-                                <label htmlFor="quantity" className="block text-gray-700 font-medium mb-2">
-                                    Quantity
-                                </label>
-                                <input
-                                    name="quantity"
-                                    type="number"
-                                    value={newIngredient.quantity}
-                                    onChange={handleInputChange}
-                                    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-                                    placeholder="Enter quantity"
-                                    required
-                                />
-                            </div>
-
-                            {/* Expiration Date */}
-                            <div className="relative">
-                                <label htmlFor="expiration_date" className="block text-gray-700 font-medium mb-2">
-                                    Expiration Date
-                                </label>
-                                <input
-                                    name="expiration_date"
-                                    type="date"
-                                    value={newIngredient.expiration_date}
-                                    onChange={handleInputChange}
-                                    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-                                    required
-                                />
-                            </div>
-
-                            {/* Select Product */}
-                            <div className="relative">
-                                <label htmlFor="Product_ID" className="block text-gray-700 font-medium mb-2">
-                                    Product
-                                </label>
-                                <select
-                                    name="Product_ID"
-                                    value={newIngredient.Product_ID}
-                                    onChange={handleInputChange}
-                                    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-                                    required
-                                >
-                                    <option value="">Select a product</option>
-                                    {products.map((product) => (
-                                        <option key={product.Product_ID} value={product.Product_ID}>
-                                            {product.Product_Name}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
-
-                            {/* Select Supplier */}
-                            <div className="relative">
-                                <label htmlFor="Supplier_ID" className="block text-gray-700 font-medium mb-2">
-                                    Supplier
-                                </label>
-                                <select
-                                    name="Supplier_ID"
-                                    value={newIngredient.Supplier_ID}
-                                    onChange={handleInputChange}
-                                    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-                                    required
-                                >
-                                    <option value="">Select a supplier</option>
-                                    {suppliers.map((supplier) => (
-                                        <option key={supplier.Supplier_ID} value={supplier.Supplier_ID}>
-                                            {supplier.Supplier_Name}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
-
                             <div className="flex justify-between items-center pt-6">
                                 <Link
                                     to="/admin/materials"
@@ -186,7 +86,7 @@ const AddMaterial = () => {
                                             d="M10 19l-7-7m0 0l7-7m-7 7h18"
                                         />
                                     </svg>
-                                    Back to Ingreidents List
+                                    Back to Ingredients List
                                 </Link>
                                 <button
                                     type="submit"

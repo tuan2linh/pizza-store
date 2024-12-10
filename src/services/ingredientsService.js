@@ -32,10 +32,21 @@ const addIngre = async (formData) => {
     }
 };
 
+const buyIngre = async (formData) => {
+    try {
+        const response = await axios.post("/ingredient/buy", formData, {
+        });
+        return response.data;
+    } catch (error) {
+        throw error.response?.data || { error: "Failed to buy ingredient" };
+    }
+};
+
 export {
     getIngre,
     deleteIngre,
     addIngre,
     updateIngre,
     getInpredientById,
+    buyIngre
 }

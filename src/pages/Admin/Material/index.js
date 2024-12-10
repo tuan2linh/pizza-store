@@ -57,7 +57,7 @@ const Products = () => {
     }, []);
 
     const filteredIngredients = ingredients
-        .filter(ing => 
+        .filter(ing =>
             ing.name.toLowerCase().includes(searchTerm.toLowerCase())
         )
         .sort((a, b) => {
@@ -83,7 +83,7 @@ const Products = () => {
 
     const getStatus = (quantity, expirationDate) => {
         const daysUntilExpiration = Math.ceil((new Date(expirationDate) - new Date()) / (1000 * 60 * 60 * 24));
-        
+
         if (daysUntilExpiration < 0) {
             return {
                 text: "Expired",
@@ -200,7 +200,7 @@ const Products = () => {
                                         paginatedIngredients.map((ingredient, index) => {
                                             const status = getStatus(ingredient.quantity, ingredient.expiration_date);
                                             return (
-                                                <tr key={ingredient.ingredient_id} 
+                                                <tr key={ingredient.ingredient_id}
                                                     className="border-b hover:bg-gray-50 transition-colors duration-200">
                                                     <td className="px-6 py-4">{(currentPage - 1) * itemsPerPage + index + 1}</td>
                                                     <td className={`px-6 py-4 font-medium ${getStatusColor(ingredient.quantity, ingredient.expiration_date)}`}>
@@ -236,6 +236,13 @@ const Products = () => {
                                                             >
                                                                 <FaTrash size={18} />
                                                             </button>
+                                                            <Link
+                                                                to={`/admin/buymaterial/${ingredient.ingredient_id}`}
+                                                                className="text-green-600 hover:text-green-800 transition-colors duration-200"
+                                                                title="Buy"
+                                                            >
+                                                                Buy
+                                                            </Link>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -258,11 +265,10 @@ const Products = () => {
                                     <button
                                         key={i}
                                         onClick={() => setCurrentPage(i + 1)}
-                                        className={`px-3 py-1 rounded ${
-                                            currentPage === i + 1
+                                        className={`px-3 py-1 rounded ${currentPage === i + 1
                                                 ? 'bg-blue-600 text-white'
                                                 : 'bg-gray-200 hover:bg-gray-300'
-                                        }`}
+                                            }`}
                                     >
                                         {i + 1}
                                     </button>
