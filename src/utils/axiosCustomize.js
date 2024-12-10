@@ -6,10 +6,10 @@ const instance = axios.create({
     // front-end local backend server
         // baseURL: 'http://54.153.176.43/api',
     // front-end local backend local
-        // baseURL: 'http://localhost:8000/api',
+        baseURL: 'http://localhost:8000/api',
     // (lúc push code mới nhớ comment 2 cái bên trên, lúc muốn viết front-end thì comment cái này- mở 1 trong 2 cái bên trên)
     // front-end server backend server (deploy)
-        baseURL: '/api',
+        // baseURL: '/api',
         withCredentials: true,
     headers: {
         'Content-Type': 'application/json',

@@ -66,7 +66,7 @@ const Employees = () => {
                     <table className="w-full text-sm text-left text-gray-500">
                         <thead className="text-xs text-gray-700 uppercase bg-gray-100">
                             <tr>
-                                <th className="px-6 py-4">ID</th>
+                                <th className="px-6 py-4">STT</th>
                                 <th className="px-6 py-4">Store ID</th>
                                 <th className="px-6 py-4">Birth Date</th>
                                 <th className="px-6 py-4">Gender</th>
