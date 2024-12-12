@@ -14,20 +14,20 @@ const AddSupplier = () => {
         Supplier_Address: "",
         Rating: "",
         Description: "",
-        IngredientWithPrice: [], // Danh sách nguyên liệu với giá
+        IngredientWithPrice: [],
     });
 
-    const [ingredients, setIngredients] = useState([]); // Danh sách nguyên liệu từ API
-    const [selectedIngredient, setSelectedIngredient] = useState(""); // Ingredient được chọn (ingredient_id)
-    const [price, setPrice] = useState(""); // Giá nguyên liệu được nhập vào
+    const [ingredients, setIngredients] = useState([]);
+    const [selectedIngredient, setSelectedIngredient] = useState("");
+    const [price, setPrice] = useState(""); 
 
-    // Gọi API lấy danh sách nguyên liệu khi component load
+
     useEffect(() => {
         const fetchIngredients = async () => {
             try {
-                const data = await getIngre(); // Gọi API để lấy danh sách nguyên liệu
+                const data = await getIngre();
                 console.log(data);
-                setIngredients(data); // Gán dữ liệu vào state
+                setIngredients(data);
             } catch (error) {
                 console.error("Error fetching ingredients:", error);
                 toast.error("Failed to fetch ingredients.");
@@ -37,20 +37,17 @@ const AddSupplier = () => {
         fetchIngredients();
     }, []);
 
-    // Xử lý khi nhập thông tin supplier
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setNewSupplier({ ...newSupplier, [name]: value });
     };
 
-    // Thêm nguyên liệu với giá vào danh sách
     const addIngredientWithPrice = () => {
         if (!selectedIngredient || !price) {
             toast.error("Please select an ingredient and enter a price.");
             return;
         }
 
-        // Kiểm tra nguyên liệu đã được thêm chưa
         const existing = newSupplier.IngredientWithPrice.find(
             (item) => item.Ingredient_ID === parseInt(selectedIngredient)
         );
@@ -60,7 +57,6 @@ const AddSupplier = () => {
             return;
         }
 
-        // Thêm nguyên liệu với giá vào danh sách
         setNewSupplier({
             ...newSupplier,
             IngredientWithPrice: [
@@ -72,13 +68,11 @@ const AddSupplier = () => {
             ],
         });
 
-        // Reset giá trị sau khi thêm
         setSelectedIngredient("");
         setPrice("");
         toast.success("Ingredient added successfully!");
     };
 
-    // Gửi dữ liệu form
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -106,11 +100,8 @@ const AddSupplier = () => {
             formData.append("Supplier_Address", Supplier_Address);
             formData.append("Rating", Rating);
             formData.append("Description", Description);
-
-            // Chuyển mảng IngredientWithPrice thành JSON và thêm vào formData
             formData.append("IngredientWithPrice", JSON.stringify(IngredientWithPrice));
 
-            // Gửi yêu cầu POST với dữ liệu formData
             await addSupplier(formData);
             toast.success("Supplier added successfully!");
             navigate("/admin/suppliers");
@@ -254,7 +245,7 @@ const AddSupplier = () => {
                                     {newSupplier.IngredientWithPrice.map((item, index) => (
                                         <li key={index} className="flex justify-between items-center bg-gray-100 px-4 py-2 rounded-lg">
                                             <span>Ingredient ID: {item.Ingredient_ID}</span>
-                                            <span>Price: ${item.Price.toFixed(2)}</span>
+                                            <span>Price: {item.Price.toFixed(2)}đ</span>
                                         </li>
                                     ))}
                                 </ul>

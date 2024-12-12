@@ -10,12 +10,15 @@ const Employees = () => {
     const [isModalOpen, setModalOpen] = useState(false);
     const [employeeToDelete, setEmployeeToDelete] = useState(null);
 
+    // Search and filter states
+    const [searchTerm, setSearchTerm] = useState("");
+    const [selectedRole, setSelectedRole] = useState("all");
+
     // Fetch employees from the backend
     const fetchEmployees = async () => {
         try {
             const result = await getEmployee();
             setEmployees(result);
-            console.log(result);
         } catch (error) {
             console.error("Failed to get list employees:", error);
             setEmployees([]);
@@ -45,9 +48,18 @@ const Employees = () => {
         } catch (error) {
             toast.error(`Failed to delete employee: ${error.message}`);
         } finally {
-            setModalOpen(false); // Close the modal after action
+            setModalOpen(false);
         }
     };
+
+    // Filter employees based on search term and role
+    const filteredEmployees = employees.filter(employee => {
+        const matchesSearch = employee.username.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesRole = selectedRole === "all" || employee.role.toLowerCase() === selectedRole.toLowerCase();
+        return matchesSearch && matchesRole;
+    });
+
+    const roleOptions = ["all", "Sales", "Customer Support", "Kitchen", "Delivery", "Manager"];
 
     return (
         <>
@@ -62,11 +74,33 @@ const Employees = () => {
                     </Link>
                 </div>
 
+                {/* Search and Filter Controls */}
+                <div className="mb-6 flex gap-4">
+                    <input
+                        type="text"
+                        placeholder="Search employees by name..."
+                        className="px-4 py-2 border rounded-lg w-64"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                    <select
+                        value={selectedRole}
+                        onChange={(e) => setSelectedRole(e.target.value)}
+                        className="px-4 py-2 border rounded-lg"
+                    >
+                        {roleOptions.map((role) => (
+                            <option key={role} value={role}>
+                                {role.charAt(0).toUpperCase() + role.slice(1)}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+
                 <div className="overflow-x-auto rounded-lg border border-gray-200">
                     <table className="w-full text-sm text-left text-gray-500">
                         <thead className="text-xs text-gray-700 uppercase bg-gray-100">
                             <tr>
-                                <th className="px-6 py-4">STT</th>
+                                <th className="px-6 py-4">ID</th>
                                 <th className="px-6 py-4">Store ID</th>
                                 <th className="px-6 py-4">Birth Date</th>
                                 <th className="px-6 py-4">Gender</th>
@@ -78,13 +112,13 @@ const Employees = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {employees.length > 0 ? (
-                                employees.map((employee, index) => (
+                            {filteredEmployees.length > 0 ? (
+                                filteredEmployees.map((employee) => (
                                     <tr
                                         key={employee.employee_id}
                                         className="bg-white border-b hover:bg-gray-50 transition duration-200"
                                     >
-                                        <td className="px-6 py-4 font-medium text-gray-900">{index+1}</td>
+                                        <td className="px-6 py-4 font-medium text-gray-900">{employee.employee_id}</td>
                                         <td className="px-6 py-4">{employee.store_id}</td>
                                         <td className="px-6 py-4">
                                             {new Date(employee.birth_date).toLocaleDateString()}
@@ -115,10 +149,10 @@ const Employees = () => {
                             ) : (
                                 <tr>
                                     <td
-                                        colSpan="10"
+                                        colSpan="9"
                                         className="px-6 py-8 text-center text-gray-500 bg-gray-50 italic"
                                     >
-                                        No employees available
+                                        No employees found
                                     </td>
                                 </tr>
                             )}

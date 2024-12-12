@@ -95,7 +95,7 @@ const Customers = () => {
                                         key={customer.customer_id}
                                         className="border-b hover:bg-gray-50 transition-colors"
                                     >
-                                        <td className="px-6 py-4 font-medium">{indexOfFirstCustomer + index + 1}</td>
+                                        <td className="px-6 py-4 font-medium">{customer.customer_id}</td>
                                         <td className="px-6 py-4 font-medium">{customer.username}</td>
                                         <td className="px-6 py-4 text-gray-600">{customer.email}</td>
                                         <td className="px-6 py-4">
@@ -117,7 +117,7 @@ const Customers = () => {
                 </div>
 
                 {totalPages > 1 && (
-                    <div className="flex items-center justify-between px-6 py-4 border-t">
+                    <div className="flex items-center justify-center px-6 py-4 border-t gap-2">
                         <button
                             onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                             disabled={currentPage === 1}
@@ -125,9 +125,24 @@ const Customers = () => {
                         >
                             Previous
                         </button>
-                        <span className="text-sm text-gray-600">
-                            Page {currentPage} of {totalPages}
-                        </span>
+
+                        {[...Array(totalPages)].map((_, index) => {
+                            const page = index + 1;
+                            return (
+                                <button
+                                    key={page}
+                                    onClick={() => paginate(page)}
+                                    className={`px-3 py-1 text-sm font-medium rounded-lg ${
+                                        currentPage === page
+                                            ? "bg-blue-500 text-white"
+                                            : "bg-white text-gray-700 border hover:bg-gray-50"
+                                    }`}
+                                >
+                                    {page}
+                                </button>
+                            );
+                        })}
+
                         <button
                             onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                             disabled={currentPage === totalPages}

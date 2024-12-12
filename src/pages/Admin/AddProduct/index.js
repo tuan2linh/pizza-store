@@ -1,30 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { addProduct } from "../../../services/productService";
+import { getAllMenu } from "../../../services/menuService.js";
+
 
 const AddProduct = () => {
     const navigate = useNavigate();
 
-    // State lưu trữ thông tin sản phẩm
     const [newProduct, setNewProduct] = useState({
         Product_Name: "",
         Menu_Name: "",
         Description: "",
-        SizeWithPrice: [],  // Mảng Size với giá
+        SizeWithPrice: [],
         Image: "",
     });
 
     const [sizes, setSizes] = useState([{ Size: "", Price: "" }]);
     const [sizeErrors, setSizeErrors] = useState([]);
+    const [menus, setMenus] = useState([]);
 
-    // Hàm xử lý thay đổi giá trị input
+    useEffect(() => {
+        const fetchMenus = async () => {
+            try {
+                const response = await getAllMenu();
+                setMenus(response);
+            } catch (error) {
+                console.error(error);
+                toast.error("Failed to fetch menus.");
+            }
+        };
+        fetchMenus();
+    }, []);
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setNewProduct({ ...newProduct, [name]: value });
     };
 
-    // Hàm xử lý thay đổi Size và Price
     const validateSize = (size) => {
         const validSizes = ['small', 'medium', 'big'];
         return validSizes.includes(size.toLowerCase());
@@ -35,7 +48,6 @@ const AddProduct = () => {
         const updatedSizes = [...sizes];
         updatedSizes[index][name] = value;
 
-        // Validate size if the changed field is "Size"
         if (name === 'Size') {
             const newErrors = [...sizeErrors];
             if (!validateSize(value)) {
@@ -50,35 +62,29 @@ const AddProduct = () => {
         setNewProduct({ ...newProduct, SizeWithPrice: updatedSizes });
     };
 
-    // Hàm thêm Size  
     const addSize = () => {
         setSizes([...sizes, { Size: "", Price: "" }]);
     };
 
-    // Hàm xóa Size
     const removeSize = (index) => {
         const updatedSizes = sizes.filter((_, i) => i !== index);
         setSizes(updatedSizes);
         setNewProduct({ ...newProduct, SizeWithPrice: updatedSizes });
     };
 
-    // Hàm xử lý submit form
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Kiểm tra dữ liệu trước khi gửi
         if (!newProduct.Product_Name || !newProduct.Menu_Name || !newProduct.Description || !newProduct.Image) {
             toast.error("Please fill in all required fields.");
             return;
         }
 
-        // Kiểm tra Size và Price
         if (newProduct.SizeWithPrice.length === 0 || newProduct.SizeWithPrice.some(size => !size.Size || !size.Price)) {
             toast.error("Please provide valid size and price information.");
             return;
         }
 
-        // Check for size validation errors
         const hasInvalidSizes = sizes.some(size => !validateSize(size.Size));
         if (hasInvalidSizes) {
             toast.error("Please use valid sizes (small, medium, or big)");
@@ -90,16 +96,15 @@ const AddProduct = () => {
         formData.append("Product_Name", newProduct.Product_Name);
         formData.append("Menu_Name", newProduct.Menu_Name);
         formData.append("Description", newProduct.Description);
-        formData.append("SizeWithPrice", JSON.stringify(newProduct.SizeWithPrice)); // Gửi mảng SizeWithPrice dưới dạng chuỗi JSON
-        formData.append("Image", newProduct.Image); // Gửi ảnh
+        formData.append("SizeWithPrice", JSON.stringify(newProduct.SizeWithPrice));
+        formData.append("Image", newProduct.Image);
 
         try {
-            // Gửi dữ liệu tới BE
             await addProduct(formData);
             console.log(newProduct);
             console.log(formData);
             toast.success("Product added successfully!");
-            navigate("/admin/products"); // Điều hướng tới danh sách sản phẩm
+            navigate("/admin/products");
         } catch (error) {
             console.error(error);
             toast.error(error.response?.data?.message || "An error occurred while adding the product.");
@@ -136,15 +141,20 @@ const AddProduct = () => {
                             <label htmlFor="Menu_Name" className="block text-gray-700 font-semibold mb-2">
                                 Menu Name
                             </label>
-                            <input
+                            <select
                                 name="Menu_Name"
-                                type="text"
                                 value={newProduct.Menu_Name}
                                 onChange={handleInputChange}
                                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
-                                placeholder="Enter menu name"
                                 required
-                            />
+                            >
+                                <option value="" disabled>Select a menu</option>
+                                {menus.map((menu, index) => (
+                                    <option key={index} value={menu.Menu_Name}>
+                                        {menu.Menu_Name}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
 
                         {/* Description */}
@@ -233,6 +243,15 @@ const AddProduct = () => {
                                 placeholder="Enter image URL"
                                 required
                             />
+                            <div className="mt-4">
+                                {newProduct.Image && ( // Hiển thị ảnh từ URL
+                                    <img
+                                        src={newProduct.Image}
+                                        alt="Product"
+                                        className="max-w-full h-40 object-contain border border-gray-300 rounded-lg"
+                                    />
+                                )}
+                            </div>
                         </div>
 
                         <div className="flex justify-between items-center pt-6">

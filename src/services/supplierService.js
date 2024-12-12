@@ -18,7 +18,11 @@ const deleteSupplier = async (id) => {
 
 const updateSupplier = async (id, formData) => {
     try {
-        const response = await axios.put(`supplier/update/${id}`, formData);
+        const response = await axios.put(`supplier/update/${id}`, formData, {
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
         return response.data;
     } catch (error) {
         throw error.response?.data || { error: "Failed to update ingredient" };
