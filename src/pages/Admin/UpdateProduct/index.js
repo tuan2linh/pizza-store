@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { getProductByID, updateProduct } from "../../../services/productService";
+import { getAllMenu } from "../../../services/menuService.js";
+
 
 const UpdateProduct = () => {
     const navigate = useNavigate();
@@ -15,7 +17,7 @@ const UpdateProduct = () => {
         SizeWithPrice: [],
         Image: "",
     });
-
+    const [menus, setMenus] = useState([]);
     const [sizes, setSizes] = useState([{ Size: "", Price: "" }]);
     const [sizeErrors, setSizeErrors] = useState([]);
 
@@ -63,6 +65,16 @@ const UpdateProduct = () => {
 
     // Fetch sản phẩm khi component được tải
     useEffect(() => {
+        const fetchMenus = async () => {
+            try {
+                const menuList = await getAllMenu();
+                setMenus(menuList); // Lưu danh sách menu vào state
+            } catch (error) {
+                toast.error("Failed to fetch menus.");
+                console.error(error);
+            }
+        };
+
         const fetchProduct = async () => {
             try {
                 const product = await getProductByID(id); // Lấy dữ liệu sản phẩm từ API
@@ -74,6 +86,7 @@ const UpdateProduct = () => {
             }
         };
         fetchProduct();
+        fetchMenus();
     }, [id]);
 
     const handleSubmit = async (e) => {
@@ -147,15 +160,22 @@ const UpdateProduct = () => {
                             <label htmlFor="Menu_Name" className="block text-gray-700 font-semibold mb-2">
                                 Menu Name
                             </label>
-                            <input
+                            <select
                                 name="Menu_Name"
-                                type="text"
                                 value={newProduct.Menu_Name}
                                 onChange={handleInputChange}
                                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
-                                placeholder="Enter menu name"
                                 required
-                            />
+                            >
+                                <option value="" disabled>
+                                    Select a menu
+                                </option>
+                                {menus.map((menu) => (
+                                    <option key={menu.Menu_ID} value={menu.Menu_Name}>
+                                        {menu.Menu_Name}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
 
                         {/* Description */}
@@ -243,24 +263,13 @@ const UpdateProduct = () => {
                             <div className="mt-4">
                                 {newProduct.Image && ( // Hiển thị ảnh từ URL
                                     <img
-                                        src={newProduct.Image} // Hiển thị ảnh từ URL
+                                        src={newProduct.Image}
                                         alt="Product"
                                         className="max-w-full h-40 object-contain border border-gray-300 rounded-lg"
                                     />
                                 )}
                             </div>
                         </div>
-                        {/* Submit */}
-                        {/* <div>
-                            <button
-                                type="submit"
-                                className="px-4 py-2 w-full text-white bg-blue-500 hover:bg-blue-700 rounded-lg transition-all duration-200"
-                            >
-                                Update Product
-                            </button>
-                        </div> */}
-
-
                         <div className="flex justify-between items-center pt-6">
                             <Link
                                 to="/admin/products"

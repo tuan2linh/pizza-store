@@ -1,52 +1,132 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { getSupplierById, updateSupplier } from "../../../services/supplierService";
+import { getIngre } from "../../../services/ingredientsService";
 
 const UpdateSupplier = () => {
-    const { id } = useParams(); // Lấy id từ URL
     const navigate = useNavigate();
-
-    // State lưu trữ thông tin nhà cung cấp
-    const [supplier, setSupplier] = useState({
+    const { id } = useParams();
+    console.log(id )
+    const [newSupplier, setNewSupplier] = useState({
         Supplier_Name: "",
         PhoneNumber: "",
         Email: "",
         Supplier_Address: "",
         Rating: "",
         Description: "",
+        IngredientWithPrice: [],
     });
 
+    const [ingredients, setIngredients] = useState([]); 
+    const [selectedIngredient, setSelectedIngredient] = useState("");
+    const [price, setPrice] = useState(""); 
+
     useEffect(() => {
-        const fetchSupplier = async () => {
+        const fetchIngredients = async () => {
             try {
-                const result = await getSupplierById(id);
-                setSupplier(result);
-                console.log(result)
+                const data = await getIngre(); 
+                setIngredients(data);
             } catch (error) {
-                console.error("Error fetching supplier:", error);
-                toast.error("Failed to load supplier data.");
+                console.error("Error fetching ingredients:", error);
+                toast.error("Failed to fetch ingredients.");
             }
         };
 
+        const fetchSupplier = async () => {
+            try {
+                const data = await getSupplierById(id); 
+                setNewSupplier({
+                    ...newSupplier,
+                    Supplier_Name: data[0].Supplier_Name,
+                    PhoneNumber: data[0].PhoneNumber,
+                    Email: data[0].Email,
+                    Supplier_Address: data[0].Supplier_Address,
+                    Rating: data[0].Rating,
+                    Description: data[0].Description,
+                    IngredientWithPrice: [], 
+                });
+                console.log(data);
+            } catch (error) {
+                console.error("Error fetching supplier data:", error);
+                toast.error("Failed to fetch supplier data.");
+            }
+        };
+
+        fetchIngredients();
         fetchSupplier();
     }, [id]);
 
-    // Hàm xử lý thay đổi giá trị input
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setSupplier({ ...supplier, [name]: value });
+        setNewSupplier({ ...newSupplier, [name]: value });
     };
 
-    // Hàm xử lý submit form
+    const addIngredientWithPrice = () => {
+        if (!selectedIngredient || !price) {
+            toast.error("Please select an ingredient and enter a price.");
+            return;
+        }
+
+        const existing = newSupplier.IngredientWithPrice.find(
+            (item) => item.Ingredient_ID === parseInt(selectedIngredient)
+        );
+
+        if (existing) {
+            toast.error("Ingredient already added. Please choose another.");
+            return;
+        }
+
+        setNewSupplier({
+            ...newSupplier,
+            IngredientWithPrice: [
+                ...newSupplier.IngredientWithPrice,
+                {
+                    Ingredient_ID: parseInt(selectedIngredient),
+                    Price: parseFloat(price),
+                },
+            ],
+        });
+
+        setSelectedIngredient("");
+        setPrice("");
+        toast.success("Ingredient added successfully!");
+    };
+
+    // Gửi dữ liệu form để cập nhật
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const { Supplier_Name, PhoneNumber, Email, Supplier_Address, Rating, Description } = supplier;
+        const { Supplier_Name, PhoneNumber, Email, Supplier_Address, Rating, Description, IngredientWithPrice } =
+            newSupplier;
+
+        if (
+            !Supplier_Name ||
+            !PhoneNumber ||
+            !Email ||
+            !Supplier_Address ||
+            !Rating ||
+            !Description ||
+            IngredientWithPrice.length === 0
+        ) {
+            toast.error("Please fill in all required fields and add at least one ingredient.");
+            return;
+        }
 
         try {
-            // Gửi yêu cầu cập nhật nhà cung cấp
-            await updateSupplier(id, supplier);
+            const formData = new FormData();
+            formData.append("Supplier_Name", Supplier_Name);
+            formData.append("PhoneNumber", PhoneNumber);
+            formData.append("Email", Email);
+            formData.append("Supplier_Address", Supplier_Address);
+            formData.append("Rating", Rating);
+            formData.append("Description", Description);
+
+            // Chuyển mảng IngredientWithPrice thành JSON và thêm vào formData
+            formData.append("IngredientWithPrice", JSON.stringify(IngredientWithPrice));
+
+            // Gửi yêu cầu POST với dữ liệu formData
+            await updateSupplier(id, formData); // Gửi ID và dữ liệu để cập nhật
             toast.success("Supplier updated successfully!");
             navigate("/admin/suppliers");
         } catch (error) {
@@ -56,151 +136,153 @@ const UpdateSupplier = () => {
     };
 
     return (
-        <section className="p-8 relative">
-            <div>
-                <h2 className="font-medium text-3xl">Update Supplier</h2>
-            </div>
-            <hr className="my-5" />
-            <div className="flex justify-center">
-                <div className="w-[80%] shadow-lg border-2 border-gray-200 rounded-lg">
-                    <form onSubmit={handleSubmit} className="space-y-4 bg-white p-6 rounded-lg">
-                        {/* Supplier Name */}
-                        <div>
-                            <label htmlFor="Supplier_Name" className="block text-gray-700 font-medium">
-                                Supplier Name
-                            </label>
-                            <input
-                                name="Supplier_Name"
-                                type="text"
-                                value={supplier.Supplier_Name}
-                                onChange={handleInputChange}
-                                className="w-full px-4 py-2 border rounded-lg"
-                                placeholder="Enter supplier name"
-                                required
-                            />
-                        </div>
-
-                        {/* Phone Number */}
-                        <div>
-                            <label htmlFor="PhoneNumber" className="block text-gray-700 font-medium">
-                                Phone Number
-                            </label>
-                            <input
-                                name="PhoneNumber"
-                                type="text"
-                                value={supplier.PhoneNumber}
-                                onChange={handleInputChange}
-                                className="w-full px-4 py-2 border rounded-lg"
-                                placeholder="Enter phone number"
-                                required
-                            />
-                        </div>
-
-                        {/* Email */}
-                        <div>
-                            <label htmlFor="Email" className="block text-gray-700 font-medium">
-                                Email
-                            </label>
-                            <input
-                                name="Email"
-                                type="email"
-                                value={supplier.Email}
-                                onChange={handleInputChange}
-                                className="w-full px-4 py-2 border rounded-lg"
-                                placeholder="Enter email"
-                                required
-                            />
-                        </div>
-
-                        {/* Supplier Address */}
-                        <div>
-                            <label htmlFor="Supplier_Address" className="block text-gray-700 font-medium">
-                                Supplier Address
-                            </label>
-                            <input
-                                name="Supplier_Address"
-                                type="text"
-                                value={supplier.Supplier_Address}
-                                onChange={handleInputChange}
-                                className="w-full px-4 py-2 border rounded-lg"
-                                placeholder="Enter supplier address"
-                                required
-                            />
-                        </div>
-
-                        {/* Rating */}
-                        <div>
-                            <label htmlFor="Rating" className="block text-gray-700 font-medium">
-                                Rating
-                            </label>
-                            <input
-                                name="Rating"
-                                type="number"
-                                value={supplier.Rating}
-                                onChange={handleInputChange}
-                                className="w-full px-4 py-2 border rounded-lg"
-                                placeholder="Enter rating (1-5)"
-                                required
-                                min="1"
-                                max="5"
-                            />
-                        </div>
-
-                        {/* Description */}
-                        <div>
-                            <label htmlFor="Description" className="block text-gray-700 font-medium">
-                                Description
-                            </label>
-                            <textarea
-                                name="Description"
-                                value={supplier.Description}
-                                onChange={handleInputChange}
-                                className="w-full h-32 px-4 py-2 border rounded-lg"
-                                placeholder="Enter supplier description"
-                            />
-                        </div>
-
-                        <div className="flex justify-between items-center pt-6">
-                            <Link
-                                to="/admin/suppliers"
-                                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-blue-600 
-                   bg-white border border-blue-600 rounded-lg shadow-md 
-                   hover:bg-blue-600 hover:text-white hover:shadow-lg
-                   focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1
-                   transition-all duration-200"
-                            >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className="h-4 w-4"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                    strokeWidth={2}
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        d="M10 19l-7-7m0 0l7-7m-7 7h18"
+        <section className="min-h-screen bg-[#e5e7eb] p-8">
+            <div className="max-w-7xl mx-auto">
+                <h2 className="font-bold text-3xl text-gray-800 mb-6">Update Supplier</h2>
+                <div className="bg-white rounded-xl shadow-md overflow-hidden">
+                    <div className="p-8">
+                        <form onSubmit={handleSubmit} className="space-y-6">
+                            {/* Form nhập thông tin supplier */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label htmlFor="Supplier_Name" className="block text-sm font-semibold text-gray-700 mb-2">
+                                        Supplier Name
+                                    </label>
+                                    <input
+                                        name="Supplier_Name"
+                                        type="text"
+                                        value={newSupplier.Supplier_Name}
+                                        onChange={handleInputChange}
+                                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                                        placeholder="Enter supplier name"
+                                        required
                                     />
-                                </svg>
-                                Back to Supplier List
-                            </Link>
+                                </div>
+                                <div>
+                                    <label htmlFor="PhoneNumber" className="block text-sm font-semibold text-gray-700 mb-2">
+                                        Phone Number
+                                    </label>
+                                    <input
+                                        name="PhoneNumber"
+                                        type="text"
+                                        value={newSupplier.PhoneNumber}
+                                        onChange={handleInputChange}
+                                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                                        placeholder="Enter phone number"
+                                        required
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor="Email" className="block text-sm font-semibold text-gray-700 mb-2">
+                                        Email
+                                    </label>
+                                    <input
+                                        name="Email"
+                                        type="email"
+                                        value={newSupplier.Email}
+                                        onChange={handleInputChange}
+                                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                                        placeholder="Enter email"
+                                        required
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor="Rating" className="block text-sm font-semibold text-gray-700 mb-2">
+                                        Rating
+                                    </label>
+                                    <input
+                                        name="Rating"
+                                        type="number"
+                                        value={newSupplier.Rating}
+                                        onChange={handleInputChange}
+                                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                                        placeholder="Enter rating (1-5)"
+                                        required
+                                        min="1"
+                                        max="5"
+                                    />
+                                </div>
+                            </div>
+                            <div>
+                                <label htmlFor="Supplier_Address" className="block text-sm font-semibold text-gray-700 mb-2">
+                                    Supplier Address
+                                </label>
+                                <input
+                                    name="Supplier_Address"
+                                    type="text"
+                                    value={newSupplier.Supplier_Address}
+                                    onChange={handleInputChange}
+                                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                                    placeholder="Enter supplier address"
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="Description" className="block text-sm font-semibold text-gray-700 mb-2">
+                                    Description
+                                </label>
+                                <textarea
+                                    name="Description"
+                                    value={newSupplier.Description}
+                                    onChange={handleInputChange}
+                                    className="w-full h-36 px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all resize-none"
+                                    placeholder="Enter description"
+                                    required
+                                ></textarea>
+                            </div>
+                            {/* Form thêm nguyên liệu */}
+                            <div>
+                                <label className="block text-sm font-semibold text-gray-700 mb-2">Ingredients</label>
+                                <div className="flex items-center space-x-4 mb-3">
+                                    <select
+                                        value={selectedIngredient}
+                                        onChange={(e) => setSelectedIngredient(e.target.value)}
+                                        className="w-1/2 px-4 py-2 rounded-lg border border-gray-300"
+                                    >
+                                        <option value="">Select an ingredient</option>
+                                        {ingredients.map((ingredient) => (
+                                            <option key={ingredient.ingredient_id} value={ingredient.ingredient_id}>
+                                                {ingredient.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    <input
+                                        type="number"
+                                        value={price}
+                                        onChange={(e) => setPrice(e.target.value)}
+                                        placeholder="Enter price"
+                                        className="w-1/2 px-4 py-2 rounded-lg border border-gray-300"
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={addIngredientWithPrice}
+                                        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all"
+                                    >
+                                        Add
+                                    </button>
+                                </div>
+                                {/* Hiển thị danh sách nguyên liệu */}
+                                <ul className="space-y-2">
+                                    {newSupplier.IngredientWithPrice.map((item, index) => (
+                                        <li key={index} className="flex justify-between items-center bg-gray-100 px-4 py-2 rounded-lg">
+                                            <span>Ingredient ID: {item.Ingredient_ID}</span>
+                                            <span>Price: {item.Price.toFixed(2)}đ</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                            {/* Nút gửi */}
                             <button
                                 type="submit"
-                                style={{
-                                    backgroundColor: "#3498db",
-                                    color: "#fff",
-                                    padding: "10px 20px",
-                                    borderRadius: "5px",
-                                    fontWeight: "bold",
-                                    cursor: "pointer",
-                                }}
-                                className="hover:opacity-60 transition-all"
+                                className="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition-all"
                             >
                                 Update Supplier
                             </button>
-                        </div>
-                    </form>
+                        </form>
+                        <Link to="/admin/suppliers" className="block text-center text-blue-600 mt-4">
+                            Back to Suppliers
+                        </Link>
+                    </div>
                 </div>
             </div>
         </section>

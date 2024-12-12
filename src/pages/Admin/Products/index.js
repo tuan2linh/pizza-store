@@ -16,12 +16,10 @@ const Products = () => {
 
     const menuOptions = ["all", "pizza", "chicken", "pasta", "appetizers", "desserts", "drinks"];
 
-    // Fetch products from the backend
     const fetchProduct = async () => {
         try {
             const result = await getProduct();
             setProducts(result);
-            console.log(result);
         } catch (error) {
             console.error("Failed to get list product:", error);
             setProducts([]);
@@ -41,17 +39,13 @@ const Products = () => {
         if (!productToDelete) return;
 
         try {
-            const result = await deleteProduct(productToDelete);
-            if (result.message === "Food removed successfully") {
-                await fetchProduct();
-                toast.success(`Product was deleted`);
-            } else {
-                toast.error(`Error deleting product: ${productToDelete}`);
-            }
+            await deleteProduct(productToDelete);
+            await fetchProduct();
+            toast.success(`Product was deleted`);
         } catch (error) {
             toast.error(error.message);
         } finally {
-            setModalOpen(false); // Close the modal after action
+            setModalOpen(false);
         }
     };
 
@@ -215,9 +209,8 @@ const Products = () => {
                             <button
                                 key={i + 1}
                                 onClick={() => handlePageChange(i + 1)}
-                                className={`px-4 py-2 border rounded-lg ${
-                                    currentPage === i + 1 ? 'bg-blue-600 text-white' : ''
-                                }`}
+                                className={`px-4 py-2 border rounded-lg ${currentPage === i + 1 ? 'bg-blue-600 text-white' : ''
+                                    }`}
                             >
                                 {i + 1}
                             </button>
